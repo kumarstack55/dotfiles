@@ -287,11 +287,9 @@ if g:my_gui_type == s:GUI_TYPE_RUNNING
   set imsearch=-1
 endif
 
-" ヤンクと選択範囲をクリップボードに送る
+" 選択範囲をクリップボードに送る
 if g:my_gui_type == s:GUI_TYPE_RUNNING
-  set clipboard=unnamed,autoselect
-else
-  set clipboard=unnamed
+  set clipboard=autoselect
 endif
 
 " ビジュアルベルを無効にする
