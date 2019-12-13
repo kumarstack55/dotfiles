@@ -27,3 +27,7 @@ cd $HOME/dotfiles/bin
 ./installer.ps1
 exit
 ```
+
+```
+nvim -c "try | PlugInstall | finally | qall! | endtry"
+```
