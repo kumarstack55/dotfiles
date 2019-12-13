@@ -1,0 +1,4 @@
+# .inputrc
+
+# backspace や tab で音が鳴ることを回避する
+set bell-style none
