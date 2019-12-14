@@ -278,6 +278,12 @@ command! MyTagbarReload call MyTagbarReload()
 " split,close時、ウィンドウの自動リサイズを行わない
 set noequalalways
 
+" ビジュアルベルを無効にする
+set novisualbell
+
+" 行番号を表示させる
+set number
+
 " カラースキームを設定する
 colorscheme apprentice
 
@@ -299,12 +305,6 @@ endif
 if g:my_gui_type == s:GUI_TYPE_RUNNING
   set clipboard=autoselect
 endif
-
-" ビジュアルベルを無効にする
-set novisualbell
-
-" 行番号を表示させる
-set number
 
 " カーソル行を表示させる
 set cursorline
