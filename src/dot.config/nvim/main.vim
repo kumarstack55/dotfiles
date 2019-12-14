@@ -510,17 +510,30 @@ function! LightLineFilename()
 endfunction
 
 function! LightLineFiletype()
-  return winwidth(0) > 70 ?
-    \ (strlen(&filetype) ? &filetype . (g:enable_devicons ?
-    \   ' ' . WebDevIconsGetFileTypeSymbol() : '') : 'no ft')
-    \ : ''
+  return
+    \ winwidth(0) > 70 ? (
+    \   strlen(&filetype) ?
+    \     &filetype . (
+    \       g:enable_devicons ?
+    \         ' ' . WebDevIconsGetFileTypeSymbol() : ''
+    \     ) : 'no ft'
+    \   ) :
+    \   strlen(&filetype) ? (
+    \     g:enable_devicons ?
+    \       WebDevIconsGetFileTypeSymbol() : ''
+    \     ) : ''
 endfunction
 
 function! LightLineFileformat()
-  return winwidth(0) > 70 ?
-    \ (&fileformat . (g:enable_devicons ?
-    \   ' ' . WebDevIconsGetFileFormatSymbol() : ''))
-    \ : ''
+  return
+    \ winwidth(0) > 70 ? (
+    \ &fileformat . (
+    \     g:enable_devicons ?
+    \     ' ' . WebDevIconsGetFileFormatSymbol()
+    \     : ''
+    \   )
+    \ ) :
+    \ (g:enable_devicons ? WebDevIconsGetFileFormatSymbol() : '')
 endfunction
 
 function! LightLineLineColumnInfo()
