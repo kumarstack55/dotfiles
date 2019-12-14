@@ -301,6 +301,15 @@ if g:my_gui_type == s:GUI_TYPE_RUNNING
   set imsearch=-1
 endif
 
+" 既存ファイル編集時のエンコーディング候補順序を定める
+set fileencodings=utf-8,cp932,utf-16le
+
+" ファイル再オープン時にカーソルを移動する (:help restore-cursor)
+autocmd BufReadPost *
+  \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+  \ |   exe "normal! g`\""
+  \ | endif
+
 " modelineの認識は先頭と末尾の行数を指定する
 set modelines=5
 
@@ -319,15 +328,6 @@ endif
 if g:my_gui_type == s:GUI_TYPE_RUNNING
   set clipboard=autoselect
 endif
-
-" ファイル再オープン時にカーソルを移動する (:help restore-cursor)
-autocmd BufReadPost *
-  \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
-  \ |   exe "normal! g`\""
-  \ | endif
-
-" 既存ファイル編集時のエンコーディング候補順序を定める
-set fileencodings=utf-8,cp932,utf-16le
 
 " すべてのモードでマウスを有効にする
 set mouse=a
