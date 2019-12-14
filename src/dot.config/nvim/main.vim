@@ -301,6 +301,9 @@ if g:my_gui_type == s:GUI_TYPE_RUNNING
   set imsearch=-1
 endif
 
+" modelineの認識は先頭と末尾の行数を指定する
+set modelines=5
+
 " 選択範囲をクリップボードに送る
 if g:my_gui_type == s:GUI_TYPE_RUNNING
   set clipboard=autoselect
@@ -316,9 +319,6 @@ set textwidth=0
 if v:version > 704
   set breakindent
 endif
-
-" modelineの認識は先頭と末尾の行数を指定する
-set modelines=5
 
 " ファイル再オープン時にカーソルを移動する (:help restore-cursor)
 autocmd BufReadPost *
