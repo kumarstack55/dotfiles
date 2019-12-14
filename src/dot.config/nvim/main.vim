@@ -348,6 +348,7 @@ endif
 if g:my_gui_type == s:GUI_TYPE_RUNNING
   set clipboard=autoselect
 endif
+inoremap <S-Insert> "*p
 
 " 検索キーワードを強調させない
 set nohlsearch
