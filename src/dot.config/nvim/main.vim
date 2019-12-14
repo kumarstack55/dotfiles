@@ -53,12 +53,17 @@ function! s:MyGetEnableDevIcons()
 endfunction
 let g:enable_devicons = s:MyGetEnableDevIcons()
 
-" Python36を読む
-if g:my_os_type == s:OS_TYPE_WINDOWS && g:my_vim_type == s:VIM_TYPE_NEOVIM
-  let g:loaded_python_provider = 0
-  let s:python3_path = 'C:\Python36\python.exe'
-  if executable(s:python3_path)
-    let g:python3_host_prog = s:python3_path
+" Python36 を読む
+if g:my_os_type == s:OS_TYPE_WINDOWS
+  if g:my_vim_type == s:VIM_TYPE_NEOVIM
+    let g:loaded_python_provider = 0
+    let s:python3_path = 'C:\Python36\python.exe'
+    if executable(s:python3_path)
+      let g:python3_host_prog = s:python3_path
+    endif
+  endif
+  if g:my_vim_type == s:VIM_TYPE_VIM
+    set pythonthreedll=C:\Python36\python36.dll
   endif
 endif
 
@@ -267,11 +272,6 @@ command! MyTagbarReload call MyTagbarReload()
 
 " カラースキームを設定する
 colorscheme apprentice
-
-" Python3の設定をする
-if g:my_os_type == s:OS_TYPE_WINDOWS && g:my_vim_type == s:VIM_TYPE_VIM
-  set pythonthreedll=C:\Python36\python36.dll
-endif
 
 if g:my_gui_type == s:GUI_TYPE_RUNNING
   " プリント時に文字化けしたため、これを回避するために追加した
