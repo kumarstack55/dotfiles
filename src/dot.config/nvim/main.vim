@@ -450,7 +450,7 @@ let g:lightline = {
   \ 'active': {
   \   'left': [ [ 'paste' ], [ 'fugitive', 'filename' ] ],
   \   'right': [
-  \     ['fileformat', 'filetype'], ['percent'],
+  \     ['filetype', 'fileformat'], ['percent'],
   \     ['fileencoding', 'lineinfo']
   \   ]
   \ },
@@ -462,10 +462,16 @@ let g:lightline = {
   \   'filetype': 'LightLineFiletype',
   \   'fileformat': 'LightLineFileformat',
   \   'lineinfo': 'LightLineLineinfo',
+  \   'percent': 'LightLinePercent',
   \ },
   \ 'separator': { 'left': '' },
   \ 'subseparator': { 'left': '|', 'right': '|' }
   \ }
+
+function! LightLinePercent()
+  return printf('%d/%d:%3d%%',
+        \ line('.'), line('$'), line('.')*100/line('$'))
+endfunction
 
 function! LightLineFugitive()
   if exists("*fugitive#head")
@@ -530,8 +536,8 @@ function! LightLineLineinfo()
     \ (len(signlist) > 2 ? 2 : 0)
 
   return winwidth(0) > 40 ?
-    \ printf("%3d:%2d/%2d", _[1], _[2], width) :
-    \ printf("%d:%-d", _[1], _[2])
+    \ printf("%2d/%2d", _[2], width) :
+    \ printf("%-d", _[2])
 endfunction
 
 "-----------------------------------------
