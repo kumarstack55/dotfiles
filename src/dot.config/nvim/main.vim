@@ -275,6 +275,10 @@ function! MyTagbarReload()
 endfunction
 command! MyTagbarReload call MyTagbarReload()
 
+" すべてのモードでマウスを有効にする
+set mouse=a
+behave mswin
+
 " split,close時、ウィンドウの自動リサイズを行わない
 set noequalalways
 
@@ -328,10 +332,6 @@ endif
 if g:my_gui_type == s:GUI_TYPE_RUNNING
   set clipboard=autoselect
 endif
-
-" すべてのモードでマウスを有効にする
-set mouse=a
-behave mswin
 
 " カーソルの上部または下部で表示するスクリーン行数の最小数を指定する
 set scrolloff=5
