@@ -438,8 +438,8 @@ set laststatus=2 " 常にステータスを表示させる
 let g:lightline = {
   \ 'colorscheme': 'jellybeans',
   \ 'active': {
-  \   'left': [ [ 'paste' ],
-  \             [ 'fugitive', 'filename' ] ]
+  \   'left': [ [ 'paste' ], [ 'fugitive', 'filename' ] ],
+  \   'right': [ ['fileformat', 'filetype'], ['percent'], ['fileencoding', 'lineinfo'] ]
   \ },
   \ 'component_function': {
   \   'fugitive': 'LightLineFugitive',
