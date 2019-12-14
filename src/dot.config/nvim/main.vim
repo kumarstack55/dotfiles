@@ -455,21 +455,21 @@ let g:lightline = {
   \   ]
   \ },
   \ 'component_function': {
-  \   'fugitive': 'LightLineFugitive',
-  \   'readonly': 'LightLineReadonly',
-  \   'modified': 'LightLineModified',
+  \   'fileformat': 'LightLineFileformat',
   \   'filename': 'LightLineFilename',
   \   'filetype': 'LightLineFiletype',
-  \   'fileformat': 'LightLineFileformat',
-  \   'lineinfo': 'LightLineLineinfo',
+  \   'fugitive': 'LightLineFugitive',
+  \   'lineinfo': 'LightLineLineColumnInfo',
+  \   'modified': 'LightLineModified',
   \   'percent': 'LightLinePercent',
+  \   'readonly': 'LightLineReadonly',
   \ },
   \ 'separator': { 'left': '' },
   \ 'subseparator': { 'left': '|', 'right': '|' }
   \ }
 
 function! LightLinePercent()
-  return printf('%d/%d:%3d%%',
+  return printf('L%d/%d:%3d%%',
         \ line('.'), line('$'), line('.')*100/line('$'))
 endfunction
 
@@ -523,9 +523,9 @@ function! LightLineFileformat()
     \ : ''
 endfunction
 
-function! LightLineLineinfo()
+function! LightLineLineColumnInfo()
   " カーソル位置を得る
-  let _ = getpos(".")
+  let p = getpos(".")
 
   " ウィンドウの幅を得る
   redir =>a |exe "sil sign place buffer=".bufnr('')|redir end
@@ -536,8 +536,8 @@ function! LightLineLineinfo()
     \ (len(signlist) > 2 ? 2 : 0)
 
   return winwidth(0) > 40 ?
-    \ printf("%2d/%2d", _[2], width) :
-    \ printf("%-d", _[2])
+    \ printf("C%d/%2d", p[2], width) :
+    \ printf("C%d", p[2])
 endfunction
 
 "-----------------------------------------
