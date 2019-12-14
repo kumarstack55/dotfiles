@@ -275,6 +275,9 @@ function! MyTagbarReload()
 endfunction
 command! MyTagbarReload call MyTagbarReload()
 
+" split,close時、ウィンドウの自動リサイズを行わない
+set noequalalways
+
 " カラースキームを設定する
 colorscheme apprentice
 
@@ -296,9 +299,6 @@ endif
 if g:my_gui_type == s:GUI_TYPE_RUNNING
   set clipboard=autoselect
 endif
-
-" split,close時、ウィンドウの自動リサイズを行わない
-set noequalalways
 
 " ビジュアルベルを無効にする
 set novisualbell
