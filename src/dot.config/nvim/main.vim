@@ -179,21 +179,26 @@ call plug#begin('~/.vim/plugged')
 call plug#end()
 
 " フォントサイズを設定する
-if g:my_gui_type == s:GUI_TYPE_RUNNING
-  if g:my_os_type == s:OS_TYPE_WINDOWS
-    let s:FONT_SIZE_SMALL = 10
-    let s:FONT_SIZE_NORMAL = 12
-    let s:FONT_SIZE_LARGE = 16
-    let s:FONT_SIZE_EXLARGE = 20
-    let s:FONT_SIZE_DEFAULT = s:FONT_SIZE_NORMAL
+if g:my_os_type == s:OS_TYPE_WINDOWS
+  let s:FONT_SIZE_SMALL = 10
+  let s:FONT_SIZE_NORMAL = 12
+  let s:FONT_SIZE_LARGE = 16
+  let s:FONT_SIZE_EXLARGE = 20
+  let s:FONT_SIZE_DEFAULT = s:FONT_SIZE_NORMAL
+
+  " nvim-qt はフォント設定が可能だが、
+  " nvim-qt と nvim を区別する手段がない
+  " そこで nvim であればファンクション MySetGuiFont を定義する
+  if g:my_gui_type == s:GUI_TYPE_RUNNING ||
+        \ g:my_vim_type == s:VIM_TYPE_NEOVIM
     function! s:MySetGuiFont(font_size)
       let &guifont = 'Cica:h' . a:font_size . ':cSHIFTJIS:qDRAFT'
     endfunction
-    command! MyFontSizeSmall call s:MySetGuiFont(s:FONT_SIZE_SMALL)
-    command! MyFontSizeNormal call s:MySetGuiFont(s:FONT_SIZE_NORMAL)
-    command! MyFontSizeLarge call s:MySetGuiFont(s:FONT_SIZE_LARGE)
-    command! MyFontSizeExLarge call s:MySetGuiFont(s:FONT_SIZE_EXLARGE)
   endif
+  command! MyFontSizeSmall call s:MySetGuiFont(s:FONT_SIZE_SMALL)
+  command! MyFontSizeNormal call s:MySetGuiFont(s:FONT_SIZE_NORMAL)
+  command! MyFontSizeLarge call s:MySetGuiFont(s:FONT_SIZE_LARGE)
+  command! MyFontSizeExLarge call s:MySetGuiFont(s:FONT_SIZE_EXLARGE)
 endif
 
 " インデントガイドが無効か確認する
@@ -275,7 +280,7 @@ colorscheme apprentice
 
 if g:my_gui_type == s:GUI_TYPE_RUNNING
   " プリント時に文字化けしたため、これを回避するために追加した
-  call s:MySetGuiFont(s:FONT_SIZE_DEFAULT)
+  MyFontSizeNormal
 
   " ツールバーを非表示にする
   set guioptions-=T
