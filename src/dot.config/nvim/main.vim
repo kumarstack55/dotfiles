@@ -450,8 +450,8 @@ let g:lightline = {
   \ 'active': {
   \   'left': [ [ 'paste' ], [ 'fugitive', 'filename' ] ],
   \   'right': [
-  \     ['filetype', 'fileformat'], ['percent'],
-  \     ['fileencoding', 'lineinfo']
+  \     ['filetype', 'fileencoding', 'fileformat'], ['percent'],
+  \     ['lineinfo']
   \   ]
   \ },
   \ 'component_function': {
