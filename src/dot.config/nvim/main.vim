@@ -291,10 +291,14 @@ set number
 " カラースキームを設定する
 colorscheme apprentice
 
-if g:my_gui_type == s:GUI_TYPE_RUNNING
-  " プリント時に文字化けしたため、これを回避するために追加した
+if g:my_gui_type == s:GUI_TYPE_RUNNING ||
+      \ g:my_vim_type == s:VIM_TYPE_NEOVIM
+  " フォントサイズを設定する
+  " また、プリント時に文字化けを回避するために追加した
   MyFontSizeNormal
+endif
 
+if g:my_gui_type == s:GUI_TYPE_RUNNING
   " ツールバーを非表示にする
   set guioptions-=T
 
@@ -413,7 +417,8 @@ set encoding=utf8    " vim内で使うエンコーディングを指定する
 set ambiwidth=double " East Asian Width Class Ambiguous を2文字幅で扱う
 
 if g:enable_devicons
-  if g:my_os_type == s:OS_TYPE_WINDOWS && g:my_gui_type == s:GUI_TYPE_RUNNING
+  if g:my_os_type == s:OS_TYPE_WINDOWS &&
+        \ g:my_gui_type == s:GUI_TYPE_RUNNING
     " gvim で encoding=utf8 かつメニューを日本語で表示させると、
     " 表示がおかしくなるため、英語表示とする。
     set langmenu=en_US
@@ -439,7 +444,10 @@ let g:lightline = {
   \ 'colorscheme': 'jellybeans',
   \ 'active': {
   \   'left': [ [ 'paste' ], [ 'fugitive', 'filename' ] ],
-  \   'right': [ ['fileformat', 'filetype'], ['percent'], ['fileencoding', 'lineinfo'] ]
+  \   'right': [
+  \     ['fileformat', 'filetype'], ['percent'],
+  \     ['fileencoding', 'lineinfo']
+  \   ]
   \ },
   \ 'component_function': {
   \   'fugitive': 'LightLineFugitive',
