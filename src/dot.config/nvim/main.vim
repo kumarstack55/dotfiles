@@ -194,10 +194,14 @@ if g:my_os_type == s:OS_TYPE_WINDOWS
   " nvim-qt はフォント設定が可能だが、
   " nvim-qt と nvim を区別する手段がない
   " そこで nvim であればファンクション MySetGuiFont を定義する
-  if g:my_gui_type == s:GUI_TYPE_RUNNING ||
-        \ g:my_vim_type == s:VIM_TYPE_NEOVIM
+  if g:my_gui_type == s:GUI_TYPE_RUNNING
     function! s:MySetGuiFont(font_size)
       let &guifont = 'Cica:h' . a:font_size . ':cSHIFTJIS:qDRAFT'
+    endfunction
+  endif
+  if g:my_vim_type == s:VIM_TYPE_NEOVIM
+    function! s:MySetGuiFont(font_size)
+      let &guifont = 'Cica:h' . a:font_size
     endfunction
   endif
   command! MyFontSizeSmall call s:MySetGuiFont(s:FONT_SIZE_SMALL)
