@@ -317,6 +317,9 @@ autocmd BufReadPost *
 " modelineの認識は先頭と末尾の行数を指定する
 set modelines=5
 
+" カーソルの上部または下部で表示するスクリーン行数の最小数を指定する
+set scrolloff=5
+
 " カーソル行を表示させる
 set cursorline
 
@@ -332,9 +335,6 @@ endif
 if g:my_gui_type == s:GUI_TYPE_RUNNING
   set clipboard=autoselect
 endif
-
-" カーソルの上部または下部で表示するスクリーン行数の最小数を指定する
-set scrolloff=5
 
 " 検索キーワードを強調させない
 set nohlsearch
