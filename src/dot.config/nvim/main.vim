@@ -372,6 +372,8 @@ else
   vnoremap l l"*ygv
   vnoremap ^ ^"*ygv
   vnoremap $ $"*ygv
+  vnoremap n n"*ygv
+  vnoremap N N"*ygv
   vnoremap gg gg"*ygv
   vnoremap G G"*ygv
 
