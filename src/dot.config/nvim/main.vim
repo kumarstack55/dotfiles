@@ -165,38 +165,44 @@ call plug#begin('~/.vim/plugged')
   Plug 'honza/vim-snippets'
 
   " A vim plugin for syntax highlighting Ansible's common filetypes
-  Plug 'pearofducks/ansible-vim',
-        \ { 'for': 'yaml.ansible' }
+  Plug 'pearofducks/ansible-vim', { 'for': 'yaml.ansible' }
 
+  " vim-markdown を利用するために必要なプラグイン
+  " vim-markdown より前である必要がある
   " Vim script for text filtering and alignment
   Plug 'godlygeek/tabular'
 
   " Syntax highlighting, matching rules and mappings
   " for the original Markdown and extensions.
-  Plug 'plasticboy/vim-markdown',
-        \ { 'for': ['md', 'text'] }
+  Plug 'plasticboy/vim-markdown', { 'for': ['md', 'text'] }
 
   " It provides nice syntax coloring and indenting
   " for Windows PowerShell (.ps1 files, and also includes
   " a filetype plugin so Vim can autodetect your PS1 scripts.
-  Plug 'PProvost/vim-ps1',
-        \ { 'for': ['ps1', 'psm'] }
+  Plug 'PProvost/vim-ps1', { 'for': ['ps1', 'psm'] }
 
   " A simple script to help create ctags-compatible tag files
   " for the sections within a reStructuredText document.
   Plug 'jszakmeister/rst2ctags'
 
   " Flake8 plugin for Vim
-  Plug 'nvie/vim-flake8',
-        \ { 'for': 'python' }
+  Plug 'nvie/vim-flake8', { 'for': 'python' }
 
   if has('python3')
     " UltiSnips is the ultimate solution for snippets in Vim.
     Plug 'SirVer/ultisnips'
   endif
 
+  if g:my_vim_version == s:VIM_VERSION_8
+    " Check syntax in Vim asynchronously and fix files,
+    " with Language Server Protocol (LSP) support
+    Plug 'dense-analysis/ale'
+
+    " ALE indicator for the lightline vim plugin
+    Plug 'maximbaz/lightline-ale'
+  endif
+
   " VimDevIcons - Add Icons to Your Plugins
-  "Plug 'ryanoasis/vim-devicons'
   if g:enable_devicons
     Plug 'ryanoasis/vim-devicons'
   endif
