@@ -496,16 +496,21 @@ endif
 " lightline.vim
 
 set laststatus=2 " 常にステータスを表示させる
-let g:lightline = {
-  \ 'colorscheme': 'jellybeans',
-  \ 'active': {
-  \   'left': [ [ 'paste' ], [ 'fugitive', 'filename' ] ],
-  \   'right': [
-  \     ['filetype', 'fileencoding', 'fileformat'], ['percent'],
-  \     ['lineinfo']
-  \   ]
-  \ },
-  \ 'component_function': {
+let g:lightline = {}
+let g:lightline.colorscheme = 'jellybeans'
+let g:lightline.separator = { 'left': '' }
+let g:lightline.subseparator = { 'left': '|', 'right': '|' }
+let g:lightline.active = {}
+let g:lightline.active.left = [
+  \   [ 'paste' ],
+  \   [ 'fugitive', 'filename' ]
+  \ ]
+let g:lightline.active.right = [
+  \   ['filetype', 'fileencoding', 'fileformat'],
+  \   ['percent'],
+  \   ['lineinfo']
+  \ ]
+let g:lightline.component_function = {
   \   'fileformat': 'LightLineFileformat',
   \   'filename': 'LightLineFilename',
   \   'filetype': 'LightLineFiletype',
@@ -514,10 +519,29 @@ let g:lightline = {
   \   'modified': 'LightLineModified',
   \   'percent': 'LightLinePercent',
   \   'readonly': 'LightLineReadonly',
-  \ },
-  \ 'separator': { 'left': '' },
-  \ 'subseparator': { 'left': '|', 'right': '|' }
   \ }
+if g:my_vim_version == s:VIM_VERSION_8
+  let g:lightline.component_expand = {
+    \   'linter_checking': 'lightline#ale#checking',
+    \   'linter_warnings': 'lightline#ale#warnings',
+    \   'linter_errors': 'lightline#ale#errors',
+    \   'linter_ok': 'lightline#ale#ok',
+    \ }
+  let g:lightline.component_type = {
+    \   'linter_checking': 'left',
+    \   'linter_warnings': 'warning',
+    \   'linter_errors': 'error',
+    \   'linter_ok': 'left',
+    \ }
+  call insert(g:lightline.active.right[0], 'linter_ok', 0)
+  call insert(g:lightline.active.right[0], 'linter_warnings', 0)
+  call insert(g:lightline.active.right[0], 'linter_errors', 0)
+  call insert(g:lightline.active.right[0], 'linter_checking', 0)
+  let g:lightline#ale#indicator_checking = "\uf110"
+  let g:lightline#ale#indicator_warnings = "\uf071"
+  let g:lightline#ale#indicator_errors = "\uf05e"
+  let g:lightline#ale#indicator_ok = "\uf00c"
+endif
 
 function! LightLinePercent()
   return printf('L%d/%d:%3d%%',
