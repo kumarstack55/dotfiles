@@ -12,8 +12,8 @@ TODO
 
 ### Windows
 
-Win + R
-powershell.exe
+* Win + R
+* powershell.exe
 
 ```
 cd $HOME
