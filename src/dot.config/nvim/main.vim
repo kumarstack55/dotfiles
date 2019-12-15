@@ -557,13 +557,13 @@ endfunction
 function! LightLineFileformat()
   return
     \ winwidth(0) > 70 ? (
-    \ &fileformat . (
-    \     g:enable_devicons ?
-    \     ' ' . WebDevIconsGetFileFormatSymbol()
-    \     : ''
-    \   )
-    \ ) :
-    \ (g:enable_devicons ? WebDevIconsGetFileFormatSymbol() : '')
+    \   &fileformat . (
+    \       g:enable_devicons ?
+    \       ' ' . WebDevIconsGetFileFormatSymbol()
+    \       : ''
+    \     )
+    \   ) :
+    \   (g:enable_devicons ? WebDevIconsGetFileFormatSymbol() : '')
 endfunction
 
 function! LightLineLineColumnInfo()
