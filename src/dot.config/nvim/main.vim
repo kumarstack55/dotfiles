@@ -41,6 +41,21 @@ function! s:MyGetVimType()
 endfunction
 let g:my_vim_type = s:MyGetVimType()
 
+" vim のバージョンを判定する
+let s:VIM_VERSION_UNKNOWN = 0
+let s:VIM_VERSION_7 = 'version eq 7'
+let s:VIM_VERSION_8 = 'version ge 8'
+function! s:MyGetVimVersion()
+  if v:version >= 800
+    return s:VIM_VERSION_8
+  endif
+  if v:version >= 700
+    return s:VIM_VERSION_7
+  endif
+  return s:VIM_VERSION_UNKNOWN
+endfunction
+let g:my_vim_version = s:MyGetVimVersion()
+
 " 有効にする機能を決定する
 function! s:MyGetEnableDevIcons()
   if g:my_vim_type == s:VIM_TYPE_NEOVIM
