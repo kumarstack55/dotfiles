@@ -365,20 +365,14 @@ else
   nnoremap v v"*ygv
   nnoremap V V"*ygv
 
-  " 選択範囲を変えたらコピーする
-  vnoremap h h"*ygv
-  vnoremap j j"*ygv
-  vnoremap k k"*ygv
-  vnoremap l l"*ygv
-  vnoremap ^ ^"*ygv
-  vnoremap $ $"*ygv
-  vnoremap n n"*ygv
-  vnoremap N N"*ygv
-  vnoremap gg gg"*ygv
-  vnoremap G G"*ygv
-
   " マウス左ボタンを離したらクリップボードにコピーする
   vnoremap <LeftRelease> "*ygv
+
+  " 選択範囲を変えたらコピーする
+  " カーソル移動のたびにコピーして選択しなおすのは高コストで、
+  " 選択の行数が多いときに使用に耐えない
+  " そこで、VISUALをやめるときだけコピーを行う
+  vnoremap <ESC> "*ygv<ESC>
 endif
 
 " 検索キーワードを強調させない
