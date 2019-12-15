@@ -631,8 +631,11 @@ endfunction
 "-----------------------------------------
 " vim-indent-guides
 
-let g:indent_guides_enable_on_vim_startup = 1 " vim起動時に有効にする
-let g:indent_guides_guide_size = 1            " サイズは1文字で表現する
+" vim起動時に有効にする
+let g:indent_guides_enable_on_vim_startup = 1
+
+" サイズは1文字で表現する
+let g:indent_guides_guide_size = 1
 
 " nerdtree は除外する
 let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
@@ -722,11 +725,23 @@ let g:UltiSnipsEditSplit="vertical"
 "-----------------------------------------
 " ansible-vim
 
+" INSERTで２つの改行の後でインデントを完全にリセットする
 let g:ansible_unindent_after_newline = 1
+
+" key=value フォーマットを強調して表示する
 let g:ansible_attribute_highlight = "ob"
+
+" name 属性を強調して表示する
 let g:ansible_name_highlight = 'd'
+
+" register, always_run, 等のキーワードを強調して表示する
 let g:ansible_extra_keywords_highlight = 1
+
+" include, until, 等のキーワードの強調を変える
 let g:ansible_normal_keywords_highlight = 'Constant'
+
+" with_ 等キーワードの強調を変える
+let g:ansible_with_keywords_highlight = 'Constant'
 
 " 初期設定:
 " $ sudo yum install epel-release -y
@@ -744,9 +759,13 @@ let g:ansible_normal_keywords_highlight = 'Constant'
 "-----------------------------------------
 " vim-markdown
 
+" folding 設定を無効にする
 let g:vim_markdown_folding_disabled = 1
+
+"let g:vim_markdown_new_list_item_indent = 0
+
+" 箇条項目の点を挿入しない
 let g:vim_markdown_auto_insert_bullets = 0
-let g:vim_markdown_new_list_item_indent = 0
 
 "-----------------------------------------
 " tagbar
