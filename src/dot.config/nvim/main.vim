@@ -350,10 +350,34 @@ if v:version > 704
 endif
 
 " 選択範囲をクリップボードに送る
+" VISUALで選択した範囲は即座にクリップボードに送られる
 if g:my_gui_type == s:GUI_TYPE_RUNNING
   set clipboard=autoselect
+else
+  " autoselect を設定できない環境では
+  " autoselect に近い設定を noremap で設定しておく
+
+  " S-Insert でクリップボードをペーストする
+  nnoremap <S-Insert> "*p
+  inoremap <S-Insert> <ESC>"*pi
+
+  " 選択を開始したらコピーする
+  nnoremap v v"*ygv
+  nnoremap V V"*ygv
+
+  " 選択範囲を変えたらコピーする
+  vnoremap h h"*ygv
+  vnoremap j j"*ygv
+  vnoremap k k"*ygv
+  vnoremap l l"*ygv
+  vnoremap ^ ^"*ygv
+  vnoremap $ $"*ygv
+  vnoremap gg gg"*ygv
+  vnoremap G G"*ygv
+
+  " マウス左ボタンを離したらクリップボードにコピーする
+  vnoremap <LeftRelease> "*ygv
 endif
-inoremap <S-Insert> "*p
 
 " 検索キーワードを強調させない
 set nohlsearch
