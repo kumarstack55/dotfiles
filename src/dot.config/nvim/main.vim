@@ -801,6 +801,20 @@ let g:flake8_show_in_gutter=1
 "   --> flake8 が実行され QuickFix に表示される
 
 "-----------------------------------------
+" dense-analysis/ale
+
+if g:my_vim_version == s:VIM_VERSION_8
+  " https://github.com/dense-analysis
+  " 5.ix. How can I navigate between errors quickly?
+  nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+  nmap <silent> <C-j> <Plug>(ale_next_wrap)
+endif
+
+" 使い方:
+" $ nvim x.py
+" :ALEInfo
+
+"-----------------------------------------
 
 " ファイルタイプを定める
 
