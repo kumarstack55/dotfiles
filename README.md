@@ -31,3 +31,7 @@ exit
 ```
 nvim -c "try | PlugInstall | finally | qall! | endtry"
 ```
+
+```
+pip install --user flake8
+```
