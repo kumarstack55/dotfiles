@@ -74,14 +74,14 @@ endif
 
 " プラグインをインストールする
 call plug#begin('~/.vim/plugged')
-  " a universal set of defaults that (hopefully) everyone can agree on.
+  " a universal set of defaults that (hopefully)
+  " everyone can agree on.
   Plug 'tpope/vim-sensible'
 
   " NERDTree
   Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
-  " vim-nerdtree-syntax-highlight - This adds syntax for nerdtree on most
-  " common file extensions.
+  " This adds syntax for nerdtree on most common file extensions.
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight',
         \ { 'on': 'NERDTreeToggle' }
 
@@ -106,20 +106,24 @@ call plug#begin('~/.vim/plugged')
   " vimfiler - A powerful file explorer implemented in Vim script
   Plug 'Shougo/vimfiler.vim'
 
-  " The unite or unite.vim plug-in can search and display information from
-  " arbitrary sources like files, buffers, recently used files or registers.
+  " The unite or unite.vim plug-in can search and display
+  " information from arbitrary sources like files, buffers,
+  " recently used files or registers.
   Plug 'Shougo/unite.vim'
 
-  " ctrlp.vim - Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
+  " ctrlp.vim - Full path fuzzy file, buffer, mru, tag, ...
+  " finder for Vim.
   Plug 'ctrlpvim/ctrlp.vim'
 
   " BufExplorer Plugin for Vim
   Plug 'jlanzarotta/bufexplorer'
 
-  " lightline.vim - A light and configurable statusline/tabline plugin for Vim
+  " lightline.vim - A light and configurable statusline/tabline
+  " plugin for Vim
   Plug 'itchyny/lightline.vim'
 
-  " Indent Guides is a plugin for visually displaying indent levels in Vim.
+  " Indent Guides is a plugin for visually displaying indent
+  " levels in Vim.
   Plug 'nathanaelkane/vim-indent-guides'
 
   " quickrun.txt - Run a command and show its result quickly.
@@ -130,18 +134,19 @@ call plug#begin('~/.vim/plugged')
     Plug 'jpalardy/vim-slime'
   endif
 
-  " Surround.vim is all about "surroundings": parentheses, brackets, quotes,
-  " XML tags, and more.
+  " Surround.vim is all about "surroundings": parentheses,
+  " brackets, quotes, XML tags, and more.
   Plug 'tpope/vim-surround'
 
   " fugitive.vim may very well be the best Git wrapper of all time.
   Plug 'tpope/vim-fugitive'
 
-  " A Vim plugin which shows a git diff in the gutter (sign column and
-  " stages/undoes hunks.
+  " A Vim plugin which shows a git diff in the gutter
+  " (sign column and stages/undoes hunks.
   Plug 'airblade/vim-gitgutter'
 
-  " This repository contains snippets files for various programming languages.
+  " This repository contains snippets files for various
+  " programming languages.
   Plug 'honza/vim-snippets'
 
   " A vim plugin for syntax highlighting Ansible's common filetypes
@@ -151,19 +156,19 @@ call plug#begin('~/.vim/plugged')
   " Vim script for text filtering and alignment
   Plug 'godlygeek/tabular'
 
-  " Syntax highlighting, matching rules and mappings for the original Markdown
-  " and extensions.
+  " Syntax highlighting, matching rules and mappings
+  " for the original Markdown and extensions.
   Plug 'plasticboy/vim-markdown',
         \ { 'for': ['md', 'text'] }
 
-  " It provides nice syntax coloring and indenting for Windows PowerShell
-  " (.ps1 files, and also includes a filetype plugin so Vim can autodetect
-  " your PS1 scripts.
+  " It provides nice syntax coloring and indenting
+  " for Windows PowerShell (.ps1 files, and also includes
+  " a filetype plugin so Vim can autodetect your PS1 scripts.
   Plug 'PProvost/vim-ps1',
         \ { 'for': ['ps1', 'psm'] }
 
-  " A simple script to help create ctags-compatible tag files for the
-  " sections within a reStructuredText document.
+  " A simple script to help create ctags-compatible tag files
+  " for the sections within a reStructuredText document.
   Plug 'jszakmeister/rst2ctags'
 
   " Flake8 plugin for Vim
