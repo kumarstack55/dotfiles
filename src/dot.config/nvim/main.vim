@@ -385,10 +385,6 @@ else
   nnoremap <S-Insert> "*p
   inoremap <S-Insert> <ESC>"*pi
 
-  " 選択を開始したらコピーする
-  nnoremap v v"*ygv
-  nnoremap V V"*ygv
-
   " マウス左ボタンを離したらクリップボードにコピーする
   vnoremap <LeftRelease> "*ygv
 
