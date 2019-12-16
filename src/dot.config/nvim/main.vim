@@ -373,6 +373,9 @@ endif
 " 選択範囲をクリップボードに送る
 " VISUALで選択した範囲は即座にクリップボードに送られる
 if g:my_gui_type == s:GUI_TYPE_RUNNING
+  " 選択範囲をコピーする
+  set guioptions+=a
+elseif g:my_vim_type == s:VIM_TYPE_VIM
   set clipboard=autoselect
 else
   " autoselect を設定できない環境では
