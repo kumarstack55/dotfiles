@@ -536,10 +536,12 @@ if g:my_vim_version == s:VIM_VERSION_8
   call insert(g:lightline.active.right[0], 'linter_warnings', 0)
   call insert(g:lightline.active.right[0], 'linter_errors', 0)
   call insert(g:lightline.active.right[0], 'linter_checking', 0)
-  let g:lightline#ale#indicator_checking = "\uf110"
-  let g:lightline#ale#indicator_warnings = "\uf071"
-  let g:lightline#ale#indicator_errors = "\uf05e"
-  let g:lightline#ale#indicator_ok = "\uf00c"
+  if g:enable_devicons
+    let g:lightline#ale#indicator_checking = "\uf110"
+    let g:lightline#ale#indicator_warnings = "\uf071"
+    let g:lightline#ale#indicator_errors = "\uf05e"
+    let g:lightline#ale#indicator_ok = "\uf00c"
+  endif
 endif
 
 function! LightLinePercent()
