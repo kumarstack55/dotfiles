@@ -271,7 +271,7 @@ command! MyTabstopWidth4 call s:MySetLocalTabstop(4)
 " Markdown編集用の設定にする
 function! MyFileTypeMarkdown()
   setlocal filetype=markdown
-  call s:MySetLocalTabstop(3)
+  call s:MySetLocalTabstop(4)
 endfunction
 command! MyFileTypeMarkdown call MyFileTypeMarkdown()
 
