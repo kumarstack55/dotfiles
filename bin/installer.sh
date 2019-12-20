@@ -64,7 +64,7 @@ main() {
 
   # なければコピーする
   cp -nv $src_dir/dot.gitconfig_local.inc \
-    $HOME/.gitconfig_local.inc
+    $HOME/.gitconfig_local.inc || true
 
   # なければリンクする
   if [[ -f $HOME/.ssh/config ]]; then
