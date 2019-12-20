@@ -191,6 +191,10 @@ call plug#begin('~/.vim/plugged')
   if has('python3')
     " UltiSnips is the ultimate solution for snippets in Vim.
     Plug 'SirVer/ultisnips'
+  elseif has('python')
+    " ultisnips の Python2 サポートは 3.1 まで。
+    " 3.2 以降は Python2 では動作しない。
+    Plug 'SirVer/ultisnips', { 'tag': '3.1' }
   endif
 
   if g:my_vim_version == s:VIM_VERSION_8
