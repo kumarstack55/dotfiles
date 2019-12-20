@@ -772,7 +772,7 @@ let g:vim_markdown_auto_insert_bullets = 0
 " tagbar
 
 let g:tagbar_type_ansible = {
-  \   'ctagstype' : 'ansible',
+  \   'ctagstype' : 'yaml',
   \   'kinds' : [ 't:tasks' ],
   \   'sort' : 0
   \ }

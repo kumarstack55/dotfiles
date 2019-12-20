@@ -1,6 +1,6 @@
---langdef=ansible
---langmap=ansible:.yml
---regex-ansible=/^\s*- name:(.*)/\1/t,task/
+--langdef=yaml
+--langmap=yaml:.yml
+--regex-yaml=/^\s*- name:(.*)/\1/t,task/
 
 --langdef=powershell
 --langmap=powershell:.ps1.psm1
