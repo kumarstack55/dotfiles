@@ -636,6 +636,9 @@ endfunction
 "-----------------------------------------
 " vim-indent-guides
 
+" バックグラウンドdarkにしてインデントガイドの色をよくする
+set background=dark
+
 " vim起動時に有効にする
 let g:indent_guides_enable_on_vim_startup = 1
 
