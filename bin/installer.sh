@@ -72,6 +72,14 @@ main() {
   fi
 
   # $HOME/.bashrc_local.sh を読むようにする
+  if [[ ! -f $HOME/.bash_profile ]]; then
+    (
+      echo "#!bash"
+      echo 'if [[ -f ~/.bashrc ]]; then'
+      echo '  source ~/.bashrc'
+      echo 'fi'
+    ) | tee $HOME/.bash_profile
+  fi
   line='source $HOME/.bashrc_local.sh'
   if ! grep -Fq "$line" $HOME/.bashrc; then
     cp -afv $HOME/.bashrc{,-$(date '+%F.%s')}
