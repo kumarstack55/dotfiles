@@ -165,7 +165,11 @@ call plug#begin('~/.vim/plugged')
   Plug 'honza/vim-snippets'
 
   " A vim plugin for syntax highlighting Ansible's common filetypes
-  Plug 'pearofducks/ansible-vim', { 'for': 'yaml.ansible' }
+  Plug 'pearofducks/ansible-vim',
+        \ {
+          \ 'for': 'yaml.ansible',
+          \ 'do': 'which ansible && ./UltiSnips/generate.sh'
+        \ }
 
   " vim-markdown を利用するために必要なプラグイン
   " vim-markdown より前である必要がある
