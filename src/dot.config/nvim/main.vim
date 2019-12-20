@@ -210,7 +210,7 @@ call plug#begin('~/.vim/plugged')
 call plug#end()
 
 " フォントサイズを設定する
-if g:my_os_type == s:OS_TYPE_WINDOWS
+if g:my_os_type == s:OS_TYPE_WINDOWS || g:my_vim_type == s:VIM_TYPE_NEOVIM
   let s:FONT_SIZE_SMALL = 10
   let s:FONT_SIZE_NORMAL = 12
   let s:FONT_SIZE_LARGE = 16
