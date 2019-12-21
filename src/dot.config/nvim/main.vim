@@ -509,36 +509,36 @@ let g:lightline.separator = { 'left': '' }
 let g:lightline.subseparator = { 'left': '|', 'right': '|' }
 let g:lightline.active = {}
 let g:lightline.active.left = [
-  \   [ 'paste' ],
-  \   [ 'fugitive', 'filename' ]
+    \ [ 'paste' ],
+    \ [ 'fugitive', 'filename' ]
   \ ]
 let g:lightline.active.right = [
-  \   ['filetype', 'fileencoding', 'fileformat'],
-  \   ['percent'],
-  \   ['lineinfo']
+    \ ['filetype', 'fileencoding', 'fileformat'],
+    \ ['percent'],
+    \ ['lineinfo']
   \ ]
 let g:lightline.component_function = {
-  \   'fileformat': 'LightLineFileformat',
-  \   'filename': 'LightLineFilename',
-  \   'filetype': 'LightLineFiletype',
-  \   'fugitive': 'LightLineFugitive',
-  \   'lineinfo': 'LightLineLineColumnInfo',
-  \   'modified': 'LightLineModified',
-  \   'percent': 'LightLinePercent',
-  \   'readonly': 'LightLineReadonly',
+    \ 'fileformat': 'LightLineFileformat',
+    \ 'filename': 'LightLineFilename',
+    \ 'filetype': 'LightLineFiletype',
+    \ 'fugitive': 'LightLineFugitive',
+    \ 'lineinfo': 'LightLineLineColumnInfo',
+    \ 'modified': 'LightLineModified',
+    \ 'percent': 'LightLinePercent',
+    \ 'readonly': 'LightLineReadonly',
   \ }
 if g:my_vim_version == s:VIM_VERSION_8
   let g:lightline.component_expand = {
-    \   'linter_checking': 'lightline#ale#checking',
-    \   'linter_warnings': 'lightline#ale#warnings',
-    \   'linter_errors': 'lightline#ale#errors',
-    \   'linter_ok': 'lightline#ale#ok',
+      \ 'linter_checking': 'lightline#ale#checking',
+      \ 'linter_warnings': 'lightline#ale#warnings',
+      \ 'linter_errors': 'lightline#ale#errors',
+      \ 'linter_ok': 'lightline#ale#ok',
     \ }
   let g:lightline.component_type = {
-    \   'linter_checking': 'left',
-    \   'linter_warnings': 'warning',
-    \   'linter_errors': 'error',
-    \   'linter_ok': 'left',
+      \ 'linter_checking': 'left',
+      \ 'linter_warnings': 'warning',
+      \ 'linter_errors': 'error',
+      \ 'linter_ok': 'left',
     \ }
   call insert(g:lightline.active.right[0], 'linter_ok', 0)
   call insert(g:lightline.active.right[0], 'linter_warnings', 0)
@@ -596,28 +596,28 @@ endfunction
 function! LightLineFiletype()
   return
     \ winwidth(0) > 70 ? (
-    \   strlen(&filetype) ?
-    \     &filetype . (
-    \       g:enable_devicons ?
-    \         ' ' . WebDevIconsGetFileTypeSymbol() : ''
-    \     ) : 'no ft'
-    \   ) :
-    \   strlen(&filetype) ? (
-    \     g:enable_devicons ?
-    \       WebDevIconsGetFileTypeSymbol() : ''
-    \     ) : ''
+      \ strlen(&filetype) ?
+        \ &filetype . (
+          \ g:enable_devicons ?
+            \ ' ' . WebDevIconsGetFileTypeSymbol() : ''
+        \ ) : 'no ft'
+      \ ) :
+      \ strlen(&filetype) ? (
+        \ g:enable_devicons ?
+          \ WebDevIconsGetFileTypeSymbol() : ''
+      \ ) : ''
 endfunction
 
 function! LightLineFileformat()
   return
     \ winwidth(0) > 70 ? (
-    \   &fileformat . (
-    \       g:enable_devicons ?
-    \       ' ' . WebDevIconsGetFileFormatSymbol()
-    \       : ''
-    \     )
-    \   ) :
-    \   (g:enable_devicons ? WebDevIconsGetFileFormatSymbol() : '')
+      \ &fileformat . (
+          \ g:enable_devicons ?
+          \ ' ' . WebDevIconsGetFileFormatSymbol()
+          \ : ''
+        \ )
+      \ ) :
+      \ (g:enable_devicons ? WebDevIconsGetFileFormatSymbol() : '')
 endfunction
 
 function! LightLineLineColumnInfo()
