@@ -19,17 +19,6 @@ function! s:MyGetOsType()
 endfunction
 let g:my_os_type = s:MyGetOsType()
 
-" GUI/CLIを判定する
-let s:GUI_TYPE_RUNNING = 'running'
-let s:GUI_TYPE_NOT_RUNNING = 'not running'
-function! s:MyGetOsType()
-  if has('gui_running')
-    return s:GUI_TYPE_RUNNING
-  endif
-  return s:GUI_TYPE_NOT_RUNNING
-endfunction
-let g:my_gui_type = s:MyGetOsType()
-
 " vim, neovimを判定する
 let s:VIM_TYPE_NEOVIM = 'NeoVim'
 let s:VIM_TYPE_VIM = 'Vim'
@@ -40,6 +29,22 @@ function! s:MyGetVimType()
   return s:VIM_TYPE_VIM
 endfunction
 let g:my_vim_type = s:MyGetVimType()
+
+" GUI/CLIを判定する
+let s:GUI_TYPE_UNKNOWN = 0
+let s:GUI_TYPE_RUNNING = 'running'
+let s:GUI_TYPE_NOT_RUNNING = 'not running'
+function! s:MyGetOsType()
+  if g:my_vim_type == s:VIM_TYPE_NEOVIM
+    return s:GUI_TYPE_UNKNOWN
+  endif
+  if has('gui_running')
+    return s:GUI_TYPE_RUNNING
+  else
+    return s:GUI_TYPE_NOT_RUNNING
+  endif
+endfunction
+let g:my_gui_type = s:MyGetOsType()
 
 " vim のバージョンを判定する
 let s:VIM_VERSION_UNKNOWN = 0
@@ -218,7 +223,8 @@ call plug#begin('~/.vim/plugged')
 call plug#end()
 
 " フォントサイズを設定する
-if g:my_os_type == s:OS_TYPE_WINDOWS || g:my_vim_type == s:VIM_TYPE_NEOVIM
+if g:my_gui_type == s:GUI_TYPE_RUNNING
+      \ || g:my_gui_type == s:GUI_TYPE_UNKNOWN
   let s:FONT_SIZE_SMALL = 10
   let s:FONT_SIZE_NORMAL = 12
   let s:FONT_SIZE_LARGE = 16
