@@ -789,42 +789,42 @@ let g:vim_markdown_auto_insert_bullets = 0
 " tagbar
 
 let g:tagbar_type_ansible = {
-  \   'ctagstype' : 'yaml',
-  \   'kinds' : [ 't:tasks' ],
-  \   'sort' : 0
+    \ 'ctagstype' : 'yaml',
+    \ 'kinds' : [ 't:tasks' ],
+    \ 'sort' : 0
   \ }
 
 let g:tagbar_type_rst = {
-  \   'ctagstype': 'rst',
-  \   'ctagsbin' : '~/.vim/plugged/rst2ctags/rst2ctags.py',
-  \   'ctagsargs' : '-f - --sort=yes',
-  \   'kinds' : [ 's:sections', 'i:images' ],
-  \   'sro' : '|',
-  \   'kind2scope' : { 's' : 'section' },
-  \   'sort': 0,
+    \ 'ctagstype': 'rst',
+    \ 'ctagsbin' : '~/.vim/plugged/rst2ctags/rst2ctags.py',
+    \ 'ctagsargs' : '-f - --sort=yes',
+    \ 'kinds' : [ 's:sections', 'i:images' ],
+    \ 'sro' : '|',
+    \ 'kind2scope' : { 's' : 'section' },
+    \ 'sort': 0,
   \ }
 
 let g:tagbar_type_ps1 = {
-  \   'ctagstype': 'powershell',
-  \   'kinds': [
-  \     'f:function',
-  \     'i:filter',
-  \     'a:alias'
-  \   ]
+    \ 'ctagstype': 'powershell',
+    \ 'kinds': [
+      \ 'f:function',
+      \ 'i:filter',
+      \ 'a:alias'
+    \ ]
   \ }
 
 let g:tagbar_type_markdown = {
-  \   'ctagstype': 'markdown',
-  \   'ctagsargs': '-f - --sort=yes',
-  \   'kinds' : [
-  \     's:sections',
-  \     'i:images'
-  \   ],
-  \   'sro' : '|',
-  \   'kind2scope' : {
-  \     's' : 'section',
-  \   },
-  \   'sort': 0,
+    \ 'ctagstype': 'markdown',
+    \ 'ctagsargs': '-f - --sort=yes',
+    \ 'kinds' : [
+      \ 's:sections',
+      \ 'i:images'
+    \ ],
+    \ 'sro' : '|',
+    \ 'kind2scope' : {
+      \ 's' : 'section',
+    \ },
+    \ 'sort': 0,
   \ }
 
 let g:tagbar_type_go = {
