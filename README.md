@@ -2,13 +2,20 @@
 
 ## インストール
 
-### macOS
+### macOS / EL7
 
-TODO
+```bash
+cd $HOME
+git clone git@github.com:kumarstack55/dotfiles.git
 
-### EL7
+cd $HOME/dotfiles/bin
+./installer.sh -h
+./installer.sh
 
-TODO
+nvim -c "try | PlugInstall | finally | qall! | endtry"
+
+pip install --user flake8
+```
 
 ### Windows
 
