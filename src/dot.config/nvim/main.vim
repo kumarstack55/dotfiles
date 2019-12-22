@@ -118,7 +118,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'kana/vim-submode'
 
   " Vim plugin that displays tags in a window, ordered by scope
-  Plug 'majutsushi/tagbar', { 'for': ['markdown', 'python', 'rst'] }
+  Plug 'majutsushi/tagbar',
+        \ { 'for': ['markdown', 'python', 'rst', 'go'] }
 
   " Generate ctags-compatible tags files for Markdown documents.
   Plug 'jszakmeister/markdown2ctags', { 'for': ['markdown'] }
