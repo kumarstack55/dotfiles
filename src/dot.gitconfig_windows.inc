@@ -7,3 +7,4 @@
 	status=false
 	branch=false
 	interactive=false
+# vim:ft=conf:
