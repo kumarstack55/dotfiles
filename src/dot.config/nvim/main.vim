@@ -329,6 +329,11 @@ command! MyTagbarReload call MyTagbarReload()
 set mouse=a
 behave mswin
 
+" 変化が見られないのでしばらくしたら消す
+" ESC応答を早めるため、キーコードシーケンス完了の待ち時間を短くする
+" https://qiita.com/k2nakamura/items/fa19806a041d0429fc9f
+"set ttimeoutlen=10
+
 " split,close時、ウィンドウの自動リサイズを行わない
 set noequalalways
 
