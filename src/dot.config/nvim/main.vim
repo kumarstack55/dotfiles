@@ -821,6 +821,7 @@ let g:tagbar_type_ps1 = {
 
 let g:tagbar_type_markdown = {
     \ 'ctagstype': 'markdown',
+    \ 'ctagsbin' : '~/.vim/plugged/markdown2ctags/markdown2ctags.py',
     \ 'ctagsargs': '-f - --sort=yes',
     \ 'kinds' : [
       \ 's:sections',
