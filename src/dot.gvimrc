@@ -1,2 +1,2 @@
 " $HOME/.gvimrc
-source $HOME/.config/nvim/main.vim
+let g:gvimrc_loaded = 1
