@@ -31,20 +31,15 @@ endfunction
 let g:my_vim_type = s:MyGetVimType()
 
 " GUI/CLIを判定する
-let s:GUI_TYPE_UNKNOWN = 0
 let s:GUI_TYPE_RUNNING = 'running'
 let s:GUI_TYPE_NOT_RUNNING = 'not running'
-function! s:MyGetOsType()
-  if g:my_vim_type == s:VIM_TYPE_NEOVIM
-    return s:GUI_TYPE_UNKNOWN
-  endif
-  if has('gui_running')
+function! s:MyGetGuiType()
+  if exists('g:ginit_loaded') || has('gui_running')
     return s:GUI_TYPE_RUNNING
-  else
-    return s:GUI_TYPE_NOT_RUNNING
   endif
+  return s:GUI_TYPE_NOT_RUNNING
 endfunction
-let g:my_gui_type = s:MyGetOsType()
+let g:my_gui_type = s:MyGetGuiType()
 
 " vim のバージョンを判定する
 let s:VIM_VERSION_UNKNOWN = 0
@@ -225,7 +220,6 @@ call plug#end()
 
 " フォントサイズを設定する
 if g:my_gui_type == s:GUI_TYPE_RUNNING
-      \ || g:my_gui_type == s:GUI_TYPE_UNKNOWN
   let s:FONT_SIZE_SMALL = 10
   let s:FONT_SIZE_NORMAL = 12
   let s:FONT_SIZE_LARGE = 16
@@ -346,8 +340,7 @@ set number
 " カラースキームを設定する
 colorscheme apprentice
 
-if g:my_gui_type == s:GUI_TYPE_RUNNING ||
-      \ g:my_vim_type == s:VIM_TYPE_NEOVIM
+if g:my_gui_type == s:GUI_TYPE_RUNNING
   " フォントサイズを設定する
   " また、プリント時に文字化けを回避するために追加した
   MyFontSizeNormal
