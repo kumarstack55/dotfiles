@@ -883,15 +883,15 @@ endif
 
 " ファイルタイプを定める
 
-au BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
-au BufRead,BufNewFile */ansible/*.yml set filetype=yaml.ansible
+autocmd BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
+autocmd BufRead,BufNewFile */ansible/*.yml set filetype=yaml.ansible
 
-au BufRead,BufNewFile */dot.gitconfig_local.inc set filetype=conf
-au BufRead,BufNewFile */.gitconfig_local.inc set filetype=conf
+autocmd BufRead,BufNewFile */dot.gitconfig_local.inc set filetype=conf
+autocmd BufRead,BufNewFile */.gitconfig_local.inc set filetype=conf
 
-au BufRead,BufNewFile *.md set filetype=markdown
+autocmd BufRead,BufNewFile *.md set filetype=markdown
 
 " vim-ps1 と ultimate を同時に利用するとコメント行の shift に失敗する。
 " 回避するに smartindent を無効にする。
-au BufRead,BufNewFile *.ps1 setlocal nosmartindent
-au BufRead,BufNewFile *.psm setlocal nosmartindent
+autocmd BufRead,BufNewFile *.ps1 setlocal nosmartindent
+autocmd BufRead,BufNewFile *.psm setlocal nosmartindent
