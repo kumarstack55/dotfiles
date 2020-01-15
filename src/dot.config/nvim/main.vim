@@ -630,12 +630,16 @@ function! LightLineLineColumnInfo()
   let p = getpos(".")
 
   " ウィンドウの幅を得る
-  redir =>a |exe "sil sign place buffer=".bufnr('')|redir end
-  let signlist = split(a, '\n')
-  let width = winwidth(0) -
-    \ ((&number||&relativenumber) ?  &numberwidth : 0) -
-    \ &foldcolumn -
-    \ (len(signlist) > 2 ? 2 : 0)
+  " https://stackoverflow.com/questions/26315925/
+  let signs = execute(printf('sign place buffer=%d', bufnr('')))
+  let signlist = split(signs, '\n')
+  let signwidth = len(signlist) >= 2 ? 2 : 0
+
+  let lineno_cols = max([&numberwidth, strlen(line('$')) + 1])
+  let width = winwidth(0)
+    \ - signwidth
+    \ - &foldcolumn
+    \ - ((&number || &relativenumber) ? lineno_cols : 0)
 
   return winwidth(0) > 40 ?
     \ printf("C%d/%2d", p[2], width) :
