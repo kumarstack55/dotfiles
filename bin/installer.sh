@@ -5,6 +5,7 @@ function usage_exit() {
   echo "usage: $0 [options...]"
   echo ""
   echo "options:"
+  echo "  -h, --help: display this help and exit"
   exit 1
 }
 
@@ -98,6 +99,8 @@ while getopts -- "-:h" opt; do
   case $opt in
     -)
       case $OPTARG in
+        help)
+          usage_exit;;
         *)
           echo_err_badopt $OPTARG
           usage_exit
