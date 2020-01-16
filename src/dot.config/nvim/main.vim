@@ -631,7 +631,11 @@ function! LightLineLineColumnInfo()
 
   " ウィンドウの幅を得る
   " https://stackoverflow.com/questions/26315925/
-  let signs = execute(printf('sign place buffer=%d', bufnr('')))
+  if g:my_vim_version == s:VIM_VERSION_7
+    redir =>signs |exe "sil sign place buffer=".bufnr('')|redir end
+  else
+    let signs = execute(printf('sign place buffer=%d', bufnr('')))
+  endif
   let signlist = split(signs, '\n')
   let signwidth = len(signlist) >= 2 ? 2 : 0
 
