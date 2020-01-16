@@ -1,13 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
-declare option_vim7=no
-
 function usage_exit() {
   echo "usage: $0 [options...]"
   echo ""
   echo "options:"
-  echo "  --vim7: use vim7"
   exit 1
 }
 
@@ -101,7 +98,6 @@ while getopts -- "-:h" opt; do
   case $opt in
     -)
       case $OPTARG in
-        vim7) option_vim7=yes;;
         *)
           echo_err_badopt $OPTARG
           usage_exit
