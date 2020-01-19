@@ -23,7 +23,8 @@ jobs:
         type vim
         sudo apt-get install neovim
         type nvim
-        ls -l
         cd ./bin
-        ls -l
+        type python
+        python --version
         ./installer.sh
+        nvim -c "try | PlugInstall | finally | qall! | endtry"
