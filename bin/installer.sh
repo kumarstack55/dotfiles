@@ -52,7 +52,18 @@ main() {
   ln -fsv $src_dir/dot.gitconfig $HOME/.gitconfig
   ln -fsv $src_dir/dot.gvimrc $HOME/.gvimrc
   ln -fsv $src_dir/dot.inputrc $HOME/.inputrc
-  ln -fsv $src_dir/dot.tmux.conf $HOME/.tmux.conf
+  if type tmux 2>&1 >>/dev/null; then
+    tmux -V \
+      | while read -r tmux version; do
+          if echo $version | grep -q '^1'; then
+            ln -fsv $src_dir/dot.tmux.conf.le_v2.1 $HOME/.tmux.conf
+          elif echo $version | grep -q '^2\.0'; then
+            ln -fsv $src_dir/dot.tmux.conf.le_v2.1 $HOME/.tmux.conf
+          else
+            ln -fsv $src_dir/dot.tmux.conf $HOME/.tmux.conf
+          fi
+        done
+  fi
   ln -fsv $src_dir/dot.vimrc $HOME/.vimrc
 
   # ディレクトリのシンボリックリンクを上書きで作る
