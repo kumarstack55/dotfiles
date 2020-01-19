@@ -12,6 +12,12 @@ cd $HOME/dotfiles/bin
 ./installer.sh -h
 ./installer.sh
 
+# for python2
+pip install --user neovim
+
+# for python3
+pip install --user pynvim
+
 nvim -c "try | PlugInstall | finally | qall! | endtry"
 
 pip install --user flake8
@@ -36,9 +42,13 @@ exit
 ```
 
 ```
-nvim -c "try | PlugInstall | finally | qall! | endtry"
-```
+# for python2
+pip install --user neovim
 
-```
+# for python3
+pip install --user pynvim
+
+nvim -c "try | PlugInstall | finally | qall! | endtry"
+
 pip install --user flake8
 ```
