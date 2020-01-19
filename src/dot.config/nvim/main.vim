@@ -512,14 +512,10 @@ command! MyDevIconsEnable call s:MyDevIconsEnable()
 
 function! s:MyDevIconsDisable()
   let g:enable_devicons = 0
-  let s:indicator_warnings =
-    \ get(g:, 'lightline#ale#indicator_warnings', 'W: ')
-  let s:indicator_errors =
-    \ get(g:, 'lightline#ale#indicator_errors', 'E: ')
-  let s:indicator_ok =
-    \ get(g:, 'lightline#ale#indicator_ok', 'OK')
-  let s:indicator_checking =
-    \ get(g:, 'lightline#ale#indicator_checking', 'Linting...')
+  let g:lightline#ale#indicator_warnings = 'W: '
+  let g:lightline#ale#indicator_errors = 'E: '
+  let g:lightline#ale#indicator_ok = 'OK'
+  let g:lightline#ale#indicator_checking = 'Linting...'
 endfunction
 command! MyDevIconsDisable call s:MyDevIconsDisable()
 
