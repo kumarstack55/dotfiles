@@ -321,7 +321,10 @@ command! MyTagbarReload call MyTagbarReload()
 
 " すべてのモードでマウスを有効にする
 set mouse=a
-behave mswin
+
+" Visualモード時に１文字選択する
+" マウス動作をxtermライクのプロファイルにする
+behave xterm
 
 " 変化が見られないのでしばらくしたら消す
 " ESC応答を早めるため、キーコードシーケンス完了の待ち時間を短くする
