@@ -9,6 +9,15 @@ function usage_exit() {
   exit 1
 }
 
+function echo_err() {
+  echo "$1" 1>&2
+}
+
+function echo_err_badopt() {
+  local optarg="$1"
+  echo_err "$0: illegal option -- $optarg"
+}
+
 # https://stackoverflow.com/questions/3915040
 function abspath() {
   # generate absolute path from relative path
