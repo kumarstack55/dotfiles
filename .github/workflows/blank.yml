@@ -12,6 +12,7 @@ jobs:
 
     - name: Run a multi-line script
       run: |
+        set -x
         uname -n
         whoami
         pwd
