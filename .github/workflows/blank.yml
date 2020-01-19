@@ -13,6 +13,7 @@ jobs:
     - name: Run a multi-line script
       run: |
         uname -n
+        whoami
         pwd
         ls
         type bash
@@ -20,6 +21,7 @@ jobs:
         type tmux
         type vi
         type vim
+        sudo apt-get install neovim
         type nvim
         cd $HOME/dotfiles/bin
         ./installer.sh
