@@ -24,6 +24,6 @@ jobs:
         sudo apt-get install neovim
         type nvim
         ls -l
-        cd ./dotfiles/bin
+        cd ./bin
         ls -l
         ./installer.sh
