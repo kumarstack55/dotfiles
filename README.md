@@ -19,6 +19,7 @@ pip install --user neovim
 pip install --user pynvim
 
 nvim -c "try | PlugInstall | finally | qall! | endtry"
+#nvim -u "~/.config/nvim/plugins.vim" -c "try | PlugInstall | finally | qall! | endtry"
 
 pip install --user flake8
 ```
@@ -48,7 +49,7 @@ pip install --user neovim
 # for python3
 pip install --user pynvim
 
-nvim -c "try | PlugInstall | finally | qall! | endtry"
+nvim -u "~/AppData/Local/nvim/plugins.vim" -c "try | PlugInstall | finally | qall! | endtry"
 
 pip install --user flake8
 ```

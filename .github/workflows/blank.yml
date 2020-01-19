@@ -28,4 +28,4 @@ jobs:
         type python
         python --version
         ./installer.sh
-        nvim -c "try | PlugInstall | finally | qall! | endtry"
+        nvim -u "~/.config/nvim/plugins.vim" -c "try | PlugInstall | finally | qall! | endtry"

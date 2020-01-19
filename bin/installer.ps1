@@ -35,6 +35,7 @@ Function Main {
   New-Item -Force -Path $HOME -Name _gvimrc -Value $SrcDir/dot.gvimrc -ItemType SymbolicLink
   New-Item -Force -Path $HOME -Name .vimrc -Value $SrcDir/dot.vimrc -ItemType SymbolicLink
   New-Item -Force -Path $HOME/AppData/Local/nvim -Name init.vim -Value $SrcDir/dot.config/nvim/init_windows.vim -ItemType SymbolicLink
+  New-Item -Force -Path $HOME/AppData/Local/nvim -Name plugins.vim -Value $SrcDir/dot.config/nvim/plugins.vim -ItemType SymbolicLink
 
   # ディレクトリのシンボリックリンクを上書きで作る
   if (Test-Path $HOME/.vim) { (Get-Item $HOME/.vim).Delete() }
