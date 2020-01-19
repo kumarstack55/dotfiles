@@ -501,6 +501,38 @@ if g:enable_devicons
   let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 endif
 
+function! s:MyDevIconsEnable()
+  let g:enable_devicons = 1
+  let g:lightline#ale#indicator_checking = "\uf110"
+  let g:lightline#ale#indicator_warnings = "\uf071"
+  let g:lightline#ale#indicator_errors = "\uf05e"
+  let g:lightline#ale#indicator_ok = "\uf00c"
+endfunction
+command! MyDevIconsEnable call s:MyDevIconsEnable()
+
+function! s:MyDevIconsDisable()
+  let g:enable_devicons = 0
+  let s:indicator_warnings =
+    \ get(g:, 'lightline#ale#indicator_warnings', 'W: ')
+  let s:indicator_errors =
+    \ get(g:, 'lightline#ale#indicator_errors', 'E: ')
+  let s:indicator_ok =
+    \ get(g:, 'lightline#ale#indicator_ok', 'OK')
+  let s:indicator_checking =
+    \ get(g:, 'lightline#ale#indicator_checking', 'Linting...')
+endfunction
+command! MyDevIconsDisable call s:MyDevIconsDisable()
+
+function! s:MyDevIconsToggle()
+  let g:enable_devicons = !g:enable_devicons
+  if g:enable_devicons
+    call s:MyDevIconsEnable()
+  else
+    call s:MyDevIconsDisable()
+  endif
+endfunction
+command! MyDevIconsToggle call s:MyDevIconsToggle()
+
 "-----------------------------------------
 " bufexplorer
 
@@ -553,10 +585,9 @@ if g:my_vim_version == s:VIM_VERSION_8
   call insert(g:lightline.active.right[0], 'linter_errors', 0)
   call insert(g:lightline.active.right[0], 'linter_checking', 0)
   if g:enable_devicons
-    let g:lightline#ale#indicator_checking = "\uf110"
-    let g:lightline#ale#indicator_warnings = "\uf071"
-    let g:lightline#ale#indicator_errors = "\uf05e"
-    let g:lightline#ale#indicator_ok = "\uf00c"
+    call s:MyDevIconsEnable()
+  else
+    call s:MyDevIconsDisable()
   endif
 endif
 
