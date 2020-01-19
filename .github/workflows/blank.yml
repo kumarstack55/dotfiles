@@ -15,3 +15,11 @@ jobs:
         uname -n
         pwd
         ls
+        type bash
+        bash --version
+        type tmux
+        type vi
+        type vim
+        type nvim
+        cd $HOME/dotfiles/bin
+        ./installer.sh
