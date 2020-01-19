@@ -1,89 +1,89 @@
 " $HOME/.config/nvim/main.vim
 
 " OSを判定する
-let s:OS_TYPE_UNKNOWN = 0
-let s:OS_TYPE_WINDOWS = 'Windows'
-let s:OS_TYPE_LINUX = 'Linux'
-let s:OS_TYPE_MAC_OS = 'macOS'
-function! s:MyGetOsType()
+let g:OS_TYPE_UNKNOWN = 0
+let g:OS_TYPE_WINDOWS = 'Windows'
+let g:OS_TYPE_LINUX = 'Linux'
+let g:OS_TYPE_MAC_OS = 'macOS'
+function! g:MyGetOsType()
   if has('win32')
-    return s:OS_TYPE_WINDOWS
+    return g:OS_TYPE_WINDOWS
   endif
   let uname = substitute(system('uname'), '\n', '', '')
   if uname == 'Linux'
-    return s:OS_TYPE_LINUX
+    return g:OS_TYPE_LINUX
   elseif uname == 'Darwin'
-    return s:OS_TYPE_MAC_OS
+    return g:OS_TYPE_MAC_OS
   endif
-  return s:OS_TYPE_UNKNOWN
+  return g:OS_TYPE_UNKNOWN
 endfunction
-let g:my_os_type = s:MyGetOsType()
+let g:my_os_type = g:MyGetOsType()
 
 " vim, neovimを判定する
-let s:VIM_TYPE_NEOVIM = 'NeoVim'
-let s:VIM_TYPE_VIM = 'Vim'
-function! s:MyGetVimType()
+let g:VIM_TYPE_NEOVIM = 'NeoVim'
+let g:VIM_TYPE_VIM = 'Vim'
+function! g:MyGetVimType()
   if has('nvim')
-    return s:VIM_TYPE_NEOVIM
+    return g:VIM_TYPE_NEOVIM
   endif
-  return s:VIM_TYPE_VIM
+  return g:VIM_TYPE_VIM
 endfunction
-let g:my_vim_type = s:MyGetVimType()
+let g:my_vim_type = g:MyGetVimType()
 
 " GUI/CLIを判定する
-let s:GUI_TYPE_RUNNING = 'running'
-let s:GUI_TYPE_NOT_RUNNING = 'not running'
-function! s:MyGetGuiType()
+let g:GUI_TYPE_RUNNING = 'running'
+let g:GUI_TYPE_NOT_RUNNING = 'not running'
+function! g:MyGetGuiType()
   if exists('g:ginit_loaded') || has('gui_running')
-    return s:GUI_TYPE_RUNNING
+    return g:GUI_TYPE_RUNNING
   endif
-  return s:GUI_TYPE_NOT_RUNNING
+  return g:GUI_TYPE_NOT_RUNNING
 endfunction
-let g:my_gui_type = s:MyGetGuiType()
+let g:my_gui_type = g:MyGetGuiType()
 
 " vim のバージョンを判定する
-let s:VIM_VERSION_UNKNOWN = 0
-let s:VIM_VERSION_7 = 'version eq 7'
-let s:VIM_VERSION_8 = 'version ge 8'
-function! s:MyGetVimVersion()
+let g:VIM_VERSION_UNKNOWN = 0
+let g:VIM_VERSION_7 = 'version eq 7'
+let g:VIM_VERSION_8 = 'version ge 8'
+function! g:MyGetVimVersion()
   if v:version >= 800
-    return s:VIM_VERSION_8
+    return g:VIM_VERSION_8
   endif
   if v:version >= 700
-    return s:VIM_VERSION_7
+    return g:VIM_VERSION_7
   endif
-  return s:VIM_VERSION_UNKNOWN
+  return g:VIM_VERSION_UNKNOWN
 endfunction
-let g:my_vim_version = s:MyGetVimVersion()
+let g:my_vim_version = g:MyGetVimVersion()
 
 " 有効にする機能を決定する
-function! s:MyGetEnableDevIcons()
-  if g:my_vim_type == s:VIM_TYPE_NEOVIM
+function! g:MyGetEnableDevIcons()
+  if g:my_vim_type == g:VIM_TYPE_NEOVIM
     return 1
   endif
-  if g:my_gui_type == s:GUI_TYPE_RUNNING
+  if g:my_gui_type == g:GUI_TYPE_RUNNING
     return 1
   endif
   return 0
 endfunction
-let g:enable_devicons = s:MyGetEnableDevIcons()
+let g:enable_devicons = g:MyGetEnableDevIcons()
 
 " Python36 を読む
-if g:my_os_type == s:OS_TYPE_WINDOWS
-  if g:my_vim_type == s:VIM_TYPE_NEOVIM
+if g:my_os_type == g:OS_TYPE_WINDOWS
+  if g:my_vim_type == g:VIM_TYPE_NEOVIM
     let g:loaded_python_provider = 0
-    let s:python3_path = 'C:\Python36\python.exe'
-    if executable(s:python3_path)
-      let g:python3_host_prog = s:python3_path
+    let g:python3_path = 'C:\Python36\python.exe'
+    if executable(g:python3_path)
+      let g:python3_host_prog = g:python3_path
     endif
   endif
-  if g:my_vim_type == s:VIM_TYPE_VIM
+  if g:my_vim_type == g:VIM_TYPE_VIM
     set pythonthreedll=C:\Python36\python36.dll
   endif
 endif
 
 " Python2 は読まない
-if g:my_os_type == s:OS_TYPE_WINDOWS && g:my_vim_type == s:VIM_TYPE_NEOVIM
+if g:my_os_type == g:OS_TYPE_WINDOWS && g:my_vim_type == g:VIM_TYPE_NEOVIM
   let g:loaded_python_provider = 0
 endif
 
@@ -146,7 +146,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'thinca/vim-quickrun'
 
   " A vim plugin to give you some slime.
-  if g:my_os_type == s:OS_TYPE_LINUX
+  if g:my_os_type == g:OS_TYPE_LINUX
     Plug 'jpalardy/vim-slime'
   endif
 
@@ -202,7 +202,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'SirVer/ultisnips', { 'tag': '3.1' }
   endif
 
-  if g:my_vim_version == s:VIM_VERSION_8
+  if g:my_vim_version == g:VIM_VERSION_8
     " Check syntax in Vim asynchronously and fix files,
     " with Language Server Protocol (LSP) support
     Plug 'dense-analysis/ale'
@@ -219,46 +219,46 @@ call plug#begin('~/.vim/plugged')
 call plug#end()
 
 " フォントサイズを設定する
-if g:my_gui_type == s:GUI_TYPE_RUNNING
-  let s:FONT_SIZE_SMALL = 10
-  let s:FONT_SIZE_NORMAL = 12
-  let s:FONT_SIZE_LARGE = 16
-  let s:FONT_SIZE_EXLARGE = 20
-  let s:FONT_SIZE_DEFAULT = s:FONT_SIZE_NORMAL
+if g:my_gui_type == g:GUI_TYPE_RUNNING
+  let g:FONT_SIZE_SMALL = 10
+  let g:FONT_SIZE_NORMAL = 12
+  let g:FONT_SIZE_LARGE = 16
+  let g:FONT_SIZE_EXLARGE = 20
+  let g:FONT_SIZE_DEFAULT = g:FONT_SIZE_NORMAL
 
   " nvim-qt はフォント設定が可能だが、
   " nvim-qt と nvim を区別する手段がない
   " そこで nvim であればファンクション MySetGuiFont を定義する
-  if g:my_gui_type == s:GUI_TYPE_RUNNING
-    function! s:MySetGuiFont(font_size)
+  if g:my_gui_type == g:GUI_TYPE_RUNNING
+    function! g:MySetGuiFont(font_size)
       let &guifont = 'Cica:h' . a:font_size . ':cSHIFTJIS:qDRAFT'
     endfunction
   endif
-  if g:my_vim_type == s:VIM_TYPE_NEOVIM
-    function! s:MySetGuiFont(font_size)
+  if g:my_vim_type == g:VIM_TYPE_NEOVIM
+    function! g:MySetGuiFont(font_size)
       let &guifont = 'Cica:h' . a:font_size
     endfunction
   endif
-  command! MyFontSizeSmall call s:MySetGuiFont(s:FONT_SIZE_SMALL)
-  command! MyFontSizeNormal call s:MySetGuiFont(s:FONT_SIZE_NORMAL)
-  command! MyFontSizeLarge call s:MySetGuiFont(s:FONT_SIZE_LARGE)
-  command! MyFontSizeExLarge call s:MySetGuiFont(s:FONT_SIZE_EXLARGE)
+  command! MyFontSizeSmall call g:MySetGuiFont(g:FONT_SIZE_SMALL)
+  command! MyFontSizeNormal call g:MySetGuiFont(g:FONT_SIZE_NORMAL)
+  command! MyFontSizeLarge call g:MySetGuiFont(g:FONT_SIZE_LARGE)
+  command! MyFontSizeExLarge call g:MySetGuiFont(g:FONT_SIZE_EXLARGE)
 endif
 
 " インデントガイドが無効か確認する
-function! s:MyIndentGuideDisabled()
+function! g:MyIndentGuideDisabled()
   call indent_guides#init_matches()
   return empty(w:indent_guides_matches)
 endfunction
 
 " インデントガイドが有効か確認する
-function! s:MyIndentGuideEnabled()
-  return ! s:MyIndentGuideDisabled()
+function! g:MyIndentGuideEnabled()
+  return ! g:MyIndentGuideDisabled()
 endfunction
 
 " インデントガイドをリロードする
 function! MyIndentGuideReload()
-  if s:MyIndentGuideEnabled()
+  if g:MyIndentGuideEnabled()
     IndentGuidesDisable
     IndentGuidesEnable
   endif
@@ -266,28 +266,28 @@ endfunction
 command! MyIndentGuideReload call MyIndentGuideReload()
 
 " タブストップを変える
-function! s:MySetLocalTabstop(ts)
+function! g:MySetLocalTabstop(ts)
   let &l:tabstop = a:ts
   let &l:shiftwidth = a:ts
   let &l:softtabstop = a:ts
   setlocal expandtab
   call MyIndentGuideReload()
 endfunction
-command! MyTabstopWidth2 call s:MySetLocalTabstop(2)
-command! MyTabstopWidth3 call s:MySetLocalTabstop(3)
-command! MyTabstopWidth4 call s:MySetLocalTabstop(4)
+command! MyTabstopWidth2 call g:MySetLocalTabstop(2)
+command! MyTabstopWidth3 call g:MySetLocalTabstop(3)
+command! MyTabstopWidth4 call g:MySetLocalTabstop(4)
 
 " Markdown編集用の設定にする
 function! MyFileTypeMarkdown()
   setlocal filetype=markdown
-  call s:MySetLocalTabstop(4)
+  call g:MySetLocalTabstop(4)
 endfunction
 command! MyFileTypeMarkdown call MyFileTypeMarkdown()
 
 " ReStructuredText用の設定にする
 function! MyFileTypeRst()
   setlocal filetype=rst
-  call s:MySetLocalTabstop(3)
+  call g:MySetLocalTabstop(3)
 endfunction
 command! MyFileTypeRst call MyFileTypeRst()
 
@@ -343,13 +343,13 @@ set number
 " カラースキームを設定する
 colorscheme apprentice
 
-if g:my_gui_type == s:GUI_TYPE_RUNNING
+if g:my_gui_type == g:GUI_TYPE_RUNNING
   " フォントサイズを設定する
   " また、プリント時に文字化けを回避するために追加した
   MyFontSizeNormal
 endif
 
-if g:my_gui_type == s:GUI_TYPE_RUNNING
+if g:my_gui_type == g:GUI_TYPE_RUNNING
   " ツールバーを非表示にする
   set guioptions-=T
 
@@ -388,10 +388,10 @@ endif
 
 " 選択範囲をクリップボードに送る
 " VISUALで選択した範囲は即座にクリップボードに送られる
-if g:my_gui_type == s:GUI_TYPE_RUNNING
+if g:my_gui_type == g:GUI_TYPE_RUNNING
   " 選択範囲をコピーする
   set guioptions+=a
-elseif g:my_vim_type == s:VIM_TYPE_VIM
+elseif g:my_vim_type == g:VIM_TYPE_VIM
   set clipboard=autoselect
 else
   " autoselect を設定できない環境では
@@ -415,7 +415,7 @@ endif
 set nohlsearch
 
 " 置換時に置換結果のプレビューをプレビューウィンドウで表示する
-if g:my_vim_type == s:VIM_TYPE_NEOVIM
+if g:my_vim_type == g:VIM_TYPE_NEOVIM
   set inccommand=split
 endif
 
@@ -426,7 +426,7 @@ set nobackup
 set swapfile
 
 " Windows環境では次のパスにスワップを作る
-if g:my_os_type == s:OS_TYPE_WINDOWS
+if g:my_os_type == g:OS_TYPE_WINDOWS
   set directory=$TEMP,c:\\tmp,c:\\temp,.
 endif
 
@@ -488,8 +488,8 @@ set encoding=utf8    " vim内で使うエンコーディングを指定する
 set ambiwidth=double " East Asian Width Class Ambiguous を2文字幅で扱う
 
 if g:enable_devicons
-  if g:my_os_type == s:OS_TYPE_WINDOWS &&
-        \ g:my_gui_type == s:GUI_TYPE_RUNNING
+  if g:my_os_type == g:OS_TYPE_WINDOWS &&
+        \ g:my_gui_type == g:GUI_TYPE_RUNNING
     " gvim で encoding=utf8 かつメニューを日本語で表示させると、
     " 表示がおかしくなるため、英語表示とする。
     set langmenu=en_US
@@ -501,33 +501,33 @@ if g:enable_devicons
   let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 endif
 
-function! s:MyDevIconsEnable()
+function! g:MyDevIconsEnable()
   let g:enable_devicons = 1
   let g:lightline#ale#indicator_checking = "\uf110"
   let g:lightline#ale#indicator_warnings = "\uf071"
   let g:lightline#ale#indicator_errors = "\uf05e"
   let g:lightline#ale#indicator_ok = "\uf00c"
 endfunction
-command! MyDevIconsEnable call s:MyDevIconsEnable()
+command! MyDevIconsEnable call g:MyDevIconsEnable()
 
-function! s:MyDevIconsDisable()
+function! g:MyDevIconsDisable()
   let g:enable_devicons = 0
   let g:lightline#ale#indicator_warnings = 'W: '
   let g:lightline#ale#indicator_errors = 'E: '
   let g:lightline#ale#indicator_ok = 'OK'
   let g:lightline#ale#indicator_checking = 'Linting...'
 endfunction
-command! MyDevIconsDisable call s:MyDevIconsDisable()
+command! MyDevIconsDisable call g:MyDevIconsDisable()
 
-function! s:MyDevIconsToggle()
+function! g:MyDevIconsToggle()
   let g:enable_devicons = !g:enable_devicons
   if g:enable_devicons
-    call s:MyDevIconsEnable()
+    call g:MyDevIconsEnable()
   else
-    call s:MyDevIconsDisable()
+    call g:MyDevIconsDisable()
   endif
 endfunction
-command! MyDevIconsToggle call s:MyDevIconsToggle()
+command! MyDevIconsToggle call g:MyDevIconsToggle()
 
 "-----------------------------------------
 " bufexplorer
@@ -563,7 +563,7 @@ let g:lightline.component_function = {
     \ 'percent': 'LightLinePercent',
     \ 'readonly': 'LightLineReadonly',
   \ }
-if g:my_vim_version == s:VIM_VERSION_8
+if g:my_vim_version == g:VIM_VERSION_8
   let g:lightline.component_expand = {
       \ 'linter_checking': 'lightline#ale#checking',
       \ 'linter_warnings': 'lightline#ale#warnings',
@@ -581,9 +581,9 @@ if g:my_vim_version == s:VIM_VERSION_8
   call insert(g:lightline.active.right[0], 'linter_errors', 0)
   call insert(g:lightline.active.right[0], 'linter_checking', 0)
   if g:enable_devicons
-    call s:MyDevIconsEnable()
+    call g:MyDevIconsEnable()
   else
-    call s:MyDevIconsDisable()
+    call g:MyDevIconsDisable()
   endif
 endif
 
@@ -661,7 +661,7 @@ function! LightLineLineColumnInfo()
 
   " ウィンドウの幅を得る
   " https://stackoverflow.com/questions/26315925/
-  if g:my_vim_version == s:VIM_VERSION_7
+  if g:my_vim_version == g:VIM_VERSION_7
     redir =>signs |exe "sil sign place buffer=".bufnr('')|redir end
   else
     let signs = execute(printf('sign place buffer=%d', bufnr('')))
@@ -906,7 +906,7 @@ let g:flake8_show_in_gutter=1
 "-----------------------------------------
 " dense-analysis/ale
 
-if g:my_vim_version == s:VIM_VERSION_8
+if g:my_vim_version == g:VIM_VERSION_8
   " https://github.com/dense-analysis
   " 5.ix. How can I navigate between errors quickly?
   nmap <silent> <C-k> <Plug>(ale_previous_wrap)
