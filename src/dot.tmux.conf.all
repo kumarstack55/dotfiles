@@ -1,5 +1,3 @@
-# .tmux.conf
-
 # prefix キーを C-b とする
 set -g prefix C-b
 
@@ -8,10 +6,6 @@ set -g allow-rename off
 
 # tmux がウィンドウ名を変更させない
 set -g automatic-rename off
-
-# TERM環境変数に256色対応の値を指定する
-# https://wiki.archlinux.jp/index.php/Tmux
-set -g default-terminal "tmux-256color"
 
 # window-status の色を指定する
 set -g status-fg "colour245"

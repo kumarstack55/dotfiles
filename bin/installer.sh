@@ -56,14 +56,15 @@ main() {
     tmux -V \
       | while read -r tmux version; do
           if echo $version | grep -q '^1'; then
-            ln -fsv $src_dir/dot.tmux.conf.le_v2.1 $HOME/.tmux.conf
+            ln -fsv $src_dir/dot.tmux.conf.lt_v2.1 $HOME/.tmux.conf
           elif echo $version | grep -q '^2\.0'; then
-            ln -fsv $src_dir/dot.tmux.conf.le_v2.1 $HOME/.tmux.conf
+            ln -fsv $src_dir/dot.tmux.conf.lt_v2.1 $HOME/.tmux.conf
           else
-            ln -fsv $src_dir/dot.tmux.conf $HOME/.tmux.conf
+            ln -fsv $src_dir/dot.tmux.conf.ge_v2.1 $HOME/.tmux.conf
           fi
         done
   fi
+  ln -fsv $src_dir/dot.tmux.conf.all $HOME/.tmux.conf.all
   ln -fsv $src_dir/dot.vimrc $HOME/.vimrc
 
   # ディレクトリのシンボリックリンクを上書きで作る
