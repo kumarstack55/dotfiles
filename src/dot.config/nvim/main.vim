@@ -720,3 +720,5 @@ autocmd BufRead,BufNewFile *.md set filetype=markdown
 " 回避するに smartindent を無効にする。
 autocmd BufRead,BufNewFile *.ps1 setlocal nosmartindent
 autocmd BufRead,BufNewFile *.psm setlocal nosmartindent
+
+autocmd BufRead,BufNewFile *.bats setlocal filetype=sh
