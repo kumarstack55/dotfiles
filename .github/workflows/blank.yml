@@ -29,6 +29,6 @@ jobs:
         python --version
         ./installer.sh
         nvim -u "~/.config/nvim/plugins.vim" -c "try | PlugInstall | finally | qall! | endtry"
-        nvim -c 'execute "normal ixxx\<Esc>:wq a.txt"' -e
+        nvim -c 'execute "normal ixxx\<Esc>:wq a.txt"'
         ls
         cat a.txt
