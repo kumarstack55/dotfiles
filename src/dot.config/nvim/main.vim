@@ -707,14 +707,14 @@ endif
 
 " ファイルタイプを定める
 
-autocmd BufRead,BufNewFile *.yml set indentexpr=""
-autocmd BufRead,BufNewFile */playbooks/*.yml set filetype=yaml.ansible
-autocmd BufRead,BufNewFile */ansible/*.yml set filetype=yaml.ansible
+autocmd BufRead,BufNewFile *.yml setlocal indentexpr=""
+autocmd BufRead,BufNewFile */playbooks/*.yml setlocal filetype=yaml.ansible
+autocmd BufRead,BufNewFile */ansible/*.yml setlocal filetype=yaml.ansible
 
-autocmd BufRead,BufNewFile */dot.gitconfig_local.inc set filetype=conf
-autocmd BufRead,BufNewFile */.gitconfig_local.inc set filetype=conf
+autocmd BufRead,BufNewFile */dot.gitconfig_local.inc setlocal filetype=conf
+autocmd BufRead,BufNewFile */.gitconfig_local.inc setlocal filetype=conf
 
-autocmd BufRead,BufNewFile *.md set filetype=markdown
+autocmd BufRead,BufNewFile *.md setlocal filetype=markdown
 
 " vim-ps1 と ultimate を同時に利用するとコメント行の shift に失敗する。
 " 回避するに smartindent を無効にする。
