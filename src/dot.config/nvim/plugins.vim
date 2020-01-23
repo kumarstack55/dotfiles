@@ -205,7 +205,7 @@ call plug#begin('~/.vim/plugged')
   if g:my_vim_version == g:VIM_VERSION_8
     " Check syntax in Vim asynchronously and fix files,
     " with Language Server Protocol (LSP) support
-    Plug 'dense-analysis/ale'
+    Plug 'dense-analysis/ale', { 'for': ['python', 'sh'] }
 
     " ALE indicator for the lightline vim plugin
     Plug 'maximbaz/lightline-ale'
