@@ -165,6 +165,8 @@ call plug#begin('~/.vim/plugged')
   " programming languages.
   Plug 'honza/vim-snippets'
 
+  Plug 'kumarstack55/vim-snippets-local'
+
   " A vim plugin for syntax highlighting Ansible's common filetypes
   Plug 'pearofducks/ansible-vim',
         \ {
