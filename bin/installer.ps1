@@ -59,7 +59,7 @@ Function Main {
       )
     )
   }
-  if (-not (Test-Path $HOME/.vim/autoload/plug.vim)) {
+  if (-not (Test-Path $HOME/AppData/Local/nvim/autoload/plug.vim)) {
     md -Force ~\AppData\Local\nvim\autoload
     $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     (New-Object Net.WebClient).DownloadFile(
