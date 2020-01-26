@@ -543,6 +543,11 @@ let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
 "-----------------------------------------
 " vim-snippets
 
+function! g:MyUltiSnipsRefreshSnippets()
+  call UltiSnips#RefreshSnippets()
+endfunction
+command! MyUltiSnipsRefreshSnippets call g:MyUltiSnipsRefreshSnippets()
+
 " Trigger configuration. Do not use <tab> if you use
 " https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
