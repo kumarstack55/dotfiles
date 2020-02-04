@@ -17,7 +17,10 @@ _ssh_auth_socket_set() {
   # 無効なリンクを消す
   local symlink
   for symlink in $(find $auth_sock_dir -type l); do
-    [[ ! -e $(readlink $symlink) ]] && rm -fv $symlink
+    local sock=$(readlink $symlink)
+    if ! ss -f unix -l | grep LISTEN | grep -F "${sock}" -q; then
+      rm -fv $symlink
+    fi
   done
 
   # リンクを選ぶ
