@@ -6,6 +6,7 @@ function __my_term_256_colors {
   case "$TERM" in
     "xterm-256color") return 0;;
     "screen-256color") return 0;;
+    "tmux-256color") return 0;;
     *) return 1;;
   esac
 }
