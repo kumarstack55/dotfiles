@@ -1,6 +1,6 @@
 #!bash
 
-_ssh_auth_sockset_set() {
+_ssh_auth_socket_set() {
   local auth_sock_dir="$HOME/.ssh/socks"
 
   if [[ ! -S "$SSH_AUTH_SOCK" ]]; then
@@ -36,4 +36,4 @@ _ssh_auth_sockset_set() {
   export SSH_AUTH_SOCK=$HOME/.ssh/agent
 }
 
-_ssh_auth_sockset_set
+_ssh_auth_socket_set
