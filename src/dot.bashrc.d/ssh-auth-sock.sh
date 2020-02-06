@@ -19,7 +19,7 @@ _ssh_auth_socket_set() {
   for symlink in $(find $auth_sock_dir -type l); do
     local sock=$(readlink $symlink)
     if ! ss -f unix -l | grep LISTEN | grep -F "${sock}" -q; then
-      rm -fv $symlink
+      rm -f $symlink
     fi
   done
 
