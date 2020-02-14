@@ -52,3 +52,9 @@ nvim -u "~/AppData/Local/nvim/plugins.vim" -c "try | PlugInstall | finally | qal
 
 pip install --user flake8
 ```
+
+### Windows + mintty
+
+```
+xterm-256color
+```
