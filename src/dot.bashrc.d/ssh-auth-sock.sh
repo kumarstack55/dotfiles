@@ -1,6 +1,6 @@
 #!bash
 
-_ssh_auth_sockset_set() {
+_ssh_auth_socket_set() {
   local auth_sock_dir="$HOME/.ssh/socks"
 
   if [[ ! -S "$SSH_AUTH_SOCK" ]]; then
@@ -17,7 +17,10 @@ _ssh_auth_sockset_set() {
   # 無効なリンクを消す
   local symlink
   for symlink in $(find $auth_sock_dir -type l); do
-    [[ ! -e $(readlink $symlink) ]] && rm -fv $symlink
+    local sock=$(readlink $symlink)
+    if ! ss -f unix -l | grep LISTEN | grep -F "${sock}" -q; then
+      rm -f $symlink
+    fi
   done
 
   # リンクを選ぶ
@@ -36,4 +39,4 @@ _ssh_auth_sockset_set() {
   export SSH_AUTH_SOCK=$HOME/.ssh/agent
 }
 
-_ssh_auth_sockset_set
+_ssh_auth_socket_set
