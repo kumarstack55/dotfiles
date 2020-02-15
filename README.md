@@ -1,15 +1,12 @@
 # dotfiles
 
-## インストール
-
-### macOS / EL7
+## macOS / EL7 / debian
 
 ```bash
 cd $HOME
 git clone git@github.com:kumarstack55/dotfiles.git
 
 cd $HOME/dotfiles/bin
-./installer.sh -h
 ./installer.sh
 
 # for python2
@@ -23,7 +20,7 @@ nvim -u "~/.config/nvim/plugins.vim" -c "try | PlugInstall | finally | qall! | e
 pip install --user flake8
 ```
 
-### Windows
+## Windows + PowerShell
 
 * Win + R
 * powershell.exe
@@ -53,8 +50,15 @@ nvim -u "~/AppData/Local/nvim/plugins.vim" -c "try | PlugInstall | finally | qal
 pip install --user flake8
 ```
 
-### Windows + mintty
+## Windows + mintty
 
-```
-xterm-256color
+* Options - Text - Font: Cica, 14pt
+* Options - Terminal - Type: xterm-256color
+
+```bash
+cd $HOME
+git clone git@github.com:kumarstack55/dotfiles.git
+
+cd $HOME/dotfiles/bin
+./installer.sh
 ```
