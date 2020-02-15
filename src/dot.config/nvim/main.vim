@@ -105,8 +105,10 @@ function! MyTagbarReload()
 endfunction
 command! MyTagbarReload call MyTagbarReload()
 
-" すべてのモードでマウスを有効にする
-set mouse=a
+if g:my_gui_type == g:GUI_TYPE_RUNNING
+  " すべてのモードでマウスを有効にする
+  set mouse=a
+endif
 
 " Visualモード時に１文字選択する
 " マウス動作をxtermライクのプロファイルにする
