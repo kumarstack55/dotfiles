@@ -61,7 +61,7 @@ main() {
   ln -fsv $src_dir/dot.gitconfig $HOME/.gitconfig
   ln -fsv $src_dir/dot.gvimrc $HOME/.gvimrc
   ln -fsv $src_dir/dot.inputrc $HOME/.inputrc
-  if type tmux 2>&1 >>/dev/null; then
+  if type tmux 2>&1 >/dev/null; then
     tmux -V \
       | while read -r tmux version; do
           if echo $version | grep -q '^1'; then
