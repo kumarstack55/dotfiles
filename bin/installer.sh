@@ -54,6 +54,11 @@ main() {
   mkdir -pv $HOME/.config
   mkdir -m 0700 -pv $HOME/.ssh
 
+  # git-bash で ln はコピーの操作となるが、これをリンク操作にする
+  if [[ $(uname -s) =~ ^MINGW64_NT ]]; then
+    export MSYS=winsymlinks:nativestrict
+  fi
+
   # ファイルのシンボリックリンクを上書きで作る
   ln -fsv $src_dir/dot.bashrc_local.sh $HOME/.bashrc_local.sh
   ln -fsv $src_dir/dot.ctags $HOME/.ctags
@@ -77,16 +82,9 @@ main() {
   ln -fsv $src_dir/dot.vimrc $HOME/.vimrc
 
   # ディレクトリのシンボリックリンクを上書きで作る
-  if [[ $(uname -s) =~ ^MINGW64_NT ]]; then
-    # git-bash で ln はコピーの操作となるが、これをリンク操作にする
-    export MSYS=winsymlinks:nativestrict
-  fi
   ln -fnsv $src_dir/dot.config/nvim $HOME/.config/nvim
   ln -fnsv $src_dir/dot.vim $HOME/.vim
   ln -fnsv $src_dir/dot.bashrc.d $HOME/.bashrc.d
-  if [[ $(uname -s) =~ ^MINGW64_NT ]]; then
-    unset MSYS
-  fi
 
   # なければコピーする
   cp -nv $src_dir/dot.gitconfig_local.inc \
