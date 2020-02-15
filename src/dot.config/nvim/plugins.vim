@@ -223,4 +223,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'ryanoasis/vim-devicons'
   endif
 
+  " (Do)cumentation (Ge)nerator 15+ languages
+  Plug 'kkoomen/vim-doge'
+
 call plug#end()
