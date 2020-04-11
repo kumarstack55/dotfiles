@@ -101,7 +101,11 @@ call plug#begin('~/.vim/plugged')
         \ { 'on': 'NERDTreeToggle' }
 
   " Distraction-free writing in Vim.
-  Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
+  Plug 'junegunn/goyo.vim', { 'for': [
+          \ 'markdown',
+          \ 'rst',
+          \ 'text',
+        \ ] }
 
   " A dark, low-contrast, Vim colorscheme.
   Plug 'romainl/Apprentice'
