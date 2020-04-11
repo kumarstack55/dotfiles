@@ -9,6 +9,7 @@ source $script_dir/funcs.sh
 seq_file=$(mktemp /tmp/tmp.XXXXXXXXXX.txt)
 sh_file=$(mktemp /tmp/tmp.XXXXXXXXXX.sh)
 
+# ファイルタイプ sh で #! 入力後にタブで補完される
 cat <<__SEQ__ | tee $seq_file
 i#!\<Tab>\<Tab>\<Esc>:wq!
 __SEQ__

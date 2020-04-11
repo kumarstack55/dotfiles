@@ -9,6 +9,7 @@ source $script_dir/funcs.sh
 seq_file=$(mktemp /tmp/tmp.XXXXXXXXXX.txt)
 out_file=$(mktemp /tmp/tmp.XXXXXXXXXX.txt)
 
+# NERDTreeToggle で NERDTree のバッファが表示される
 cat <<__SEQ__ | tee $seq_file
 :NERDTreeToggle
 ?
