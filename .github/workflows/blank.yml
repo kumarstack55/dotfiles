@@ -51,3 +51,9 @@ jobs:
         exec 1>&2
         nvim -u "~/.config/nvim/plugins.vim" \
           -c "try | PlugInstall --sync | finally | qall! | endtry"
+
+    - name: Test
+      run: |
+        set -x
+        exec 1>&2
+        pwd
