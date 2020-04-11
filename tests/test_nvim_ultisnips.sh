@@ -14,5 +14,5 @@ i#!\<Tab>\<Tab>\<Esc>:wq!
 __SEQ__
 
 cmd=$(get_normal_cmd "$seq_file")
-nvim -c "execute \"normal ${cmd}\"" "$sh_file"
+nvim -c "execute \"normal ${cmd}\"" "$sh_file" 1>/dev/null 2>/dev/null
 grep -Fq "#!/usr/bin/env bash" "$sh_file"

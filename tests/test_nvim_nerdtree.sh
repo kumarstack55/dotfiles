@@ -17,5 +17,5 @@ cat <<__SEQ__ | tee $seq_file
 __SEQ__
 
 cmd=$(get_normal_cmd "$seq_file")
-nvim -c "execute \"normal ${cmd}\""
+nvim -c "execute \"normal ${cmd}\"" 1>/dev/null 2>/dev/null
 grep -q "^\" NERDTree" "$out_file"
