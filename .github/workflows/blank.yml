@@ -8,6 +8,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Configure git to prevent warnings from being raised in checkout
+      run: |
+        git config --global advice.detachedHead false
+
     - uses: actions/checkout@v1
 
     - name: Run a multi-line script
