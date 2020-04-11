@@ -119,6 +119,7 @@ call plug#begin('~/.vim/plugged')
           \ 'python',
           \ 'rst',
           \ 'snippets',
+          \ 'sh',
         \ ] }
 
   " Generate ctags-compatible tags files for Markdown documents.
