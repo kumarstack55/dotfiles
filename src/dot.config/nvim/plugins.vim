@@ -131,10 +131,6 @@ call plug#begin('~/.vim/plugged')
 
   " vimfiler - A powerful file explorer implemented in Vim script
   Plug 'Shougo/vimfiler.vim'
-
-  " The unite or unite.vim plug-in can search and display
-  " information from arbitrary sources like files, buffers,
-  " recently used files or registers.
   Plug 'Shougo/unite.vim'
 
   " ctrlp.vim - Full path fuzzy file, buffer, mru, tag, ...
