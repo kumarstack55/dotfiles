@@ -32,12 +32,21 @@ jobs:
         type python
         python --version
 
-    - name: Run a multi-line script
-      run: |
+    - name: Install nvim
         set -x
         exec 1>&2
         sudo apt-get install neovim
+
+    - name: Install the dotfiles
+      run: |
+        set -x
+        exec 1>&2
         cd ./bin
         ./installer.sh
+
+    - name: Install the nvim plugins
+      run: |
+        set -x
+        exec 1>&2
         nvim -u "~/.config/nvim/plugins.vim" \
           -c "try | PlugInstall --sync | finally | qall! | endtry"
