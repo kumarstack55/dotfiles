@@ -20,10 +20,11 @@ jobs:
         exec 1>&2
         uname -n
         whoami
-        pwd
-        ls
+        echo $SHELL
         type bash
         bash --version
+        pwd
+        ls
         type tmux
         type vi
         type vim
