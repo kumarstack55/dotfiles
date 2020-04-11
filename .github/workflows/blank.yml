@@ -34,6 +34,7 @@ jobs:
     - name: Run a multi-line script
       run: |
         set -x
+        exec 1>&2
         sudo apt-get install neovim
         cd ./bin
         ./installer.sh
