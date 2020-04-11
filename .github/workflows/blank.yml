@@ -52,11 +52,11 @@ jobs:
         nvim -u "~/.config/nvim/plugins.vim" \
           -c "try | PlugInstall --sync | finally | qall! | endtry"
 
-    - name: Test
+    - name: Run tests
       run: |
         set -x
         exec 1>&2
         pwd
         type python
         python --version
-        ./tests/test_nvim_ultisnips.sh
+        ./tests/run.sh
