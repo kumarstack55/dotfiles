@@ -14,7 +14,7 @@ jobs:
 
     - uses: actions/checkout@v1
 
-    - name: Run a multi-line script
+    - name: Output information about the test environment
       run: |
         set -x
         uname -n
@@ -26,10 +26,14 @@ jobs:
         type tmux
         type vi
         type vim
-        sudo apt-get install neovim
-        type nvim
-        cd ./bin
+        type nvim || true
         type python
         python --version
+
+    - name: Run a multi-line script
+      run: |
+        set -x
+        sudo apt-get install neovim
+        cd ./bin
         ./installer.sh
         nvim -u "~/.config/nvim/plugins.vim" -c "try | PlugInstall | finally | qall! | endtry"
