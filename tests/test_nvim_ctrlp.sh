@@ -9,7 +9,7 @@ source $script_dir/funcs.sh
 seq_file=$(mktemp /tmp/tmp.XXXXXXXXXX.txt)
 out_file=$(mktemp /tmp/tmp.XXXXXXXXXX.txt)
 
-# テキストファイルを編集するとき、Goyoコマンドが定義されている
+# ctrl-p でファイル名を選び、ファイルを編集し、終了する
 cat <<__SEQ__ | tee $seq_file
 \<c-p>LICENSE\<CR>
 :w! ${out_file}
