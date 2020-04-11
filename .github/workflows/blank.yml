@@ -39,4 +39,5 @@ jobs:
         sudo apt-get install neovim
         cd ./bin
         ./installer.sh
-        nvim -u "~/.config/nvim/plugins.vim" -c "try | PlugInstall --sync | finally | qall! | endtry"
+        nvim -u "~/.config/nvim/plugins.vim" \
+          -c "try | PlugInstall --sync | finally | qall! | endtry"
