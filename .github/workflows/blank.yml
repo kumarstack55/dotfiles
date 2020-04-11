@@ -57,3 +57,6 @@ jobs:
         set -x
         exec 1>&2
         pwd
+        type python
+        python --version
+        ./tests/nvim_ultisnips.sh
