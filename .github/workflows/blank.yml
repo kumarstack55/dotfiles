@@ -59,4 +59,4 @@ jobs:
         pwd
         type python
         python --version
-        ./tests/nvim_ultisnips.sh
+        ./tests/test_nvim_ultisnips.sh
