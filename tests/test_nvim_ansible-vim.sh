@@ -20,7 +20,7 @@ cat <<'__SEQ__' | tee "$cmd_file"
 2G$a\<Tab>\<c-j>\<Esc>:wq!
 __SEQ__
 
-cmd=$(get_normal_cmd "$cmd_file")
+cmd=$(my_get_normal_cmd "$cmd_file")
 nvim -c "execute \"normal ${cmd}\"" "$yml_file" \
   1>/dev/null 2>/dev/null
 

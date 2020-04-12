@@ -16,6 +16,6 @@ iprint 1+2\<Esc>:QuickRun python
 :w! ${out_file}
 :qa!
 __SEQ__
-cmd=$(get_normal_cmd "$seq_file")
+cmd=$(my_get_normal_cmd "$seq_file")
 nvim -c "execute \"normal ${cmd}\"" 1>/dev/null 2>/dev/null
 grep -q "^3$" "$out_file"

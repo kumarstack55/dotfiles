@@ -17,6 +17,6 @@ cat <<__SEQ__ | tee $seq_file
 :redir END
 :qa!
 __SEQ__
-cmd=$(get_normal_cmd "$seq_file")
+cmd=$(my_get_normal_cmd "$seq_file")
 nvim -c "execute \"normal ${cmd}\"" $tmp_file 1>/dev/null 2>/dev/null
 grep -q "Goyo" "$out_file"
