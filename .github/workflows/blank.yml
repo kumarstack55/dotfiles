@@ -68,6 +68,12 @@ jobs:
         nvim -u "~/.config/nvim/plugins.vim" \
           -c "try | PlugInstall --sync | finally | qall! | endtry"
 
+    - name: Install pynvim
+      run: |
+        set -x
+        exec 1>&2
+        python2 -m pip install --user --upgrade pynvim
+
     - name: Check the nvim health
       run: |
         set -x
