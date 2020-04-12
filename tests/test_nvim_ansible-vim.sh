@@ -6,16 +6,22 @@ script_path=$(readlink -f $0)
 script_dir=$(dirname $script_path)
 source $script_dir/funcs.sh
 
-seq_file=$(mktemp /tmp/tmp.XXXXXXXXXX.txt)
-sh_file=$(mktemp /tmp/tmp.XXXXXXXXXX.sh)
+cmd_file=$(my_mktemp -h cmd -e txt)
+yml_file=$(my_mktemp -h ansible-vim -e yml)
 
 # ファイルタイプ sh で #! 入力後にタブキーで補完される
-cat <<__SEQ__ | tee $seq_file
-i# vim:set ft=yaml.ansible:
+cat <<__YAML__ | tee "$yml_file"
 - name: x
-fail\<Esc>:set ft=yaml.ansible
-a\<Tab>\<c-j>\<Esc>:wq!
+  fail
+# vim:set ft=yaml.ansible:
+__YAML__
+
+cat <<'__SEQ__' | tee "$cmd_file"
+2G$a\<Tab>\<c-j>\<Esc>:wq!
 __SEQ__
-cmd=$(get_normal_cmd "$seq_file")
-nvim -c "execute \"normal ${cmd}\"" "$sh_file" 1>/dev/null 2>/dev/null
-grep -Fq "msg" "$sh_file"
+
+cmd=$(get_normal_cmd "$cmd_file")
+nvim -c "execute \"normal ${cmd}\"" "$yml_file" \
+  1>/dev/null 2>/dev/null
+
+grep -Fq "msg" "$yml_file"
