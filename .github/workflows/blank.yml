@@ -37,6 +37,7 @@ jobs:
         set -x
         exec 1>&2
         sudo apt-get install neovim
+        nvim --version
 
     - name: Install ansible
       run: |
@@ -47,6 +48,7 @@ jobs:
         sudo apt-add-repository --yes --update \
           ppa:ansible/ansible
         sudo apt install ansible
+        ansible --version
 
     - name: Install the dotfiles
       run: |
