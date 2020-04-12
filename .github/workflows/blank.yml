@@ -31,6 +31,8 @@ jobs:
         type nvim || true
         type python
         python --version
+        type ansible
+        ansible --version
 
     - name: Install nvim
       run: |
