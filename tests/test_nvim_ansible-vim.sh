@@ -6,7 +6,7 @@ script_path=$(readlink -f $0)
 script_dir=$(dirname $script_path)
 source $script_dir/funcs.sh
 
-cmd_file=$(my_mktemp -h cmd -e txt)
+cmd_file=$(my_mktemp -h cmd)
 yml_file=$(my_mktemp -h ansible-vim -e yml)
 
 # ファイルタイプ sh で #! 入力後にタブキーで補完される
