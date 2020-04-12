@@ -26,4 +26,5 @@ cat <<__VIM__ | tee "$vim_script_file"
 :qa!
 __VIM__
 nvim -s "$vim_script_file" "$out_file" 1>/dev/null 2>/dev/null
+cat $out_file
 grep -q "msg" "$out_file"
