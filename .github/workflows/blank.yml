@@ -67,6 +67,8 @@ jobs:
         exec 1>&2
         nvim -u "~/.config/nvim/plugins.vim" \
           -c "try | PlugInstall --sync | finally | qall! | endtry"
+        nvim -c "checkhealth | w! /tmp/checkhealth.txt | qall!"
+        cat /tmp/checkhealth.txt
 
     - name: Run tests
       run: |
