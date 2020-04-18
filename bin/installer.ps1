@@ -1,5 +1,7 @@
 ﻿Set-StrictMode -Version Latest
 
+$ErrorActionPreference = "Stop"
+
 # 管理者権限があるか確認する
 if (-not (([Security.Principal.WindowsPrincipal] `
   [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
