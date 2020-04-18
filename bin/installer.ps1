@@ -83,19 +83,24 @@ Function Main {
         )
     }
 
+    #
+    # プラグインのインストール前にPython用のパッケージが必要であるため、
+    # installer.ps1 ではコメントアウトしている
+    #
+
     # nvimプラグインをインストールする
-    $nvim_exists = $null
-    try {
-        Get-Command nvim | Out-Null
-        $nvim_exists = $True
-    } catch [System.Management.Automation.ActionPreferenceStopException] {
-        $nvim_exists = $False
-    }
-    if ($nvim_exists) {
-        if ($PSCmdlet.ShouldProcess('nvim', 'PlugInstall')) {
-            nvim -u "~/.config/nvim/plugins.vim " -c "try | PlugInstall --sync | finally | qall! | endtry"
-        }
-    }
+    #$nvim_exists = $null
+    #try {
+    #    Get-Command nvim | Out-Null
+    #    $nvim_exists = $True
+    #} catch [System.Management.Automation.ActionPreferenceStopException] {
+    #    $nvim_exists = $False
+    #}
+    #if ($nvim_exists) {
+    #    if ($PSCmdlet.ShouldProcess('nvim', 'PlugInstall')) {
+    #        nvim -u "~/.config/nvim/plugins.vim " -c "try | PlugInstall --sync | finally | qall! | endtry"
+    #    }
+    #}
 }
 
 # ファンクションの中でスクリプトパスを取得できないため、ここで得る
