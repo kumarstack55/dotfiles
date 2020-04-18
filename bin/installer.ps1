@@ -1,4 +1,7 @@
-﻿Set-StrictMode -Version Latest
+﻿[CmdletBinding(SupportsShouldProcess=$True)]
+Param()
+
+Set-StrictMode -Version Latest
 
 $ErrorActionPreference = "Stop"
 
