@@ -22,7 +22,7 @@ Function GetSrcDir {
 }
 
 Function Main {
-  Param($Path)
+  Param([Parameter(Mandatory)]$Path)
 
   # ローカルリポジトリのパスを得る
   $SrcDir = GetSrcDir $Path
@@ -74,6 +74,10 @@ Function Main {
       )
     )
   }
+
+  # nvimプラグインを
+  #nvim -u "~/.config/nvim/plugins.vim " `
+  #  -c "try | PlugInstall --sync | finally | qall! | endtry"
 }
 
 $Path = $MyInvocation.MyCommand.Path
