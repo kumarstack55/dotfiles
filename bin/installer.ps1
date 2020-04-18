@@ -98,7 +98,9 @@ Function Main {
     }
 }
 
+# ファンクションの中でスクリプトパスを取得できないため、ここで得る
 $Path = $MyInvocation.MyCommand.Path
+
 Main $Path
 
 # vm:ts=2 sw=2 sts=2 et ai:
