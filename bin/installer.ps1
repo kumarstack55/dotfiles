@@ -5,14 +5,6 @@ Set-StrictMode -Version Latest
 
 $ErrorActionPreference = "Stop"
 
-# 管理者権限があるか確認する
-if (-not (([Security.Principal.WindowsPrincipal] `
-  [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
-    [Security.Principal.WindowsBuiltInRole] "Administrator"))) {
-  Write-Warning "管理者権限で実行してください"
-  exit 1
-}
-
 Function GetSrcDir {
   Param($Path)
   $Path = Join-Path (Split-Path -Parent $Path) ".."
@@ -21,11 +13,23 @@ Function GetSrcDir {
   return $SrcDir
 }
 
+Function ConfirmAdministratorPriviledge {
+  if (-not (([Security.Principal.WindowsPrincipal] `
+    [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
+      [Security.Principal.WindowsBuiltInRole] "Administrator"))) {
+    Write-Warning "管理者権限で実行してください"
+    exit 1
+  }
+}
+
 Function Main {
   Param([Parameter(Mandatory)]$Path)
 
   # ローカルリポジトリのパスを得る
   $SrcDir = GetSrcDir $Path
+
+  # 管理者権限があるか確認する
+  ConfirmAdministratorPriviledge
 
   # なければディレクトリを作る
   New-Item -Force -Path $HOME -Name .config -ItemType Directory
