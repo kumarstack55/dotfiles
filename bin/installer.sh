@@ -42,76 +42,100 @@ function echo_repo_dir() {
   echo $(abspath $(dirname $0)/..)
 }
 
+function echo_bin_dir() {
+  echo $(echo_repo_dir)/bin
+}
+
 function echo_src_dir() {
   echo $(echo_repo_dir)/src
 }
 
+function test_item_os() {
+  local item_os="$1"
+  [[ $item_os == "unix" || $item_os == "any" ]]
+}
+
+function test_item_when() {
+  [ -z "${item_when+x}" ] || eval "when_${item_when}"
+}
+
+
+function when_tmux_vesion_lt_2pt1 {
+  type tmux 2>&1 >/dev/null \
+    && tmux -V \
+      | cut -d' ' -f2 \
+      | while IFS=. read -r major minor; do
+          [[ $major -le 1 || ( ( $major -eq 2 ) && ( $minor -lt 1 ) ) ]]
+        done
+}
+
+function when_tmux_vesion_ge_2pt1 {
+  type tmux 2>&1 >/dev/null \
+    && tmux -V \
+      | cut -d' ' -f2 \
+      | while IFS=. read -r major minor; do
+          [[ $major -gt 2 || ( ( $major -eq 2 ) && ( $minor -ge 1 ) ) ]]
+        done
+}
+
+function when_path_not_exists() {
+  [[ ! -e "$HOME/$item_path" ]]
+}
+
+function do_action_symlink() {
+  if [[ -d $src_dir/$item_target ]]; then
+    ln -fnsv $src_dir/$item_target $HOME/$item_path
+  else
+    ln -fsv $src_dir/$item_target $HOME/$item_path
+  fi
+}
+
+function do_action_copy() {
+  cp -fv $src_dir/$item_target $HOME/$item_path
+}
+
+function do_action_lineinfile() {
+  if ! grep -Fq "$item_line" $HOME/$item_path; then
+    cp -afv $HOME/$item_path{,-$(date '+%F.%s')}
+    ( echo ""; echo "$item_line" ) | tee -a $HOME/$item_path >/dev/null
+  fi
+}
+
+function do_action_touch() {
+  touch $HOME/$item_path
+}
+
+function do_action_directory() {
+  local options=""
+  if [[ ! -z ${item_mode+x} ]]; then
+    options="$options -m $item_mode"
+  fi
+  mkdir $options -pv $HOME/$item_path
+}
+
 main() {
   # ローカルリポジトリのパスを得る
+  local repo_dir=$(echo_repo_dir)
   local src_dir=$(echo_src_dir)
-
-  # なければディレクトリを作る
-  mkdir -pv $HOME/.config
-  mkdir -m 0700 -pv $HOME/.ssh
+  local bin_dir=$(echo_bin_dir)
 
   # git-bash で ln はコピーの操作となるが、これをリンク操作にする
   if [[ $(uname -s) =~ ^MINGW64_NT ]]; then
     export MSYS=winsymlinks:nativestrict
   fi
 
-  # ファイルのシンボリックリンクを上書きで作る
-  ln -fsv $src_dir/dot.bashrc_local.sh $HOME/.bashrc_local.sh
-  ln -fsv $src_dir/dot.ctags $HOME/.ctags
-  ln -fsv $src_dir/dot.editorconfig $HOME/.editorconfig
-  ln -fsv $src_dir/dot.gitconfig $HOME/.gitconfig
-  ln -fsv $src_dir/dot.gvimrc $HOME/.gvimrc
-  ln -fsv $src_dir/dot.inputrc $HOME/.inputrc
-  if type tmux 2>&1 >/dev/null; then
-    tmux -V \
-      | while read -r tmux version; do
-          if echo $version | grep -q '^1'; then
-            ln -fsv $src_dir/dot.tmux.conf.lt_v2.1 $HOME/.tmux.conf
-          elif echo $version | grep -q '^2\.0'; then
-            ln -fsv $src_dir/dot.tmux.conf.lt_v2.1 $HOME/.tmux.conf
-          else
-            ln -fsv $src_dir/dot.tmux.conf.ge_v2.1 $HOME/.tmux.conf
-          fi
-        done
-  fi
-  ln -fsv $src_dir/dot.tmux.conf.all $HOME/.tmux.conf.all
-  ln -fsv $src_dir/dot.vimrc $HOME/.vimrc
-
-  # ディレクトリのシンボリックリンクを上書きで作る
-  ln -fnsv $src_dir/dot.config/nvim $HOME/.config/nvim
-  ln -fnsv $src_dir/dot.vim $HOME/.vim
-  ln -fnsv $src_dir/dot.bashrc.d $HOME/.bashrc.d
-
-  # なければコピーする
-  cp -nv $src_dir/dot.gitconfig_local.inc \
-    $HOME/.gitconfig_local.inc || true
-
-  # なければリンクする
-  if [[ -f $HOME/.ssh/config ]]; then
-    ln -nsv $src_dir/dot.ssh/config $HOME/.ssh/config
-  fi
-
-  # $HOME/.bashrc_local.sh を読むようにする
-  if [[ ! -f $HOME/.bash_profile ]]; then
-    (
-      echo "#!bash"
-      echo 'if [[ -f ~/.bashrc ]]; then'
-      echo '  source ~/.bashrc'
-      echo 'fi'
-    ) | tee $HOME/.bash_profile
-  fi
-  line='source $HOME/.bashrc_local.sh'
-  if [[ ! -f $HOME/.bashrc ]]; then
-    touch $HOME/.bashrc
-  fi
-  if ! grep -Fq "$line" $HOME/.bashrc; then
-    cp -afv $HOME/.bashrc{,-$(date '+%F.%s')}
-    ( echo ""; echo "$line" ) | tee -a $HOME/.bashrc >/dev/null
-  fi
+  # インベントリを配置する
+  $bin_dir/inventory_to_sh.py $repo_dir/inventory.json \
+    | while read -r line; do
+        (
+          eval "$line"
+          test_item_os "$item_os" \
+            && test_item_when \
+              && do_action_${item_action} \
+                || true
+        )
+      done
+  exit
 
   # vim-plug をインストールする
   if [[ ! -f ~/.vim/autoload/plug.vim ]]; then

@@ -7,8 +7,8 @@ import argparse
 def print_inventory_item(inventory_item):
     parts = list()
     for k, v in inventory_item.items():
-        assert '"' not in v
-        parts.append('item_%s="%s"' % (k, v))
+        assert "'" not in v
+        parts.append("item_%s='%s'" % (k, v))
     print(' '.join(parts))
 
 

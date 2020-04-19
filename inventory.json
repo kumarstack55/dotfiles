@@ -2,9 +2,127 @@
   "inventory": [
     {
       "os": "unix",
+      "action": "directory",
+      "path": ".config"
+    },
+    {
+      "os": "unix",
+      "action": "directory",
+      "path": ".ssh",
+      "mode": "0700"
+    },
+    {
+      "os": "unix",
       "action": "symlink",
       "path": ".bashrc_local.sh",
       "target": "dot.bashrc_local.sh"
+    },
+    {
+      "os": "any",
+      "action": "symlink",
+      "path": ".ctags",
+      "target": "dot.ctags"
+    },
+    {
+      "os": "any",
+      "action": "symlink",
+      "path": ".editorconfig",
+      "target": "dot.editorconfig"
+    },
+    {
+      "os": "any",
+      "action": "symlink",
+      "path": ".gitconfig",
+      "target": "dot.gitconfig"
+    },
+    {
+      "os": "unix",
+      "action": "symlink",
+      "path": ".gvimrc",
+      "target": "dot.gvimrc"
+    },
+    {
+      "os": "unix",
+      "action": "symlink",
+      "path": ".inputrc",
+      "target": "dot.inputrc"
+    },
+    {
+      "os": "unix",
+      "action": "symlink",
+      "path": ".tmux.conf",
+      "target": "dot.tmux.conf.lt_v2.1",
+      "when": "tmux_vesion_lt_2pt1"
+    },
+    {
+      "os": "unix",
+      "action": "symlink",
+      "path": ".tmux.conf",
+      "target": "dot.tmux.conf.ge_v2.1",
+      "when": "tmux_vesion_ge_2pt1"
+    },
+    {
+      "os": "unix",
+      "action": "symlink",
+      "path": ".tmux.conf.all",
+      "target": "dot.tmux.conf.all"
+    },
+    {
+      "os": "unix",
+      "action": "symlink",
+      "path": ".vimrc",
+      "target": "dot.vimrc"
+    },
+    {
+      "os": "unix",
+      "action": "symlink",
+      "path": ".config/nvim",
+      "target": "dot.config/nvim"
+    },
+    {
+      "os": "unix",
+      "action": "symlink",
+      "path": ".vim",
+      "target": "dot.vim"
+    },
+    {
+      "os": "unix",
+      "action": "symlink",
+      "path": ".bashrc.d",
+      "target": "dot.bashrc.d"
+    },
+    {
+      "os": "unix",
+      "action": "copy",
+      "path": ".gitconfig_local.inc",
+      "target": "dot.gitconfig_local.inc",
+      "when": "path_not_exists"
+    },
+    {
+      "os": "unix",
+      "action": "symlink",
+      "path": ".ssh/config",
+      "target": "dot.ssh/config",
+      "when": "path_not_exists"
+    },
+    {
+      "os": "unix",
+      "action": "copy",
+      "path": ".bash_profile",
+      "target": "dot.bash_profile",
+      "when": "path_not_exists"
+    },
+    {
+      "os": "unix",
+      "action": "touch",
+      "path": ".bashrc",
+      "when": "path_not_exists"
+    },
+    {
+      "os": "unix",
+      "action": "lineinfile",
+      "path": ".bashrc",
+      "line": "source $HOME/.bashrc_local.sh"
     }
   ]
 }
