@@ -1,0 +1,10 @@
+{
+  "inventory": [
+    {
+      "os": "unix",
+      "action": "symlink",
+      "path": ".bashrc_local.sh",
+      "target": "dot.bashrc_local.sh"
+    }
+  ]
+}
