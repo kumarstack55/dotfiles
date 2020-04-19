@@ -62,3 +62,45 @@ git clone git@github.com:kumarstack55/dotfiles.git
 cd $HOME/dotfiles/bin
 ./installer.sh
 ```
+
+## ディレクトリ構造
+
+```
+unix: linux, macos, git-bash
+any : unix + windows
+
+* $HOME/
+    * AppData/
+        * Local/
+            * nvim/                            [os:windows, action:directory]
+                * init.vim                     [os:windows, action:symlink,   target:dot.config/nvim/init_windows.vim]
+                * plugins.vim                  [os:windows, action:symlink,   target:dot.config/nvim/plugins.vim]
+    * Documents/
+        * WindowsPowerShell/
+            * Microsoft.PowerShell_profile.ps1 [os:windows, action:file,      target:Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1]
+    * .bashrc_local.sh                         [os:unix,    action:symlink,   target:dot.bashrc_local.sh]
+    * .bashrc.d                                [os:unix,    action:symlink,   target:dot.bashrc.d]
+    * .bash_profile                            [os:unix,    action:backup]
+    * .bash_profile                            [os:unix,    action:file,      when:path not exists]
+    * .bash_profile                            [os:unix,    action:append]
+    * .config/                                 [os:any,     action:directory]
+        * nvim/                                [os:windows, action:directory]
+        * nvim/                                [os:unix,    action:symlink,   target:dot.config/nvim]
+    * .ctags                                   [os:any,     action:symlink,   target:dot.ctags]
+    * .editorconfig                            [os:any,     action:symlink,   target:dot.editorconfig]
+    * .gitconfig                               [os:any,     action:symlink,   target:dot.gitconfig]
+    * .gitconfig_windows.inc                   [os:windows, action:symlink,   target:dot.gitconfig_windows.inc]
+    * .gitconfig_local.inc                     [os:any,     action:file,      target:dot.gitconfig_local.inc]
+    * .gvimrc                                  [os:unix,    action:symlink,   target:dot.gvimrc]
+    * .inputrc                                 [os:unix,    action:symlink,   target:dot.inputrc]
+    * .ssh/                                    [os:unix,    action:directory, mode: 0700]
+        * config                               [os:unix,    action:symlink,   target:dot.ssh/config, when:path not exists]
+    * .tmux.conf                               [os:unix,    action:symlink,   target:dot.tmux.conf.lt_v2.1, when:tmux_version <  2.1]
+    * .tmux.conf                               [os:unix,    action:symlink,   target:dot.tmux.conf.ge_v2.1, when:tmux_version >= 2.1]
+    * .tmux.conf.all                           [os:unix,    action:symlink,   target:dot.tmux.conf.all]
+    * .vim/                                    [os:any,     action:symlink,   target:dot.vim]
+        * autoload/                            [os:windows, action:directory]
+            * plug.vim                         [os:windows, action:file]
+    * .vimrc                                   [os:windows, action:symlink,   target:dot.vimrc]
+    * _gvimrc                                  [os:windows, action:symlink,   target:dot.gvimrc]
+```
