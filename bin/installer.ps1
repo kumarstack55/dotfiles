@@ -60,6 +60,9 @@ Function Main {
     if (-not (Test-Path $HOME/.gitconfig_local.inc)) {
         Copy-Item $SrcDir/dot.gitconfig_local.inc $HOME/.gitconfig_local.inc
     }
+    if (-not (Test-Path $PROFILE)) {
+        Copy-Item $SrcDir/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1 $PROFILE
+    }
 
     # vim-plug をインストールする
     if (-not (Test-Path $HOME/.vim/autoload/plug.vim)) {
