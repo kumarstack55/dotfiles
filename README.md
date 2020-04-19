@@ -93,6 +93,7 @@ any : unix + windows
     * .gitconfig_local.inc                     [os:any,     action:file,      target:dot.gitconfig_local.inc]
     * .gvimrc                                  [os:unix,    action:symlink,   target:dot.gvimrc]
     * .inputrc                                 [os:unix,    action:symlink,   target:dot.inputrc]
+    * .powershellrc.ps1                        [os:windows, action:symlink,   target:dot.powershellrc.ps1]
     * .ssh/                                    [os:unix,    action:directory, mode: 0700]
         * config                               [os:unix,    action:symlink,   target:dot.ssh/config, when:path not exists]
     * .tmux.conf                               [os:unix,    action:symlink,   target:dot.tmux.conf.lt_v2.1, when:tmux_version <  2.1]
