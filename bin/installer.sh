@@ -82,7 +82,7 @@ function when_path_not_exists() {
   [[ ! -e "$HOME/$item_path" ]]
 }
 
-function do_action_symlink() {
+function action_symlink() {
   if [[ -d $src_dir/$item_target ]]; then
     ln -fnsv $src_dir/$item_target $HOME/$item_path
   else
@@ -90,22 +90,22 @@ function do_action_symlink() {
   fi
 }
 
-function do_action_copy() {
+function action_copy() {
   cp -fv $src_dir/$item_target $HOME/$item_path
 }
 
-function do_action_lineinfile() {
+function action_lineinfile() {
   if ! grep -Fq "$item_line" $HOME/$item_path; then
     cp -afv $HOME/$item_path{,-$(date '+%F.%s')}
     ( echo ""; echo "$item_line" ) | tee -a $HOME/$item_path >/dev/null
   fi
 }
 
-function do_action_touch() {
+function action_touch() {
   touch $HOME/$item_path
 }
 
-function do_action_directory() {
+function action_directory() {
   local options=""
   if [[ ! -z ${item_mode+x} ]]; then
     options="$options -m $item_mode"
@@ -131,7 +131,7 @@ main() {
           eval "$line"
           test_item_os "$item_os" \
             && test_item_when \
-              && do_action_${item_action} \
+              && action_${item_action} \
                 || true
         )
       done
