@@ -137,7 +137,6 @@ main() {
                 || true
         )
       done
-  exit
 
   # vim-plug をインストールする
   if [[ ! -f ~/.vim/autoload/plug.vim ]]; then
