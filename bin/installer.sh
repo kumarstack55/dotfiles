@@ -83,6 +83,7 @@ function when_path_not_exists() {
 }
 
 function action_symlink() {
+  local src_dir=$(echo_src_dir)
   if [[ -d $src_dir/$item_target ]]; then
     ln -fnsv $src_dir/$item_target $HOME/$item_path
   else
@@ -91,6 +92,7 @@ function action_symlink() {
 }
 
 function action_copy() {
+  local src_dir=$(echo_src_dir)
   cp -fv $src_dir/$item_target $HOME/$item_path
 }
 
