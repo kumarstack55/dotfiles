@@ -63,6 +63,42 @@ Function WhenPathNotExists() {
     -not ( Test-Path $Path )
 }
 
+Function Invoke-When {
+    Param($Item)
+    if ( $Item.PSObject.Properties.Name -match "when" ) {
+        $When = ($Item | Select-Object -ExpandProperty "when")
+        Switch ($When) {
+            "path_not_exists" {
+                return WhenPathNotExists $Item.path
+            }
+            default {
+                throw "unknown when ${When}"
+            }
+        }
+    }
+    return $True
+}
+
+Function Invoke-Action {
+    Param($Item)
+    Switch ($Item.action) {
+        "directory" {
+            Invoke-ActionDirectory -ItemPath $Item.path
+        }
+        "symlink" {
+            $Target = Join-Path $SrcDir $Item.target
+            Invoke-ActionSymlink -ItemPath $Item.path -Target $Target
+        }
+        "copy" {
+            $Target = Join-Path $SrcDir $Item.target
+            Invoke-ActionCopy -ItemPath $Item.path -Target $Target
+        }
+        default {
+            throw "unknown action"
+        }
+    }
+}
+
 Function Main {
     Param([Parameter(Mandatory)]$ScriptPath)
 
@@ -73,44 +109,13 @@ Function Main {
     # 管理者権限があるか確認する
     ConfirmAdministratorPriviledge
 
+    # インベントリを配置する
     Get-Content (Join-Path $RepoDir inventory.json) |
         ConvertFrom-Json |
         Select-Object -ExpandProperty inventory |
         Where-Object { Test-ItemOs $_.os } |
-        Where-Object {
-            $Item = $_
-            if ( $Item.PSObject.Properties.Name -match "when" ) {
-                $When = ($Item | Select-Object -ExpandProperty "when")
-                Switch ($When) {
-                    "path_not_exists" {
-                        return WhenPathNotExists $Item.path
-                    }
-                    default {
-                        throw "unknown when ${When}"
-                    }
-                }
-            }
-            return $True
-        } |
-        Foreach-Object {
-            $Item = $_
-            Switch ($Item.action) {
-                "directory" {
-                    Invoke-ActionDirectory -ItemPath $Item.path
-                }
-                "symlink" {
-                    $Target = Join-Path $SrcDir $Item.target
-                    Invoke-ActionSymlink -ItemPath $Item.path -Target $Target
-                }
-                "copy" {
-                    $Target = Join-Path $SrcDir $Item.target
-                    Invoke-ActionCopy -ItemPath $Item.path -Target $Target
-                }
-                default {
-                    throw "unknown action"
-                }
-            }
-        }
+        Where-Object { Invoke-When $_ } |
+        Foreach-Object { Invoke-Action -Item $_ }
 
     # ファイルのシンボリックリンクを上書きで作る
     #New-Item -Force -Path $HOME/AppData/Local/nvim -Name plugins.vim -Value $SrcDir/dot.config/nvim/plugins.vim -ItemType SymbolicLink
