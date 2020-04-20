@@ -1,9 +1,15 @@
 {
   "inventory": [
     {
-      "os": "unix",
+      "os": "any",
       "action": "directory",
       "path": ".config"
+    },
+    {
+      "os": "any",
+      "action": "symlink",
+      "path": ".config/nvim",
+      "target": "dot.config/nvim"
     },
     {
       "os": "unix",
@@ -36,9 +42,21 @@
       "target": "dot.gitconfig"
     },
     {
+      "os": "windows",
+      "action": "symlink",
+      "path": ".gitconfig_windows.inc",
+      "target": "dot.gitconfig_windows.inc"
+    },
+    {
       "os": "unix",
       "action": "symlink",
       "path": ".gvimrc",
+      "target": "dot.gvimrc"
+    },
+    {
+      "os": "windows",
+      "action": "symlink",
+      "path": "_gvimrc",
       "target": "dot.gvimrc"
     },
     {
@@ -68,19 +86,19 @@
       "target": "dot.tmux.conf.all"
     },
     {
-      "os": "unix",
+      "os": "any",
       "action": "symlink",
       "path": ".vimrc",
       "target": "dot.vimrc"
     },
     {
-      "os": "unix",
+      "os": "windows",
       "action": "symlink",
-      "path": ".config/nvim",
-      "target": "dot.config/nvim"
+      "path": "AppData/Local/nvim/init.vim",
+      "target": "dot.config/nvim/init_windows.vim"
     },
     {
-      "os": "unix",
+      "os": "any",
       "action": "symlink",
       "path": ".vim",
       "target": "dot.vim"
@@ -92,10 +110,17 @@
       "target": "dot.bashrc.d"
     },
     {
-      "os": "unix",
+      "os": "any",
       "action": "copy",
       "path": ".gitconfig_local.inc",
       "target": "dot.gitconfig_local.inc",
+      "when": "path_not_exists"
+    },
+    {
+      "os": "windows",
+      "action": "copy",
+      "path": "Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1",
+      "target": "Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1",
       "when": "path_not_exists"
     },
     {
