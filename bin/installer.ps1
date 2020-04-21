@@ -99,6 +99,21 @@ Function Invoke-ItemAction {
     }
 }
 
+Function Test-CommandExists {
+    Param($Name)
+
+    try {
+        Get-Command -Name $Name -ErrorAction Stop | Out-Null
+        return $True
+    } catch [System.Management.Automation.ActionPreferenceStopException] {
+        $e = $_.Exception
+        if ($e -is [System.Management.Automation.CommandNotFoundException]) {
+            return $False
+        }
+        Throw $_
+    }
+}
+
 Function Main {
     Param([Parameter(Mandatory)]$ScriptPath)
 
@@ -117,6 +132,12 @@ Function Main {
         Where-Object { Test-ItemWhen -Item $_ } |
         Foreach-Object { Invoke-ItemAction -Item $_ }
 
+    if (Test-CommandExists python) {
+        if ($PSCmdlet.ShouldProcess('python', 'pip install --user')) {
+            $ReqPath = Join-Path $RepoDir requirements.txt
+            pip install --user -r $ReqPath
+        }
+    }
 
     # vim-plug をインストールする
     if (-not (Test-Path $HOME/.vim/autoload/plug.vim)) {
@@ -140,24 +161,11 @@ Function Main {
         )
     }
 
-    #
-    # プラグインのインストール前にPython用のパッケージが必要であるため、
-    # installer.ps1 ではコメントアウトしている
-    #
-
-    # nvimプラグインをインストールする
-    #$nvim_exists = $null
-    #try {
-    #    Get-Command nvim | Out-Null
-    #    $nvim_exists = $True
-    #} catch [System.Management.Automation.ActionPreferenceStopException] {
-    #    $nvim_exists = $False
-    #}
-    #if ($nvim_exists) {
-    #    if ($PSCmdlet.ShouldProcess('nvim', 'PlugInstall')) {
-    #        nvim -u "~/.config/nvim/plugins.vim " -c "try | PlugInstall --sync | finally | qall! | endtry"
-    #    }
-    #}
+    if (Test-CommandExists nvim) {
+        if ($PSCmdlet.ShouldProcess('nvim', 'PlugInstall')) {
+            nvim -u "~/.config/nvim/plugins.vim " -c "try | PlugInstall --sync | finally | qall! | endtry"
+        }
+    }
 }
 
 # ファンクションの中でスクリプトパスを取得できないため、ここで得る
