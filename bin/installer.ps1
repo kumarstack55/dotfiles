@@ -63,7 +63,7 @@ Function WhenPathNotExists() {
     -not ( Test-Path $Path )
 }
 
-Function Invoke-When {
+Function Test-ItemWhen {
     Param($Item)
     if ( $Item.PSObject.Properties.Name -match "when" ) {
         $When = ($Item | Select-Object -ExpandProperty "when")
@@ -79,7 +79,7 @@ Function Invoke-When {
     return $True
 }
 
-Function Invoke-Action {
+Function Invoke-ItemAction {
     Param($Item)
     Switch ($Item.action) {
         "directory" {
@@ -113,9 +113,9 @@ Function Main {
     Get-Content (Join-Path $RepoDir inventory.json) |
         ConvertFrom-Json |
         Select-Object -ExpandProperty inventory |
-        Where-Object { Test-ItemOs $_.os } |
-        Where-Object { Invoke-When $_ } |
-        Foreach-Object { Invoke-Action -Item $_ }
+        Where-Object { Test-ItemOs -ItemOs $_.os } |
+        Where-Object { Test-ItemWhen -Item $_ } |
+        Foreach-Object { Invoke-ItemAction -Item $_ }
 
     # ファイルのシンボリックリンクを上書きで作る
     #New-Item -Force -Path $HOME/AppData/Local/nvim -Name plugins.vim -Value $SrcDir/dot.config/nvim/plugins.vim -ItemType SymbolicLink
