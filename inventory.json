@@ -124,6 +124,12 @@
       "when": "path_not_exists"
     },
     {
+      "os": "windows",
+      "action": "symlink",
+      "path": ".powershellrc.ps1",
+      "target": "dot.powershellrc.ps1"
+    },
+    {
       "os": "unix",
       "action": "symlink",
       "path": ".ssh/config",
