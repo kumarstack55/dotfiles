@@ -117,8 +117,6 @@ Function Main {
         Where-Object { Test-ItemWhen -Item $_ } |
         Foreach-Object { Invoke-ItemAction -Item $_ }
 
-    # ファイルのシンボリックリンクを上書きで作る
-    #New-Item -Force -Path $HOME/AppData/Local/nvim -Name plugins.vim -Value $SrcDir/dot.config/nvim/plugins.vim -ItemType SymbolicLink
 
     # vim-plug をインストールする
     if (-not (Test-Path $HOME/.vim/autoload/plug.vim)) {
