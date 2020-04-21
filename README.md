@@ -39,14 +39,6 @@ exit
 ```
 
 ```
-# for python2
-pip install --user neovim
-
-# for python3
-pip install --user pynvim
-
-nvim -u "~/AppData/Local/nvim/plugins.vim" -c "try | PlugInstall | finally | qall! | endtry"
-
 pip install --user flake8
 ```
 
@@ -74,7 +66,6 @@ any : unix + windows
         * Local/
             * nvim/                            [os:windows, action:directory]
                 * init.vim                     [os:windows, action:symlink,   target:dot.config/nvim/init_windows.vim]
-                * plugins.vim                  [os:windows, action:symlink,   target:dot.config/nvim/plugins.vim]
     * Documents/
         * WindowsPowerShell/
             * Microsoft.PowerShell_profile.ps1 [os:windows, action:copy,      target:Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1]
