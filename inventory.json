@@ -93,14 +93,9 @@
     },
     {
       "os": "windows",
-      "action": "directory",
-      "path": "AppData/Local/nvim"
-    },
-    {
-      "os": "windows",
       "action": "symlink",
-      "path": "AppData/Local/nvim/init.vim",
-      "target": "dot.config/nvim/init_windows.vim"
+      "path": "AppData/Local/nvim",
+      "target": "AppData/Local/nvim"
     },
     {
       "os": "any",
