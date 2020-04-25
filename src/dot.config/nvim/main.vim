@@ -129,7 +129,8 @@ set novisualbell
 set number
 
 " カラースキームを設定する
-colorscheme apprentice
+"colorscheme apprentice
+colorscheme gruvbox
 
 if g:my_gui_type == g:GUI_TYPE_RUNNING
   " フォントサイズを設定する

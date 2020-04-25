@@ -110,6 +110,9 @@ call plug#begin('~/.vim/plugged')
   " A dark, low-contrast, Vim colorscheme.
   Plug 'romainl/Apprentice'
 
+  " Retro groove color scheme for Vim
+  Plug 'morhetz/gruvbox'
+
   " EditorConfig Vim Plugin
   Plug 'editorconfig/editorconfig-vim'
 
