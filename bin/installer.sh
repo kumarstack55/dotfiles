@@ -116,6 +116,25 @@ function action_directory() {
 }
 
 main() {
+  # 引数を解析する
+  local opt
+  while getopts -- "-:h" opt; do
+    case $opt in
+      -)
+        case $OPTARG in
+          help)
+            usage_exit;;
+          *)
+            echo_err_badopt $OPTARG
+            usage_exit
+            ;;
+        esac;;
+      h)  usage_exit;;
+      \?) usage_exit;;
+    esac
+  done
+  shift $((OPTIND-1))
+
   # ローカルリポジトリのパスを得る
   local repo_dir=$(echo_repo_dir)
   local src_dir=$(echo_src_dir)
@@ -154,23 +173,6 @@ main() {
   fi
 }
 
-while getopts -- "-:h" opt; do
-  case $opt in
-    -)
-      case $OPTARG in
-        help)
-          usage_exit;;
-        *)
-          echo_err_badopt $OPTARG
-          usage_exit
-          ;;
-      esac;;
-    h)  usage_exit;;
-    \?) usage_exit;;
-  esac
-done
-shift $((OPTIND-1))
-
-main
+main "$@"
 
 # vim:ts=2 sw=2 sts=2 et ai:
