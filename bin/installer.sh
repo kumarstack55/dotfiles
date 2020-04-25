@@ -138,6 +138,11 @@ main() {
         )
       done
 
+  if type python3 2>&1 >/dev/null && type pip3 2>&1 >/dev/null; then
+    local req_path="$repo_dir/requirements.txt"
+    pip3 install --user -r "$req_path"
+  fi
+
   # vim-plug をインストールする
   if [[ ! -f ~/.vim/autoload/plug.vim ]]; then
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
