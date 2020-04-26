@@ -230,4 +230,7 @@ call plug#begin('~/.vim/plugged')
   " (Do)cumentation (Ge)nerator 15+ languages
   Plug 'kkoomen/vim-doge'
 
+  " Yet Another Lexima
+  Plug 'mattn/vim-lexiv'
+
 call plug#end()
