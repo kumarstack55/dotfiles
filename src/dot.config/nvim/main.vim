@@ -712,6 +712,24 @@ endif
 " :ALEInfo
 
 "-----------------------------------------
+" vim-doge
+
+" 使い方:
+"
+" $ vim a.py
+" idef a():
+" pass<ESC>:1<CR>\d
+"
+" $ vim a.sh
+" ia() {
+" }<ESC>:1<CR>\d
+
+let g:doge_doc_standard_python = 'google'
+
+" デフォルト値だが指定ない場合に補完されなかったため明示指定する
+let g:doge_doc_standard_sh = 'google'
+
+"-----------------------------------------
 
 " ファイルタイプを定める
 
