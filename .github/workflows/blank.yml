@@ -38,7 +38,7 @@ jobs:
       run: |
         set -x
         exec 1>&2
-        sudo apt-get install neovim
+        sudo apt install neovim
         nvim --version
 
     - name: Install pynvim
