@@ -68,13 +68,6 @@ jobs:
         sudo apt install python3-setuptools
         ./installer.sh
 
-    - name: Install the nvim plugins
-      run: |
-        set -x
-        exec 1>&2
-        nvim -u "~/.config/nvim/plugins.vim" \
-          -c "try | PlugInstall --sync | finally | qall! | endtry"
-
     - name: Check the nvim health
       run: |
         set -x
