@@ -65,6 +65,7 @@ jobs:
         set -x
         exec 1>&2
         cd ./bin
+        apt install python3-setuptools
         ./installer.sh
 
     - name: Install the nvim plugins
