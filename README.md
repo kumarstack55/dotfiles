@@ -9,14 +9,6 @@ git clone git@github.com:kumarstack55/dotfiles.git
 cd $HOME/dotfiles/bin
 ./installer.sh
 
-# for python2
-pip install --user neovim
-
-# for python3
-pip install --user pynvim
-
-nvim -u "~/.config/nvim/plugins.vim" -c "try | PlugInstall | finally | qall! | endtry"
-
 pip install --user flake8
 ```
 
@@ -64,8 +56,7 @@ any : unix + windows
 * $HOME/
     * AppData/
         * Local/
-            * nvim/                            [os:windows, action:directory]
-                * init.vim                     [os:windows, action:symlink,   target:dot.config/nvim/init_windows.vim]
+            * nvim/                            [os:windows, action:symlink,   target:AppData\Local\nvim]
     * Documents/
         * WindowsPowerShell/
             * Microsoft.PowerShell_profile.ps1 [os:windows, action:copy,      target:Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1]
