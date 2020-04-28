@@ -233,4 +233,8 @@ call plug#begin('~/.vim/plugged')
   " Yet Another Lexima
   Plug 'mattn/vim-lexiv'
 
+  " vim-coverage is a utility for visualizing test coverage results in vim.
+  Plug 'google/vim-maktaba'
+  Plug 'google/vim-coverage'
+  Plug 'google/vim-glaive'
 call plug#end()

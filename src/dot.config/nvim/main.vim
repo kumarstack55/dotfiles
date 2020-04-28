@@ -730,6 +730,17 @@ let g:doge_doc_standard_python = 'google'
 let g:doge_doc_standard_sh = 'google'
 
 "-----------------------------------------
+" vim-coverage
+
+" 使い方:
+"
+" $ pip install --user coverage
+" $ nvim a.py
+" :CoverageShow
+
+call glaive#Install()
+
+"-----------------------------------------
 
 " ファイルタイプを定める
 
