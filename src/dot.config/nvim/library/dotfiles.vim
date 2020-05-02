@@ -13,6 +13,12 @@ let g:VIM_VERSION_UNKNOWN = 0
 let g:VIM_VERSION_7 = 'version eq 7'
 let g:VIM_VERSION_8 = 'version ge 8'
 
+let g:FONT_SIZE_SMALL = 10
+let g:FONT_SIZE_NORMAL = 12
+let g:FONT_SIZE_LARGE = 16
+let g:FONT_SIZE_EXLARGE = 20
+let g:FONT_SIZE_DEFAULT = g:FONT_SIZE_NORMAL
+
 function! dotfiles#get_os_type()
   if has('win32')
     return g:OS_TYPE_WINDOWS
@@ -78,4 +84,18 @@ function! dotfiles#get_enable_dev_icons()
     return 1
   endif
   return 0
+endfunction
+
+function! dotfiles#set_gui_font(font_height_pt)
+  let font_name = 'Cica'
+  let height = 'h' . a:font_height_pt
+  let options = [font_name, height]
+  if dotfiles#is_windows() && dotfiles#is_vim()
+    let charset = 'cSHIFTJIS'
+    add(options, charset)
+    let quality = 'qDRAFT'
+    add(options, quality)
+  endif
+  let guifont_string = join(options, ':')
+  let &guifont = guifont_string
 endfunction

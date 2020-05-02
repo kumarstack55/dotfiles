@@ -5,28 +5,11 @@ let s:plugins_file = s:script_dir . "/plugins.vim"
 execute "source " . s:plugins_file
 
 " フォントサイズを設定する
-if g:my_gui_type == g:GUI_TYPE_RUNNING
-  let g:FONT_SIZE_SMALL = 10
-  let g:FONT_SIZE_NORMAL = 12
-  let g:FONT_SIZE_LARGE = 16
-  let g:FONT_SIZE_EXLARGE = 20
-  let g:FONT_SIZE_DEFAULT = g:FONT_SIZE_NORMAL
-
-  " nvim-qt はフォント設定が可能だが、
-  " nvim-qt と nvim を区別する手段がない
-  " そこで nvim であればファンクション MySetGuiFont を定義する
-  function! g:MySetGuiFont(font_size)
-    let &guifont = 'Cica:h' . a:font_size . ':cSHIFTJIS:qDRAFT'
-  endfunction
-  if g:my_vim_type == g:VIM_TYPE_NEOVIM
-    function! g:MySetGuiFont(font_size)
-      let &guifont = 'Cica:h' . a:font_size
-    endfunction
-  endif
-  command! MyFontSizeSmall call g:MySetGuiFont(g:FONT_SIZE_SMALL)
-  command! MyFontSizeNormal call g:MySetGuiFont(g:FONT_SIZE_NORMAL)
-  command! MyFontSizeLarge call g:MySetGuiFont(g:FONT_SIZE_LARGE)
-  command! MyFontSizeExLarge call g:MySetGuiFont(g:FONT_SIZE_EXLARGE)
+if dotfiles#is_gui_running()
+  command! MyFontSizeSmall call dotfiles#set_gui_font(g:FONT_SIZE_SMALL)
+  command! MyFontSizeNormal call dotfiles#set_gui_font(g:FONT_SIZE_NORMAL)
+  command! MyFontSizeLarge call dotfiles#set_gui_font(g:FONT_SIZE_LARGE)
+  command! MyFontSizeExLarge call dotfiles#set_gui_font(g:FONT_SIZE_EXLARGE)
 endif
 
 " インデントガイドが無効か確認する
