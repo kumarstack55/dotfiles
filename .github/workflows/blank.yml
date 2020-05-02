@@ -35,6 +35,11 @@ jobs:
         type ansible
         ansible --version
 
+    - name: Output apt list
+      run: |
+        set -x
+        apt list
+
     - name: Install nvim
       run: |
         set -x
