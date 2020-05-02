@@ -26,6 +26,14 @@ function! dotfiles#get_os_type()
   return g:OS_TYPE_UNKNOWN
 endfunction
 
+function! dotfiles#is_linux()
+  return dotfiles#get_os_type() == g:OS_TYPE_LINUX
+endfunction
+
+function! dotfiles#is_windows()
+  return dotfiles#get_os_type() == g:OS_TYPE_WINDOWS
+endfunction
+
 function! dotfiles#get_vim_type()
   if has('nvim')
     return g:VIM_TYPE_NEOVIM
@@ -33,11 +41,23 @@ function! dotfiles#get_vim_type()
   return g:VIM_TYPE_VIM
 endfunction
 
+function! dotfiles#is_neovim()
+  return dotfiles#get_vim_type() == g:VIM_TYPE_NEOVIM
+endfunction
+
+function! dotfiles#is_vim()
+  return dotfiles#get_vim_type() == g:VIM_TYPE_VIM
+endfunction
+
 function! dotfiles#get_gui_type()
   if exists('g:ginit_loaded') || has('gui_running')
     return g:GUI_TYPE_RUNNING
   endif
   return g:GUI_TYPE_NOT_RUNNING
+endfunction
+
+function! dotfiles#is_gui_running()
+  return dotfiles#get_gui_type() == g:GUI_TYPE_RUNNING
 endfunction
 
 function! dotfiles#get_vim_version()
