@@ -72,6 +72,7 @@ jobs:
         exec 1>&2
         cd ./bin
         sudo apt install python3-setuptools
+        sudo apt install python3-wheel
         ./installer.sh
 
     - name: Check the nvim health
