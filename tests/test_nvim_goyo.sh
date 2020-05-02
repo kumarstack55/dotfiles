@@ -22,4 +22,6 @@ cmd=$(my_get_normal_cmd "$seq_file")
 nvim -c "execute \"normal ${cmd}\"" $tmp_file \
   1>/dev/null 2>/dev/null
 
+cat "$out_file"
+
 grep -q "Goyo" "$out_file"
