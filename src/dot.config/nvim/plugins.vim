@@ -171,7 +171,8 @@ call plug#begin('~/.vim/plugged')
   endif
 
   " (Do)cumentation (Ge)nerator 15+ languages
-  Plug 'kkoomen/vim-doge'
+  "Plug 'kkoomen/vim-doge'
+  Plug 'kumarstack55/vim-doge'
 
   " Yet Another Lexima
   Plug 'mattn/vim-lexiv'
