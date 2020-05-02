@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-function usage_exit() {
+usage_exit() {
   echo "usage: $0 [options...]"
   echo ""
   echo "options:"
@@ -9,17 +9,17 @@ function usage_exit() {
   exit 1
 }
 
-function echo_err() {
+echo_err() {
   echo "$1" 1>&2
 }
 
-function echo_err_badopt() {
+echo_err_badopt() {
   local optarg="$1"
   echo_err "$0: illegal option -- $optarg"
 }
 
-# https://stackoverflow.com/questions/3915040
-function abspath() {
+abspath() {
+  # https://stackoverflow.com/questions/3915040
   # generate absolute path from relative path
   # $1     : relative filename
   # return : absolute path
@@ -38,51 +38,52 @@ function abspath() {
   fi
 }
 
-function echo_repo_dir() {
+echo_repo_dir() {
   echo $(abspath $(dirname $0)/..)
 }
 
-function echo_bin_dir() {
+echo_bin_dir() {
   echo $(echo_repo_dir)/bin
 }
 
-function echo_src_dir() {
+echo_src_dir() {
   echo $(echo_repo_dir)/src
 }
 
-function test_item_os() {
+test_item_os() {
   local item_os="$1"
   [[ $item_os == "unix" || $item_os == "any" ]]
 }
 
-function test_item_when() {
+test_item_when() {
   [ -z "${item_when+x}" ] || eval "when_${item_when}"
 }
 
-
-function when_tmux_vesion_lt_2pt1 {
+when_tmux_vesion_lt_2pt1() {
   type tmux 2>&1 >/dev/null \
     && tmux -V \
       | cut -d' ' -f2 \
-      | while IFS=. read -r major minor; do
+      | {
+          IFS=. read -r major minor
           [[ $major -le 1 || ( ( $major -eq 2 ) && ( $minor -lt 1 ) ) ]]
-        done
+        }
 }
 
-function when_tmux_vesion_ge_2pt1 {
+when_tmux_vesion_ge_2pt1() {
   type tmux 2>&1 >/dev/null \
     && tmux -V \
       | cut -d' ' -f2 \
-      | while IFS=. read -r major minor; do
+      | {
+          IFS=. read -r major minor
           [[ $major -gt 2 || ( ( $major -eq 2 ) && ( $minor -ge 1 ) ) ]]
-        done
+        }
 }
 
-function when_path_not_exists() {
+when_path_not_exists() {
   [[ ! -e "$HOME/$item_path" ]]
 }
 
-function action_symlink() {
+action_symlink() {
   local src_dir=$(echo_src_dir)
   if [[ -d $src_dir/$item_target ]]; then
     ln -fnsv $src_dir/$item_target $HOME/$item_path
@@ -91,23 +92,23 @@ function action_symlink() {
   fi
 }
 
-function action_copy() {
+action_copy() {
   local src_dir=$(echo_src_dir)
   cp -fv $src_dir/$item_target $HOME/$item_path
 }
 
-function action_lineinfile() {
+action_lineinfile() {
   if ! grep -Fq "$item_line" $HOME/$item_path; then
     cp -afv $HOME/$item_path{,-$(date '+%F.%s')}
     ( echo ""; echo "$item_line" ) | tee -a $HOME/$item_path >/dev/null
   fi
 }
 
-function action_touch() {
+action_touch() {
   touch $HOME/$item_path
 }
 
-function action_directory() {
+action_directory() {
   local options=""
   if [[ ! -z ${item_mode+x} ]]; then
     options="$options -m $item_mode"
@@ -157,6 +158,7 @@ main() {
         )
       done
 
+  # Pythonパッケージをインストールする
   if type python3 2>&1 >/dev/null && type pip3 2>&1 >/dev/null; then
     local req_path="$repo_dir/requirements.txt"
     pip3 install --user -r "$req_path"
@@ -172,12 +174,9 @@ main() {
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   fi
 
-
   if type nvim 2>&1 >/dev/null; then
     nvim -u "$HOME/.config/nvim/plugins.vim" -c "try | PlugInstall --sync | finally | qall! | endtry"
   fi
-
-
 }
 
 main "$@"
