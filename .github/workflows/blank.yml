@@ -38,7 +38,7 @@ jobs:
     - name: Output apt list
       run: |
         set -x
-        apt list
+        apt list | grep wheel
 
     - name: Install nvim
       run: |
