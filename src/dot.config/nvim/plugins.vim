@@ -8,7 +8,8 @@ let g:my_vim_type = dotfiles#get_vim_type()
 let g:my_gui_type = dotfiles#get_gui_type()
 let g:my_vim_version = dotfiles#get_vim_version()
 
-" 有効にする機能を決定する
+" 初期状態として有効にするか決定する
+" ターミナルの表示が崩れる等の場合は無効にすればよい
 let g:enable_devicons = dotfiles#get_enable_dev_icons()
 
 " Windows + nvim では Python3 を使う
@@ -165,7 +166,7 @@ call plug#begin('~/.vim/plugged')
   endif
 
   " VimDevIcons - Add Icons to Your Plugins
-  if g:enable_devicons
+  if dotfiles#get_enable_dev_icons()
     Plug 'ryanoasis/vim-devicons'
   endif
 
