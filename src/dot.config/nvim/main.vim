@@ -215,7 +215,7 @@ set nobackup
 set swapfile
 
 " Windows環境では次のパスにスワップを作る
-if g:my_os_type == g:OS_TYPE_WINDOWS
+if dotfiles#is_windows()
   set directory=$TEMP,c:\\tmp,c:\\temp,.
 endif
 
@@ -277,8 +277,7 @@ set encoding=utf8    " vim内で使うエンコーディングを指定する
 set ambiwidth=double " East Asian Width Class Ambiguous を2文字幅で扱う
 
 if g:enable_devicons
-  if g:my_os_type == g:OS_TYPE_WINDOWS &&
-        \ g:my_gui_type == g:GUI_TYPE_RUNNING
+  if dotfiles#is_windows() && dotfiles#is_gui_running()
     " gvim で encoding=utf8 かつメニューを日本語で表示させると、
     " 表示がおかしくなるため、英語表示とする。
     set langmenu=en_US

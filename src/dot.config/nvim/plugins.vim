@@ -11,23 +11,21 @@ let g:my_vim_version = dotfiles#get_vim_version()
 " 有効にする機能を決定する
 let g:enable_devicons = dotfiles#get_enable_dev_icons()
 
-" Python36 を読む
-if g:my_os_type == g:OS_TYPE_WINDOWS
-  if g:my_vim_type == g:VIM_TYPE_NEOVIM
-    let g:loaded_python_provider = 0
-    let g:python3_path = 'C:\Python36\python.exe'
-    if executable(g:python3_path)
-      let g:python3_host_prog = g:python3_path
-    endif
+" Windows + nvim では Python3 を使う
+if dotfiles#is_windows() && dotfiles#is_neovim()
+  let g:loaded_python_provider = 0
+  let g:python3_path = 'C:\Python36\python.exe'
+  if executable(g:python3_path)
+    let g:python3_host_prog = g:python3_path
   endif
-  if g:my_vim_type == g:VIM_TYPE_VIM
-    set pythonthreedll=C:\Python36\python36.dll
-  endif
+
+  " Python2 は使わない
+  let g:loaded_python_provider = 0
 endif
 
-" Python2 は読まない
-if g:my_os_type == g:OS_TYPE_WINDOWS && g:my_vim_type == g:VIM_TYPE_NEOVIM
-  let g:loaded_python_provider = 0
+" Windows + vim では Python3 を使う
+if dotfiles#is_windows() && dotfiles#is_vim()
+  set pythonthreedll=C:\Python36\python36.dll
 endif
 
 " プラグインをインストールする
@@ -99,7 +97,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'thinca/vim-quickrun'
 
   " A vim plugin to give you some slime.
-  if g:my_os_type == g:OS_TYPE_LINUX
+  if dotfiles#is_linux()
     Plug 'jpalardy/vim-slime'
   endif
 
