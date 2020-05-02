@@ -38,13 +38,13 @@ jobs:
     - name: Output apt list
       run: |
         set -x
-        apt list >apt_list-$(date '+%F').txt
+        apt list >apt_list.txt
 
     - name: Upload apt list result
       uses: actions/upload-artifact@v1
       with:
         name: homework
-        path: apt_list-$(date '+%F').txt
+        path: apt_list.txt
 
     - name: Install nvim
       run: |
