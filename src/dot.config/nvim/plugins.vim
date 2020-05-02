@@ -181,4 +181,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'google/vim-maktaba'
   Plug 'google/vim-coverage'
   Plug 'google/vim-glaive'
+
+  " A simple Vimscript test framework
+  Plug 'junegunn/vader.vim'
 call plug#end()
