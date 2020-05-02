@@ -1,72 +1,15 @@
 " $HOME/.config/nvim/plugins.vim
 
-" OSを判定する
-let g:OS_TYPE_UNKNOWN = 0
-let g:OS_TYPE_WINDOWS = 'Windows'
-let g:OS_TYPE_LINUX = 'Linux'
-let g:OS_TYPE_MAC_OS = 'macOS'
-function! g:MyGetOsType()
-  if has('win32')
-    return g:OS_TYPE_WINDOWS
-  endif
-  let uname = substitute(system('uname'), '\n', '', '')
-  if uname == 'Linux'
-    return g:OS_TYPE_LINUX
-  elseif uname == 'Darwin'
-    return g:OS_TYPE_MAC_OS
-  endif
-  return g:OS_TYPE_UNKNOWN
-endfunction
-let g:my_os_type = g:MyGetOsType()
+runtime library/dotfiles.vim
 
-" vim, neovimを判定する
-let g:VIM_TYPE_NEOVIM = 'NeoVim'
-let g:VIM_TYPE_VIM = 'Vim'
-function! g:MyGetVimType()
-  if has('nvim')
-    return g:VIM_TYPE_NEOVIM
-  endif
-  return g:VIM_TYPE_VIM
-endfunction
-let g:my_vim_type = g:MyGetVimType()
-
-" GUI/CLIを判定する
-let g:GUI_TYPE_RUNNING = 'running'
-let g:GUI_TYPE_NOT_RUNNING = 'not running'
-function! g:MyGetGuiType()
-  if exists('g:ginit_loaded') || has('gui_running')
-    return g:GUI_TYPE_RUNNING
-  endif
-  return g:GUI_TYPE_NOT_RUNNING
-endfunction
-let g:my_gui_type = g:MyGetGuiType()
-
-" vim のバージョンを判定する
-let g:VIM_VERSION_UNKNOWN = 0
-let g:VIM_VERSION_7 = 'version eq 7'
-let g:VIM_VERSION_8 = 'version ge 8'
-function! g:MyGetVimVersion()
-  if v:version >= 800
-    return g:VIM_VERSION_8
-  endif
-  if v:version >= 700
-    return g:VIM_VERSION_7
-  endif
-  return g:VIM_VERSION_UNKNOWN
-endfunction
-let g:my_vim_version = g:MyGetVimVersion()
+" 実行環境を調べる
+let g:my_os_type = dotfiles#get_os_type()
+let g:my_vim_type = dotfiles#get_vim_type()
+let g:my_gui_type = dotfiles#get_gui_type()
+let g:my_vim_version = dotfiles#get_vim_version()
 
 " 有効にする機能を決定する
-function! g:MyGetEnableDevIcons()
-  if g:my_vim_type == g:VIM_TYPE_NEOVIM
-    return 1
-  endif
-  if g:my_gui_type == g:GUI_TYPE_RUNNING
-    return 1
-  endif
-  return 0
-endfunction
-let g:enable_devicons = g:MyGetEnableDevIcons()
+let g:enable_devicons = dotfiles#get_enable_dev_icons()
 
 " Python36 を読む
 if g:my_os_type == g:OS_TYPE_WINDOWS
