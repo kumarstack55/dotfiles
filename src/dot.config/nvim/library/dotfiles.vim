@@ -79,20 +79,3 @@ function! dotfiles#get_enable_dev_icons()
   endif
   return 0
 endfunction
-
-" 以下、削除予定
-function! g:MyGetOsType()
-  return dotfiles#get_os_type()
-endfunction
-
-function! g:MyGetVimType()
-  return dotfiles#get_vim_type()
-endfunction
-
-function! g:MyGetGuiType()
-  return dotfiles#get_gui_type()
-endfunction
-
-function! g:MyGetVimVersion()
-  return dotfiles#get_vim_version()
-endfunction
