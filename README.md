@@ -1,3 +1,5 @@
+![CI](https://github.com/kumarstack55/dotfiles/workflows/CI/badge.svg)
+
 # dotfiles
 
 ## macOS / EL7 / debian
