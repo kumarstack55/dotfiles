@@ -2,7 +2,13 @@
 
 # dotfiles
 
-## macOS / EL7 / debian
+## インストール
+
+### macOS, EL7, debian, Windows+mintty
+
+* Windows + mintty の場合のみ次の設定をする:
+    * Options - Text - Font: Cica, 14pt
+    * Options - Terminal - Type: xterm-256color
 
 ```bash
 cd $HOME
@@ -14,39 +20,18 @@ cd $HOME/dotfiles/bin
 pip install --user flake8
 ```
 
-## Windows + PowerShell
+### Windows+PowerShell
 
-* Win + R
-* powershell.exe
+PowerShell を管理者権限で実行する。
 
-```
+```ps1
 cd $HOME
 git clone git@github.com:kumarstack55/dotfiles.git
 
 cd $HOME/dotfiles/bin
-./start-powershell-runas.ps1
-```
-
-```
 ./installer.ps1
-exit
-```
 
-```
 pip install --user flake8
-```
-
-## Windows + mintty
-
-* Options - Text - Font: Cica, 14pt
-* Options - Terminal - Type: xterm-256color
-
-```bash
-cd $HOME
-git clone git@github.com:kumarstack55/dotfiles.git
-
-cd $HOME/dotfiles/bin
-./installer.sh
 ```
 
 ## ディレクトリ構造
@@ -87,3 +72,7 @@ any : unix + windows
     * .vimrc                                   [os:windows, action:symlink,   target:dot.vimrc]
     * _gvimrc                                  [os:windows, action:symlink,   target:dot.gvimrc]
 ```
+
+## License
+
+MIT
