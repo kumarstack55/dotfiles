@@ -63,6 +63,7 @@ call plug#begin('~/.vim/plugged')
 
   " Vim plugin that displays tags in a window, ordered by scope
   Plug 'majutsushi/tagbar', { 'for': [
+          \ 'c',
           \ 'go',
           \ 'markdown',
           \ 'python',
