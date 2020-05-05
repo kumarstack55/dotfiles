@@ -53,6 +53,7 @@ any : unix + windows
     * .bash_profile                            [os:unix,    action:append]
     * .config/                                 [os:any,     action:directory]
         * nvim/                                [os:any,     action:symlink,   target:dot.config/nvim]
+        * pip/                                 [os:unix,    action:symlink,   target:dot.config/pip]
     * .ctags                                   [os:any,     action:symlink,   target:dot.ctags]
     * .editorconfig                            [os:any,     action:symlink,   target:dot.editorconfig]
     * .gitconfig                               [os:any,     action:symlink,   target:dot.gitconfig]

@@ -13,6 +13,12 @@
     },
     {
       "os": "unix",
+      "action": "symlink",
+      "path": ".config/pip",
+      "target": "dot.config/pip"
+    },
+    {
+      "os": "unix",
       "action": "directory",
       "path": ".ssh",
       "mode": "0700"
