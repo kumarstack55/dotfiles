@@ -2,12 +2,6 @@
 
 runtime library/dotfiles.vim
 
-" 実行環境を調べる
-let g:my_os_type = dotfiles#get_os_type()
-let g:my_vim_type = dotfiles#get_vim_type()
-let g:my_gui_type = dotfiles#get_gui_type()
-let g:my_vim_version = dotfiles#get_vim_version()
-
 " 初期状態として有効にするか決定する
 " ターミナルの表示が崩れる等の場合は無効にすればよい
 let g:enable_devicons = dotfiles#get_enable_dev_icons()
@@ -157,7 +151,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'SirVer/ultisnips', { 'tag': '3.1' }
   endif
 
-  if g:my_vim_version == g:VIM_VERSION_8
+  if dotfiles#version_ge_8()
     " Check syntax in Vim asynchronously and fix files,
     " with Language Server Protocol (LSP) support
     Plug 'dense-analysis/ale', { 'for': ['python', 'sh'] }

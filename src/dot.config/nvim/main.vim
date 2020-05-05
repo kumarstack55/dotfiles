@@ -6,87 +6,33 @@ execute "source " . s:plugins_file
 
 " フォントサイズを設定する
 if dotfiles#is_gui_running()
-  command! MyFontSizeSmall call dotfiles#set_gui_font(g:FONT_SIZE_SMALL)
-  command! MyFontSizeNormal call dotfiles#set_gui_font(g:FONT_SIZE_NORMAL)
-  command! MyFontSizeLarge call dotfiles#set_gui_font(g:FONT_SIZE_LARGE)
-  command! MyFontSizeExLarge call dotfiles#set_gui_font(g:FONT_SIZE_EXLARGE)
+  command! MyFontSizeSmall
+        \ call dotfiles#set_gui_font(g:FONT_SIZE_SMALL)
+  command! MyFontSizeNormal
+        \ call dotfiles#set_gui_font(g:FONT_SIZE_NORMAL)
+  command! MyFontSizeLarge
+        \ call dotfiles#set_gui_font(g:FONT_SIZE_LARGE)
+  command! MyFontSizeExLarge
+        \ call dotfiles#set_gui_font(g:FONT_SIZE_EXLARGE)
 endif
 
-" インデントガイドが無効か確認する
-function! g:MyIndentGuideDisabled()
-  call indent_guides#init_matches()
-  return empty(w:indent_guides_matches)
-endfunction
+" tabstop, shiftwidth を変える
+command! MyTabstopWidth2 call dotfiles#set_tabstop(2)
+command! MyTabstopWidth3 call dotfiles#set_tabstop(3)
+command! MyTabstopWidth4 call dotfiles#set_tabstop(4)
 
-" インデントガイドが有効か確認する
-function! g:MyIndentGuideEnabled()
-  return ! g:MyIndentGuideDisabled()
-endfunction
-
-" インデントガイドをリロードする
-function! MyIndentGuideReload()
-  if g:MyIndentGuideEnabled()
-    IndentGuidesDisable
-    IndentGuidesEnable
-  endif
-endfunction
-command! MyIndentGuideReload call MyIndentGuideReload()
-
-" タブストップを変える
-function! g:MySetLocalTabstop(ts)
-  let &l:tabstop = a:ts
-  let &l:shiftwidth = a:ts
-  let &l:softtabstop = a:ts
-  setlocal expandtab
-  call MyIndentGuideReload()
-endfunction
-command! MyTabstopWidth2 call g:MySetLocalTabstop(2)
-command! MyTabstopWidth3 call g:MySetLocalTabstop(3)
-command! MyTabstopWidth4 call g:MySetLocalTabstop(4)
-
-" Markdown編集用の設定にする
-function! MyFileTypeMarkdown()
-  setlocal filetype=markdown
-  call g:MySetLocalTabstop(4)
-endfunction
-command! MyFileTypeMarkdown call MyFileTypeMarkdown()
-
-" ReStructuredText用の設定にする
-function! MyFileTypeRst()
-  setlocal filetype=rst
-  call g:MySetLocalTabstop(3)
-endfunction
-command! MyFileTypeRst call MyFileTypeRst()
+" ファイルタイプ用の設定にする
+command! MyFiletypeMarkdown
+  \ call dotfiles#set_filetype_markdown()
+command! MyFileTypeRst call dotfiles#set_filetype_rst()
 
 " カーソル行の直後にmodelineを加える
-function! MyModelineAppend()
-  let pos = getpos(".")
-  let modeline = "vim:set ft=" . &filetype . ":"
-  let line = ""
-  if &filetype == ""
-    return
-  elseif &filetype == "markdown"
-    let line = "<!-- " . modeline . " -->"
-  elseif &filetype == "rst"
-    let line = ".. " . modeline
-  else
-    let line = modeline
-  endif
-  execute ":normal A\n" . line
-  call setpos(".", pos)
-endfunction
-command! MyModelineAppend call MyModelineAppend()
+command! MyModelineAppend call dotfiles#add_modeline()
 
 " Tagbar をリロードする
-function! MyTagbarReload()
-  if exists('t:tagbar_buf_name') && bufwinnr(t:tagbar_buf_name) != -1
-    TagbarClose
-    TagbarOpen
-  endif
-endfunction
-command! MyTagbarReload call MyTagbarReload()
+command! MyTagbarReload call dotfiles#tagbar_reload()
 
-if g:my_gui_type == g:GUI_TYPE_RUNNING
+if dotfiles#is_gui_running()
   " すべてのモードでマウスを有効にする
   set mouse=a
 endif
@@ -96,7 +42,8 @@ endif
 behave xterm
 
 " 変化が見られないのでしばらくしたら消す
-" ESC応答を早めるため、キーコードシーケンス完了の待ち時間を短くする
+" ESC応答を早めるため、キーコードシーケンス完了の待ち時間を
+" 短くする
 " https://qiita.com/k2nakamura/items/fa19806a041d0429fc9f
 "set ttimeoutlen=10
 
@@ -113,16 +60,18 @@ set number
 "colorscheme apprentice
 colorscheme gruvbox
 
-if g:my_gui_type == g:GUI_TYPE_RUNNING
+if dotfiles#is_gui_running()
   " フォントサイズを設定する
   " また、プリント時に文字化けを回避するために追加した
   MyFontSizeNormal
 endif
 
-if g:my_gui_type == g:GUI_TYPE_RUNNING
+if dotfiles#is_gui_running() && dotfiles#is_neovim()
   " ツールバーを非表示にする
   set guioptions-=T
+endif
 
+if dotfiles#is_gui_running()
   " insert モードで IM を OFF にする
   set iminsert=0
 
@@ -133,7 +82,8 @@ endif
 " 既存ファイル編集時のエンコーディング候補順序を定める
 set fileencodings=utf-8,cp932,utf-16le
 
-" ファイル再オープン時にカーソルを移動する (:help restore-cursor)
+" ファイル再オープン時にカーソルを移動する
+" (:help restore-cursor)
 autocmd BufReadPost *
   \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
   \ |   exe "normal! g`\""
@@ -142,7 +92,7 @@ autocmd BufReadPost *
 " modelineの認識は先頭と末尾の行数を指定する
 set modelines=5
 
-" カーソルの上部または下部で表示するスクリーン行数の最小数を指定する
+" カーソルの上下端で表示するスクリーン行数の最小数を指定する
 set scrolloff=5
 
 " カーソル行を表示させる
@@ -158,10 +108,10 @@ endif
 
 " 選択範囲をクリップボードに送る
 " VISUALで選択した範囲は即座にクリップボードに送られる
-if g:my_gui_type == g:GUI_TYPE_RUNNING
+if dotfiles#is_gui_running()
   " 選択範囲をコピーする
   set guioptions+=a
-elseif g:my_vim_type == g:VIM_TYPE_VIM
+elseif dotfiles#is_vim()
   set clipboard=autoselect
 else
   " autoselect を設定できない環境では
@@ -185,7 +135,7 @@ endif
 set nohlsearch
 
 " 置換時に置換結果のプレビューをプレビューウィンドウで表示する
-if g:my_vim_type == g:VIM_TYPE_NEOVIM
+if dotfiles#is_neovim()
   set inccommand=split
 endif
 
@@ -226,9 +176,12 @@ call submode#map('winsize', 'n', '', '-', '<C-w>-')
 "-----------------------------------------
 " NERDTree
 
-let NERDTreeShowBookmarks = 1   " 開始時にブックマークを表示
-let NERDTreeShowHidden = 1      " 隠しファイルを表示
-let NERDTreeSortHiddenFirst = 1 " 隠しファイルは先頭に表示
+" 開始時にブックマークを表示
+let NERDTreeShowBookmarks = 1
+" 隠しファイルを表示
+let NERDTreeShowHidden = 1
+" 隠しファイルは先頭に表示
+let NERDTreeSortHiddenFirst = 1
 
 " 使い方
 " :NERDTree
@@ -254,8 +207,10 @@ let NERDTreeSortHiddenFirst = 1 " 隠しファイルは先頭に表示
 "-----------------------------------------
 " vim-devicons
 
-set encoding=utf8    " vim内で使うエンコーディングを指定する
-set ambiwidth=double " East Asian Width Class Ambiguous を2文字幅で扱う
+" vim内で使うエンコーディングを指定する
+set encoding=utf8
+" East Asian Width Class Ambiguous を2文字幅で扱う
+set ambiwidth=double
 
 if g:enable_devicons
   if dotfiles#is_windows() && dotfiles#is_gui_running()
@@ -270,33 +225,9 @@ if g:enable_devicons
   let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 endif
 
-function! g:MyDevIconsEnable()
-  let g:enable_devicons = 1
-  let g:lightline#ale#indicator_checking = "\uf110"
-  let g:lightline#ale#indicator_warnings = "\uf071"
-  let g:lightline#ale#indicator_errors = "\uf05e"
-  let g:lightline#ale#indicator_ok = "\uf00c"
-endfunction
-command! MyDevIconsEnable call g:MyDevIconsEnable()
-
-function! g:MyDevIconsDisable()
-  let g:enable_devicons = 0
-  let g:lightline#ale#indicator_warnings = 'W: '
-  let g:lightline#ale#indicator_errors = 'E: '
-  let g:lightline#ale#indicator_ok = 'OK'
-  let g:lightline#ale#indicator_checking = 'Linting...'
-endfunction
-command! MyDevIconsDisable call g:MyDevIconsDisable()
-
-function! g:MyDevIconsToggle()
-  let g:enable_devicons = !g:enable_devicons
-  if g:enable_devicons
-    call g:MyDevIconsEnable()
-  else
-    call g:MyDevIconsDisable()
-  endif
-endfunction
-command! MyDevIconsToggle call g:MyDevIconsToggle()
+command! MyDevIconsEnable call dotfiles#devicons_enable()
+command! MyDevIconsDisable call dotfiles#devicons_disable()
+command! MyDevIconsToggle call dotfiles#devicons_toggle()
 
 "-----------------------------------------
 " bufexplorer
@@ -332,7 +263,7 @@ let g:lightline.component_function = {
     \ 'percent': 'LightLinePercent',
     \ 'readonly': 'LightLineReadonly',
   \ }
-if g:my_vim_version == g:VIM_VERSION_8
+if dotfiles#version_ge_8()
   let g:lightline.component_expand = {
       \ 'linter_checking': 'lightline#ale#checking',
       \ 'linter_warnings': 'lightline#ale#warnings',
@@ -350,9 +281,9 @@ if g:my_vim_version == g:VIM_VERSION_8
   call insert(g:lightline.active.right[0], 'linter_errors', 0)
   call insert(g:lightline.active.right[0], 'linter_checking', 0)
   if g:enable_devicons
-    call g:MyDevIconsEnable()
+    call dotfiles#devicons_enable()
   else
-    call g:MyDevIconsDisable()
+    call dotfiles#devicons_disable()
   endif
 endif
 
@@ -430,10 +361,10 @@ function! LightLineLineColumnInfo()
 
   " ウィンドウの幅を得る
   " https://stackoverflow.com/questions/26315925/
-  if g:my_vim_version == g:VIM_VERSION_7
-    redir =>signs |exe "sil sign place buffer=".bufnr('')|redir end
-  else
+  if dotfiles#version_ge_8()
     let signs = execute(printf('sign place buffer=%d', bufnr('')))
+  else
+    redir =>signs |exe "sil sign place buffer=".bufnr('')|redir end
   endif
   let signlist = split(signs, '\n')
   let signwidth = len(signlist) >= 2 ? 2 : 0
@@ -472,8 +403,8 @@ let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
 " vim-quickrun
 
 " 使い方
-" :QuickRun<enter> でバッファ内を実行すると結果が別バッファで得られる。
-" Python 等のコードを書いて実行する等が便利。
+" :QuickRun<enter> でバッファ内を実行すると結果が別バッファで
+" 得られる。Python 等のコードを書いて実行する等が便利。
 
 "-----------------------------------------
 " vim-slime
@@ -526,10 +457,8 @@ let g:indent_guides_exclude_filetypes = ['help', 'nerdtree']
 "-----------------------------------------
 " vim-snippets
 
-function! g:MyUltiSnipsRefreshSnippets()
-  call UltiSnips#RefreshSnippets()
-endfunction
-command! MyUltiSnipsRefreshSnippets call g:MyUltiSnipsRefreshSnippets()
+command! MyUltiSnipsRefreshSnippets
+      \ call UltiSnips#RefreshSnippets()
 
 " Trigger configuration. Do not use <tab> if you use
 " https://github.com/Valloric/YouCompleteMe.
@@ -680,7 +609,7 @@ let g:flake8_show_in_gutter=1
 "-----------------------------------------
 " dense-analysis/ale
 
-if g:my_vim_version == g:VIM_VERSION_8
+if dotfiles#version_ge_8()
   " https://github.com/dense-analysis
   " 5.ix. How can I navigate between errors quickly?
   nmap <silent> <C-k> <Plug>(ale_previous_wrap)
@@ -724,20 +653,35 @@ call glaive#Install()
 
 " ファイルタイプを定める
 
-autocmd BufRead,BufNewFile *.yml setlocal indentexpr=""
-autocmd BufRead,BufNewFile */playbooks/*.yml setlocal filetype=yaml.ansible
-autocmd BufRead,BufNewFile */ansible/*.yml setlocal filetype=yaml.ansible
+" *.yml
+autocmd BufRead,BufNewFile *.yml
+      \ setlocal indentexpr=""
 
-autocmd BufRead,BufNewFile */dot.gitconfig_local.inc setlocal filetype=conf
-autocmd BufRead,BufNewFile */.gitconfig_local.inc setlocal filetype=conf
+" Ansible
+autocmd BufRead,BufNewFile */playbooks/*.yml
+      \ setlocal filetype=yaml.ansible
+autocmd BufRead,BufNewFile */ansible/*.yml
+      \ setlocal filetype=yaml.ansible
 
+" config
+autocmd BufRead,BufNewFile */dot.gitconfig_local.inc
+      \ setlocal filetype=conf
+autocmd BufRead,BufNewFile */.gitconfig_local.inc
+      \ setlocal filetype=conf
+
+" Markdwon
 autocmd BufRead,BufNewFile *.md
-  \ setlocal filetype=markdown shiftwidth=4 softtabstop=4 tabstop=4
-  \ expandtab
+  \ setlocal filetype=markdown shiftwidth=4 softtabstop=4
+  \ tabstop=4 expandtab
 
-" vim-ps1 と ultimate を同時に利用するとコメント行の shift に失敗する。
-" 回避するに smartindent を無効にする。
-autocmd BufRead,BufNewFile *.ps1 setlocal nosmartindent
-autocmd BufRead,BufNewFile *.psm setlocal nosmartindent
+" Bash
+autocmd BufRead,BufNewFile *.bats
+      \ setlocal filetype=sh
 
-autocmd BufRead,BufNewFile *.bats setlocal filetype=sh
+" PowerShell
+" vim-ps1 と UltiSnips を同時に利用するとコメント行の
+" shift に失敗する。回避するに smartindent を無効にする。
+autocmd BufRead,BufNewFile *.ps1
+      \ setlocal nosmartindent
+autocmd BufRead,BufNewFile *.psm
+      \ setlocal nosmartindent

@@ -55,6 +55,14 @@ function! dotfiles#is_vim()
   return dotfiles#get_vim_type() == g:VIM_TYPE_VIM
 endfunction
 
+function! dotfiles#version_ge_8()
+  return v:version >= 800
+endfunction
+
+function! dotfiles#version_ge_7()
+  return v:version >= 700
+endfunction
+
 function! dotfiles#get_gui_type()
   if exists('g:ginit_loaded') || has('gui_running')
     return g:GUI_TYPE_RUNNING
@@ -98,4 +106,87 @@ function! dotfiles#set_gui_font(font_height_pt)
   endif
   let guifont_string = join(options, ':')
   let &guifont = guifont_string
+endfunction
+
+function! dotfiles#indent_guide_disabled()
+  call indent_guides#init_matches()
+  return empty(w:indent_guides_matches)
+endfunction
+
+function! dotfiles#indent_guide_enabled()
+  return ! dotfiles#indent_guide_disabled()
+endfunction
+
+function! dotfiles#indent_guide_reload()
+  if dotfiles#indent_guide_enabled()
+    IndentGuidesDisable
+    IndentGuidesEnable
+  endif
+endfunction
+
+function! dotfiles#set_tabstop(ts)
+  let &l:tabstop = a:ts
+  let &l:shiftwidth = a:ts
+  let &l:softtabstop = a:ts
+  setlocal expandtab
+  call dotfiles#indent_guide_reload()
+endfunction
+
+function! dotfiles#set_filetype_markdown()
+  setlocal filetype=markdown
+  call dotfiles#set_tabstop(4)
+endfunction
+
+function! dotfiles#set_filetype_rst()
+  setlocal filetype=rst
+  call dotfiles#set_tabstop(3)
+endfunction
+
+function! dotfiles#add_modeline()
+  let pos = getpos(".")
+  let modeline = "vim:set ft=" . &filetype . ":"
+  let line = ""
+  if &filetype == ""
+    return
+  elseif &filetype == "markdown"
+    let line = "<!-- " . modeline . " -->"
+  elseif &filetype == "rst"
+    let line = ".. " . modeline
+  else
+    let line = modeline
+  endif
+  execute ":normal A\n" . line
+  call setpos(".", pos)
+endfunction
+
+function! dotfiles#tagbar_reload()
+  if exists('t:tagbar_buf_name') && bufwinnr(t:tagbar_buf_name) != -1
+    TagbarClose
+    TagbarOpen
+  endif
+endfunction
+
+function! dotfiles#devicons_enable()
+  let g:enable_devicons = 1
+  let g:lightline#ale#indicator_checking = "\uf110"
+  let g:lightline#ale#indicator_warnings = "\uf071"
+  let g:lightline#ale#indicator_errors = "\uf05e"
+  let g:lightline#ale#indicator_ok = "\uf00c"
+endfunction
+
+function! dotfiles#devicons_disable()
+  let g:enable_devicons = 0
+  let g:lightline#ale#indicator_warnings = 'W: '
+  let g:lightline#ale#indicator_errors = 'E: '
+  let g:lightline#ale#indicator_ok = 'OK'
+  let g:lightline#ale#indicator_checking = 'Linting...'
+endfunction
+
+function! dotfiles#devicons_toggle()
+  let g:enable_devicons = !g:enable_devicons
+  if g:enable_devicons
+    call dotfiles#devicons_disable()
+  else
+    call dotfiles#devicons_enable()
+  endif
 endfunction
