@@ -1,5 +1,8 @@
 " $HOME/.config/nvim/plugins.vim
 
+if has('windows')
+  set rtp+=~/.config/nvim
+endif
 runtime library/dotfiles.vim
 
 " 初期状態として有効にするか決定する
