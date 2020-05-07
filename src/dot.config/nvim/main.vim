@@ -66,7 +66,7 @@ if dotfiles#is_gui_running()
   MyFontSizeNormal
 endif
 
-if dotfiles#is_gui_running() && dotfiles#is_neovim()
+if dotfiles#is_gui_running() && dotfiles#is_vim()
   " ツールバーを非表示にする
   set guioptions-=T
 endif
