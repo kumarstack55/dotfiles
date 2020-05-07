@@ -100,9 +100,9 @@ function! dotfiles#set_gui_font(font_height_pt)
   let options = [font_name, height]
   if dotfiles#is_windows() && dotfiles#is_vim()
     let charset = 'cSHIFTJIS'
-    add(options, charset)
+    call add(options, charset)
     let quality = 'qDRAFT'
-    add(options, quality)
+    call add(options, quality)
   endif
   let guifont_string = join(options, ':')
   let &guifont = guifont_string
