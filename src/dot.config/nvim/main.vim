@@ -683,5 +683,5 @@ autocmd BufRead,BufNewFile *.bats
 " shift に失敗する。回避するに smartindent を無効にする。
 autocmd BufRead,BufNewFile *.ps1
       \ setlocal nosmartindent
-autocmd BufRead,BufNewFile *.psm
+autocmd BufRead,BufNewFile *.psm1
       \ setlocal nosmartindent
