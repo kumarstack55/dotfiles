@@ -6,14 +6,10 @@ execute "source " . s:plugins_file
 
 " フォントサイズを設定する
 if dotfiles#is_gui_running()
-  command! MyFontSizeSmall
-        \ call dotfiles#set_gui_font(g:FONT_SIZE_SMALL)
-  command! MyFontSizeNormal
-        \ call dotfiles#set_gui_font(g:FONT_SIZE_NORMAL)
-  command! MyFontSizeLarge
-        \ call dotfiles#set_gui_font(g:FONT_SIZE_LARGE)
-  command! MyFontSizeExLarge
-        \ call dotfiles#set_gui_font(g:FONT_SIZE_EXLARGE)
+  command! MyFontSizeSmall call dotfiles#set_gui_font(g:FONT_SIZE_SMALL)
+  command! MyFontSizeNormal call dotfiles#set_gui_font(g:FONT_SIZE_NORMAL)
+  command! MyFontSizeLarge call dotfiles#set_gui_font(g:FONT_SIZE_LARGE)
+  command! MyFontSizeExLarge call dotfiles#set_gui_font(g:FONT_SIZE_EXLARGE)
 endif
 
 " tabstop, shiftwidth を変える
