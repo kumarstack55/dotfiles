@@ -22,9 +22,8 @@ command! MyTabstopWidth3 call dotfiles#set_tabstop(3)
 command! MyTabstopWidth4 call dotfiles#set_tabstop(4)
 
 " ファイルタイプ用の設定にする
-command! MyFiletypeMarkdown
-  \ call dotfiles#set_filetype_markdown()
-command! MyFileTypeRst call dotfiles#set_filetype_rst()
+command! MyFiletypeMarkdown call dotfiles#set_filetype_markdown()
+command! MyFiletypeRst call dotfiles#set_filetype_rst()
 
 " カーソル行の直後にmodelineを加える
 command! MyModelineAppend call dotfiles#add_modeline()
