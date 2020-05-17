@@ -60,7 +60,7 @@ test_item_when() {
 }
 
 when_tmux_vesion_lt_2pt1() {
-  type tmux 2>&1 >/dev/null \
+  type tmux >/dev/null 2>&1 \
     && tmux -V \
       | cut -d' ' -f2 \
       | {
@@ -70,7 +70,7 @@ when_tmux_vesion_lt_2pt1() {
 }
 
 when_tmux_vesion_ge_2pt1() {
-  type tmux 2>&1 >/dev/null \
+  type tmux >/dev/null 2>&1 \
     && tmux -V \
       | cut -d' ' -f2 \
       | {
@@ -159,7 +159,7 @@ main() {
       done
 
   # Pythonパッケージをインストールする
-  if type python3 2>&1 >/dev/null && type pip3 2>&1 >/dev/null; then
+  if type python3 >/dev/null 2>&1 && type pip3 >/dev/null 2>&1; then
     local req_path="$repo_dir/requirements.txt"
     pip3 install --user -r "$req_path"
   fi
@@ -174,7 +174,7 @@ main() {
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   fi
 
-  if type nvim 2>&1 >/dev/null; then
+  if type nvim >/dev/null 2>&1; then
     nvim -u "$HOME/.config/nvim/plugins.vim" -c "try | PlugInstall --sync | finally | qall! | endtry"
   fi
 }
