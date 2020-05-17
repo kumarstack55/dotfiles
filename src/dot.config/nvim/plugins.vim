@@ -121,7 +121,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'pearofducks/ansible-vim',
         \ {
           \ 'for': 'yaml.ansible',
-          \ 'do': 'which ansible && ./UltiSnips/generate.sh'
+          \ 'do': 'which ansible && ./UltiSnips/generate.sh --style dictionary'
         \ }
 
   " vim-markdown を利用するために必要なプラグイン
