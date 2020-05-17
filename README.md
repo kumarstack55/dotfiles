@@ -47,6 +47,7 @@ any : unix + windows
     * Documents/
         * WindowsPowerShell/
             * Microsoft.PowerShell_profile.ps1 [os:windows, action:copy,      target:Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1]
+    * .ansible.cfg                             [os:unix,    action:symlink,   target:dot.ansible.cfg]
     * .bashrc_local.sh                         [os:unix,    action:symlink,   target:dot.bashrc_local.sh]
     * .bashrc.d                                [os:unix,    action:symlink,   target:dot.bashrc.d]
     * .bash_profile                            [os:unix,    action:copy,      when:path_not_exists]

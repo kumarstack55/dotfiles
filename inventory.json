@@ -2,6 +2,12 @@
   "inventory": [
     {
       "os": "any",
+      "action": "symlink",
+      "path": ".ansible.cfg",
+      "target": "dot.ansible.cfg"
+    },
+    {
+      "os": "any",
       "action": "directory",
       "path": ".config"
     },
