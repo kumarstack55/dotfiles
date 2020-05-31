@@ -49,6 +49,10 @@ charset = utf-8-bom
 indent_size = 4
 tab_width = 4
 
+[*.rs]
+indent_size = 4
+tab_width = 4
+
 [*.rst]
 
 [{*.sh,*.sh.j2,*.bash,*.bats}]
