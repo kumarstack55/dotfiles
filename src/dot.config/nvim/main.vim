@@ -699,10 +699,6 @@ autocmd BufRead,BufNewFile *.md
   \ setlocal filetype=markdown shiftwidth=4 softtabstop=4
   \ tabstop=4 expandtab
 
-" Bash
-autocmd BufRead,BufNewFile *.bats
-      \ setlocal filetype=sh
-
 " PowerShell
 " vim-ps1 と UltiSnips を同時に利用するとコメント行の
 " shift に失敗する。回避するに smartindent を無効にする。

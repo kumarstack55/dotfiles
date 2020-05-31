@@ -184,4 +184,7 @@ call plug#begin('~/.vim/plugged')
 
   " Vim motions on speed!
   Plug 'easymotion/vim-easymotion'
+
+  " Syntax files for Bats (Bash Automated Testing System).
+  Plug 'aliou/bats.vim'
 call plug#end()
