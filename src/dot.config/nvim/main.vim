@@ -590,7 +590,8 @@ let g:tagbar_type_markdown = {
         \ 'h4': 'd',
         \ 'h5': 'e',
         \ 'h6': 'f',
-      \}
+      \},
+      \ 'sort': 0,
     \}
 
 let g:tagbar_type_go = {
