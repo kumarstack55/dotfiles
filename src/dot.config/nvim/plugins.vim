@@ -65,6 +65,7 @@ call plug#begin('~/.vim/plugged')
           \ 'markdown',
           \ 'python',
           \ 'rst',
+          \ 'rust',
           \ 'sh',
           \ 'snippets',
           \ 'vim',
