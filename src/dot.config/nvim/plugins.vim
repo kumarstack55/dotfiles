@@ -71,8 +71,10 @@ call plug#begin('~/.vim/plugged')
           \ 'vim',
         \ ] }
 
-  " Generate ctags-compatible tags files for Markdown documents.
-  Plug 'jszakmeister/markdown2ctags', { 'for': ['markdown'] }
+  if !dotfiles#has_mdctags()
+    " Generate ctags-compatible tags files for Markdown documents.
+    Plug 'jszakmeister/markdown2ctags', { 'for': ['markdown'] }
+  endif
 
   " vimfiler - A powerful file explorer implemented in Vim script
   Plug 'Shougo/vimfiler.vim'

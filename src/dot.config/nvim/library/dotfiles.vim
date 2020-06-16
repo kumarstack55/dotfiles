@@ -190,3 +190,7 @@ function! dotfiles#devicons_toggle()
     call dotfiles#devicons_enable()
   endif
 endfunction
+
+function! dotfiles#has_mdctags()
+  return executable('mdctags')
+endfunction
