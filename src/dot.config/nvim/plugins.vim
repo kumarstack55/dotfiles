@@ -12,18 +12,26 @@ let g:enable_devicons = dotfiles#get_enable_dev_icons()
 " Windows + nvim では Python3 を使う
 if dotfiles#is_windows() && dotfiles#is_neovim()
   let g:loaded_python_provider = 0
-  let g:python3_path = 'C:\Python36\python.exe'
-  if executable(g:python3_path)
-    let g:python3_host_prog = g:python3_path
+  let g:python38_path = 'C:\Python38\python.exe'
+  let g:python36_path = 'C:\Python36\python.exe'
+  if executable(g:python38_path)
+    let g:python3_host_prog = g:python38_path
+  elseif executable(g:python36_path)
+    let g:python3_host_prog = g:python36_path
   endif
-
   " Python2 は使わない
   let g:loaded_python_provider = 0
 endif
 
 " Windows + vim では Python3 を使う
 if dotfiles#is_windows() && dotfiles#is_vim()
-  set pythonthreedll=C:\Python36\python36.dll
+  let g:python36dll_path = 'C:\Python36\python36.dll'
+  let g:python38dll_path = 'C:\Python38\python38.dll'
+  if executable(g:python38dll_path)
+    let &pythonthreedll=g:python38dll_path
+  elseif filereadable(g:python36dll_path)
+    let &pythonthreedll=g:python36dll_path
+  endif
 endif
 
 " プラグインをインストールする
