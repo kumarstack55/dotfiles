@@ -18,7 +18,17 @@ _ssh_auth_socket_set() {
   local symlink
   for symlink in $(find $auth_sock_dir -type l); do
     local sock=$(readlink $symlink)
-    if ! ss -f unix -l | grep LISTEN | grep -F "${sock}" -q; then
+
+    local ss
+    if [[ -f /bin/ss ]]; then
+      # for debian 10, etc.
+      ss="/bin/ss"
+    elif [[ -f /usr/bin/ss ]]; then
+      # for EL7, etc
+      ss="/usr/bin/ss"
+    fi
+
+    if ! $ss -f unix -l | grep LISTEN | grep -F "${sock}" -q; then
       rm -f $symlink
     fi
   done

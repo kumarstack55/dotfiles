@@ -65,13 +65,16 @@ call plug#begin('~/.vim/plugged')
           \ 'markdown',
           \ 'python',
           \ 'rst',
+          \ 'rust',
           \ 'sh',
           \ 'snippets',
           \ 'vim',
         \ ] }
 
-  " Generate ctags-compatible tags files for Markdown documents.
-  Plug 'jszakmeister/markdown2ctags', { 'for': ['markdown'] }
+  if !dotfiles#has_mdctags()
+    " Generate ctags-compatible tags files for Markdown documents.
+    Plug 'jszakmeister/markdown2ctags', { 'for': ['markdown'] }
+  endif
 
   " vimfiler - A powerful file explorer implemented in Vim script
   Plug 'Shougo/vimfiler.vim'
@@ -121,7 +124,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'pearofducks/ansible-vim',
         \ {
           \ 'for': 'yaml.ansible',
-          \ 'do': 'which ansible && ./UltiSnips/generate.sh'
+          \ 'do': 'which ansible && ./UltiSnips/generate.sh --style dictionary'
         \ }
 
   " vim-markdown を利用するために必要なプラグイン
@@ -184,4 +187,7 @@ call plug#begin('~/.vim/plugged')
 
   " Vim motions on speed!
   Plug 'easymotion/vim-easymotion'
+
+  " Syntax files for Bats (Bash Automated Testing System).
+  Plug 'aliou/bats.vim'
 call plug#end()

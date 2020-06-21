@@ -548,11 +548,11 @@ let g:tagbar_type_ps1 = {
     \ ]
   \ }
 
-if dotfiles#is_windows()
+if dotfiles#has_mdctags()
   let g:tagbar_type_markdown = {
-      \ 'ctagsbin' : 'c:\tools\mdctags\bin\mdctags.exe',
-      \ 'ctagsargs' : '',
-      \ 'kinds'     : [
+      \ 'ctagsbin': 'mdctags',
+      \ 'ctagsargs': '',
+      \ 'kinds': [
         \ 'a:h1:0:0',
         \ 'b:h2:0:0',
         \ 'c:h3:0:0',
@@ -562,22 +562,23 @@ if dotfiles#is_windows()
       \ ],
       \ 'sro': '::',
       \ 'kind2scope' : {
-        \ 'a' : 'h1',
-        \ 'b' : 'h2',
-        \ 'c' : 'h3',
-        \ 'd' : 'h4',
-        \ 'e' : 'h5',
-        \ 'f' : 'h6',
+        \ 'a': 'h1',
+        \ 'b': 'h2',
+        \ 'c': 'h3',
+        \ 'd': 'h4',
+        \ 'e': 'h5',
+        \ 'f': 'h6',
       \ },
       \ 'scope2kind' : {
-        \ 'h1' : 'a',
-        \ 'h2' : 'b',
-        \ 'h3' : 'c',
-        \ 'h4' : 'd',
-        \ 'h5' : 'e',
-        \ 'h6' : 'f',
-      \ }
-    \ }
+        \ 'h1': 'a',
+        \ 'h2': 'b',
+        \ 'h3': 'c',
+        \ 'h4': 'd',
+        \ 'h5': 'e',
+        \ 'h6': 'f',
+      \ },
+      \ 'sort': 0,
+    \}
 else
   let g:tagbar_type_markdown = {
       \ 'ctagstype': 'markdown',
@@ -622,6 +623,20 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
   \ }
+
+let g:tagbar_type_rust = {
+    \ 'ctagstype' : 'rust',
+    \ 'kinds' : [
+      \'T:types,type definitions',
+      \'f:functions,function definitions',
+      \'g:enum,enumeration names',
+      \'s:structure names',
+      \'m:modules,module names',
+      \'c:consts,static constants',
+      \'t:traits',
+      \'i:impls,trait implementations',
+    \]
+  \}
 
 "-----------------------------------------
 " vim-flake8
@@ -700,10 +715,6 @@ autocmd BufRead,BufNewFile */.gitconfig_local.inc
 autocmd BufRead,BufNewFile *.md
   \ setlocal filetype=markdown shiftwidth=4 softtabstop=4
   \ tabstop=4 expandtab
-
-" Bash
-autocmd BufRead,BufNewFile *.bats
-      \ setlocal filetype=sh
 
 " PowerShell
 " vim-ps1 と UltiSnips を同時に利用するとコメント行の
