@@ -23,9 +23,9 @@ _ssh_auth_socket_set() {
     if [[ -f /bin/ss ]]; then
       # for debian 10, etc.
       ss="/bin/ss"
-    elif [[ -f /usr/bin/ss ]]; then
+    elif [[ -f /usr/sbin/ss ]]; then
       # for EL7, etc
-      ss="/usr/bin/ss"
+      ss="/usr/sbin/ss"
     fi
 
     if ! $ss -f unix -l | grep LISTEN | grep -F "${sock}" -q; then
