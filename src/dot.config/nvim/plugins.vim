@@ -201,4 +201,22 @@ call plug#begin('~/.vim/plugged')
 
   " vim-cheatsheet opens your cheat sheet file.
   Plug 'reireias/vim-cheatsheet', { 'on': 'Cheat' }
+
+  if dotfiles#version_ge_8()
+    " normalize async job control api for vim and neovim
+    Plug 'prabirshrestha/async.vim'
+
+    " Async autocompletion for Vim 8 and Neovim with |timers|.
+    Plug 'prabirshrestha/asyncomplete.vim'
+
+    " Async Language Server Protocol plugin for vim8 and neovim.
+    Plug 'prabirshrestha/vim-lsp'
+
+    " Provide Language Server Protocol autocompletion source for
+    " asyncomplete.vim and vim-lsp.
+    Plug 'prabirshrestha/asyncomplete-lsp.vim'
+
+    " Auto configurations for Language Servers for vim-lsp.
+    Plug 'mattn/vim-lsp-settings'
+  endif
 call plug#end()
