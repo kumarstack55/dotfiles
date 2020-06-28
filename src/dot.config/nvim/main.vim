@@ -723,3 +723,14 @@ autocmd BufRead,BufNewFile *.ps1
       \ setlocal nosmartindent
 autocmd BufRead,BufNewFile *.psm1
       \ setlocal nosmartindent
+
+" ~/.config/nvim/_config/*.vim 等を読み込む
+call
+  \ map(
+    \ sort(
+      \ split(
+        \ globpath(&runtimepath, '_config/*.vim')
+      \ )
+    \ ),
+    \ {->[execute('exec "so" v:val')]}
+  \ )
