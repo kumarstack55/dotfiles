@@ -1,3 +1,7 @@
+if empty(globpath(&rtp, 'autoload/lightline.vim'))
+  finish
+endif
+
 set laststatus=2 " 常にステータスを表示させる
 let g:lightline = {}
 let g:lightline.colorscheme = 'jellybeans'
@@ -139,4 +143,3 @@ function! LightLineLineColumnInfo()
     \ printf("C%d/%2d", p[2], width) :
     \ printf("C%d", p[2])
 endfunction
-

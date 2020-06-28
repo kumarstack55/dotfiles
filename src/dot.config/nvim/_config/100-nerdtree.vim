@@ -1,3 +1,7 @@
+if empty(globpath(&rtp, 'autoload/nerdtree.vim'))
+  finish
+endif
+
 " 開始時にブックマークを表示
 let NERDTreeShowBookmarks = 1
 
