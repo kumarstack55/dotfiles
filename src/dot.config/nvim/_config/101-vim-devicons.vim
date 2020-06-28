@@ -1,7 +1,3 @@
-if empty(globpath(&rtp, 'autoload/vim-devicons.vim'))
-  finish
-endif
-
 " vim内で使うエンコーディングを指定する
 set encoding=utf8
 
