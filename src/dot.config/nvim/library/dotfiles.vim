@@ -183,7 +183,6 @@ function! dotfiles#devicons_disable()
 endfunction
 
 function! dotfiles#devicons_toggle()
-  let g:enable_devicons = !g:enable_devicons
   if g:enable_devicons
     call dotfiles#devicons_disable()
   else
