@@ -200,5 +200,5 @@ call plug#begin('~/.vim/plugged')
   Plug 'aliou/bats.vim'
 
   " vim-cheatsheet opens your cheat sheet file.
-  Plug 'reireias/vim-cheatsheet'
+  Plug 'reireias/vim-cheatsheet', { 'on': 'Cheat' }
 call plug#end()
