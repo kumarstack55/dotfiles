@@ -197,7 +197,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'easymotion/vim-easymotion'
 
   " Syntax files for Bats (Bash Automated Testing System).
-  Plug 'aliou/bats.vim'
+  "Plug 'aliou/bats.vim'
+  Plug 'kumarstack55/bats.vim'
 
   " vim-cheatsheet opens your cheat sheet file.
   Plug 'reireias/vim-cheatsheet', { 'on': 'Cheat' }
