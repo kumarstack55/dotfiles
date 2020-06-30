@@ -1,5 +1,10 @@
 # Cheatsheet
 
+## easymotion
+
+* 画面内で `XY` で始まる単語にジャンプする
+    * `sXY`
+
 ## vim-fugitive
 
 * コミットログを確認するため、quickfix にログを表示する
@@ -167,3 +172,4 @@ tmux target pane: :0.0    --> 初回はどの pane に出力するか決める
                           --> date が実行される
 C-c C-c                   --> 2回目以降は pane 指定不要となる
 ```
+
