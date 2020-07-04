@@ -56,7 +56,7 @@ C-w >>><<<
 ### easymotion
 
 * 画面内で `XY` で始まる単語にジャンプする
-    * `sXY`
+    * `<Leader>sXY`
 
 ### vim-surround
 
