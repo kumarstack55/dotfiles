@@ -213,4 +213,13 @@ call plug#begin('~/.vim/plugged')
     " Auto configurations for Language Servers for vim-lsp.
     Plug 'mattn/vim-lsp-settings'
   endif
+
+  " fernのNoteの記述に従いnvimでは適用する
+  " Fix CursorHold Performance
+  if has("nvim")
+    Plug 'antoinemadec/FixCursorHold.nvim'
+  endif
+
+  " General purpose asynchronous tree viewer written in Pure Vim script.
+  Plug 'lambdalisue/fern.vim'
 call plug#end()
