@@ -54,6 +54,12 @@
       "target": "dot.gitconfig"
     },
     {
+      "os": "any",
+      "action": "symlink",
+      "path": ".hgrc",
+      "target": "dot.hgrc"
+    },
+    {
       "os": "windows",
       "action": "symlink",
       "path": ".gitconfig_windows.inc",
@@ -126,6 +132,13 @@
       "action": "copy",
       "path": ".gitconfig_local.inc",
       "target": "dot.gitconfig_local.inc",
+      "when": "path_not_exists"
+    },
+    {
+      "os": "any",
+      "action": "copy",
+      "path": ".hgrc_local.ini",
+      "target": "dot.hgrc_local.ini",
       "when": "path_not_exists"
     },
     {
