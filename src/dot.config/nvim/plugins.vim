@@ -140,7 +140,7 @@ call plug#begin('~/.vim/plugged')
   " It provides nice syntax coloring and indenting
   " for Windows PowerShell (.ps1 files, and also includes
   " a filetype plugin so Vim can autodetect your PS1 scripts.
-  Plug 'PProvost/vim-ps1', { 'for': ['ps1', 'psm'] }
+  Plug 'PProvost/vim-ps1', { 'for': ['ps1', 'psm', 'md'] }
 
   " A simple script to help create ctags-compatible tag files
   " for the sections within a reStructuredText document.
