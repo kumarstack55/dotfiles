@@ -36,6 +36,9 @@ endif
 
 " プラグインをインストールする
 call plug#begin('~/.vim/plugged')
+  " vim-cheatsheet opens your cheat sheet file.
+  Plug 'reireias/vim-cheatsheet', { 'on': 'Cheat' }
+
   " a universal set of defaults that (hopefully)
   " everyone can agree on.
   Plug 'tpope/vim-sensible'
@@ -192,9 +195,6 @@ call plug#begin('~/.vim/plugged')
   " Syntax files for Bats (Bash Automated Testing System).
   "Plug 'aliou/bats.vim'
   Plug 'kumarstack55/bats.vim'
-
-  " vim-cheatsheet opens your cheat sheet file.
-  Plug 'reireias/vim-cheatsheet', { 'on': 'Cheat' }
 
   if dotfiles#version_ge_8()
     " normalize async job control api for vim and neovim
