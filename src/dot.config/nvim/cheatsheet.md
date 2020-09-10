@@ -1,5 +1,40 @@
 # Cheatsheet
 
+## ツリービュアー
+
+```
+:Fern .
+```
+
+```
+:Fern . -drawer
+```
+
+```
+:Fern %:h
+```
+
+* `?` でヘルプを出す。
+* `!` で隠しファイルを表示する。
+
+選択したファイルのあるディレクトリに cd する:
+
+```
+lcd %:h
+```
+
+ブックマークを開く:
+
+```
+:Fern bookmark:///
+```
+
+### nerdtree
+
+```
+:NERDTree
+```
+
 ## ファイル
 
 ### VimFiler
@@ -9,12 +44,6 @@
 ### unite
 
 `:Unite file buffer`
-
-### nerdtree
-
-```
-:NERDTree
-```
 
 ### ctrlp.vim
 
