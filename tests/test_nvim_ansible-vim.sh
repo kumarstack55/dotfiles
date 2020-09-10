@@ -23,5 +23,15 @@ __SEQ__
 cmd=$(my_get_normal_cmd "$cmd_file")
 nvim -c "execute \"normal ${cmd}\"" "$yml_file" \
   1>/dev/null 2>/dev/null
-
+ls -al $HOME/
+ls -al $HOME/.vim
+ls -al $HOME/.vim/plugged
+ls -al $HOME/.vim/plugged/ansible-vim/UltiSnips
+cd $HOME/.vim/plugged/ansible-vim
+head -1 ./UltiSnips/generate.sh
+head -1 ./UltiSnips/generate.py
+which python3
+python3 --version
+./UltiSnips/generate.sh --dictionary
+cat "$yml_file"
 grep -Fq "msg" "$yml_file"
