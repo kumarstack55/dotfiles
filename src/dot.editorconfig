@@ -21,6 +21,9 @@ indent_style = tab
 indent_size = 4
 tab_width = 4
 
+[*.diff]
+trim_trailing_whitespace = false
+
 [{.gitconfig,dot.gitconfig,.gitconfig_*.inc,dot.gitconfig_*.inc}]
 indent_size = 8
 tab_width = 8
