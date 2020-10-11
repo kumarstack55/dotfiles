@@ -24,6 +24,13 @@
       "target": "dot.config/pip"
     },
     {
+      "os": "any",
+      "action": "symlink",
+      "path": ".config/gh",
+      "target": "dot.config/gh",
+      "when": "path_not_exists"
+    },
+    {
       "os": "unix",
       "action": "directory",
       "path": ".ssh",
