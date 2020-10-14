@@ -53,7 +53,8 @@ set number
 
 " カラースキームを設定する
 "colorscheme apprentice
-colorscheme gruvbox
+"colorscheme gruvbox
+colorscheme iceberg
 
 if dotfiles#is_gui_running()
   " フォントサイズを設定する

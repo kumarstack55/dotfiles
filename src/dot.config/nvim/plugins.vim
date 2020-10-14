@@ -56,6 +56,9 @@ call plug#begin('~/.vim/plugged')
   " Retro groove color scheme for Vim
   Plug 'morhetz/gruvbox'
 
+  " Iceberg is well-designed, bluish color scheme for Vim and Neovim.
+  Plug 'cocopon/iceberg.vim'
+
   " EditorConfig Vim Plugin
   Plug 'editorconfig/editorconfig-vim'
 
