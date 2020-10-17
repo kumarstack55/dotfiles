@@ -56,8 +56,11 @@ call plug#begin('~/.vim/plugged')
   " Retro groove color scheme for Vim
   Plug 'morhetz/gruvbox'
 
+  " Pgmnt is a template engine for creating Vim color schemes.
+  Plug 'cocopon/pgmnt.vim'
+
   " Iceberg is well-designed, bluish color scheme for Vim and Neovim.
-  Plug 'cocopon/iceberg.vim'
+  Plug 'kumarstack55/iceberg.vim'
 
   " EditorConfig Vim Plugin
   Plug 'editorconfig/editorconfig-vim'
