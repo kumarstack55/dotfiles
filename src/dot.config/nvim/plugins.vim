@@ -182,7 +182,10 @@ call plug#begin('~/.vim/plugged')
   endif
 
   " (Do)cumentation (Ge)nerator 15+ languages
-  Plug 'kkoomen/vim-doge'
+  if has('nvim') || (v:version > 700 && has('patch-7.4.2119'))
+    " Vim v7.4.2119+ is required.
+    Plug 'kkoomen/vim-doge'
+  endif
 
   " Yet Another Lexima
   Plug 'mattn/vim-lexiv'
