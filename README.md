@@ -4,13 +4,24 @@
 
 ## インストール
 
-### macOS, EL7, debian, Windows+mintty
+### macOS, EL7, debian, Windows+PuTTY, Windows+mintty
 
+* Windows + PuTTY の場合のみ次の設定をする:
+    * Window
+        * Appearance
+            * Font: Cica, 14pt
+    * Connection
+        * SSH
+            * Auth
+                * [x] Allow agent forwarding
 * Windows + mintty の場合のみ次の設定をする:
     * Options - Text - Font: Cica, 14pt
     * Options - Terminal - Type: xterm-256color
 
 ```bash
+#sudo apt install git -y
+#sudo yum install git -y
+
 cd $HOME
 git clone git@github.com:kumarstack55/dotfiles.git
 
