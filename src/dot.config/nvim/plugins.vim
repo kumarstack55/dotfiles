@@ -229,18 +229,20 @@ call plug#begin('~/.vim/plugged')
     Plug 'antoinemadec/FixCursorHold.nvim'
   endif
 
-  " General purpose asynchronous tree viewer written in Pure Vim script.
-  Plug 'lambdalisue/fern.vim'
+  if has("nvim") || v:version >= 801
+    " General purpose asynchronous tree viewer written in Pure Vim script.
+    Plug 'lambdalisue/fern.vim'
 
-  " A plugin for fern.vim which provides simple bookmark feature.
-  Plug 'lambdalisue/fern-bookmark.vim'
+    " A plugin for fern.vim which provides simple bookmark feature.
+    Plug 'lambdalisue/fern-bookmark.vim'
 
-  " A simplified version of vim-devicons which does NOT provide any 3rd
-  " party integrations in itself. In otherwords, it is a fundemental
-  " plugin to handle Nerd Fonts from Vim.
-  Plug 'lambdalisue/nerdfont.vim'
+    " A simplified version of vim-devicons which does NOT provide any 3rd
+    " party integrations in itself. In otherwords, it is a fundemental
+    " plugin to handle Nerd Fonts from Vim.
+    Plug 'lambdalisue/nerdfont.vim'
 
-  " fern.vim plugin which add file type icons through
-  " lambdalisue/nerdfont.vim.
-  Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+    " fern.vim plugin which add file type icons through
+    " lambdalisue/nerdfont.vim.
+    Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+  endif
 call plug#end()
