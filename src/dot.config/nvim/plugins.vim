@@ -103,7 +103,9 @@ call plug#begin('~/.vim/plugged')
 
   " Indent Guides is a plugin for visually displaying indent
   " levels in Vim.
-  Plug 'nathanaelkane/vim-indent-guides'
+  if dotfiles#get_vim_version() == g:VIM_VERSION_8
+    Plug 'nathanaelkane/vim-indent-guides'
+  endif
 
   " quickrun.txt - Run a command and show its result quickly.
   Plug 'thinca/vim-quickrun'
