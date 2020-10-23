@@ -116,6 +116,10 @@ action_directory() {
   mkdir $options -pv $HOME/$item_path
 }
 
+action_chmod_600() {
+  chmod 600 $src_dir/$item_target
+}
+
 main() {
   # 引数を解析する
   local opt

@@ -103,7 +103,9 @@ call plug#begin('~/.vim/plugged')
 
   " Indent Guides is a plugin for visually displaying indent
   " levels in Vim.
-  Plug 'nathanaelkane/vim-indent-guides'
+  if dotfiles#get_vim_version() == g:VIM_VERSION_8
+    Plug 'nathanaelkane/vim-indent-guides'
+  endif
 
   " quickrun.txt - Run a command and show its result quickly.
   Plug 'thinca/vim-quickrun'
@@ -182,7 +184,10 @@ call plug#begin('~/.vim/plugged')
   endif
 
   " (Do)cumentation (Ge)nerator 15+ languages
-  Plug 'kkoomen/vim-doge'
+  if has('nvim') || (v:version > 700 && has('patch-7.4.2119'))
+    " Vim v7.4.2119+ is required.
+    Plug 'kkoomen/vim-doge'
+  endif
 
   " Yet Another Lexima
   Plug 'mattn/vim-lexiv'
@@ -226,18 +231,20 @@ call plug#begin('~/.vim/plugged')
     Plug 'antoinemadec/FixCursorHold.nvim'
   endif
 
-  " General purpose asynchronous tree viewer written in Pure Vim script.
-  Plug 'lambdalisue/fern.vim'
+  if has("nvim") || v:version >= 801
+    " General purpose asynchronous tree viewer written in Pure Vim script.
+    Plug 'lambdalisue/fern.vim'
 
-  " A plugin for fern.vim which provides simple bookmark feature.
-  Plug 'lambdalisue/fern-bookmark.vim'
+    " A plugin for fern.vim which provides simple bookmark feature.
+    Plug 'lambdalisue/fern-bookmark.vim'
 
-  " A simplified version of vim-devicons which does NOT provide any 3rd
-  " party integrations in itself. In otherwords, it is a fundemental
-  " plugin to handle Nerd Fonts from Vim.
-  Plug 'lambdalisue/nerdfont.vim'
+    " A simplified version of vim-devicons which does NOT provide any 3rd
+    " party integrations in itself. In otherwords, it is a fundemental
+    " plugin to handle Nerd Fonts from Vim.
+    Plug 'lambdalisue/nerdfont.vim'
 
-  " fern.vim plugin which add file type icons through
-  " lambdalisue/nerdfont.vim.
-  Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+    " fern.vim plugin which add file type icons through
+    " lambdalisue/nerdfont.vim.
+    Plug 'lambdalisue/fern-renderer-nerdfont.vim'
+  endif
 call plug#end()

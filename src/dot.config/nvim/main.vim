@@ -177,12 +177,16 @@ autocmd BufRead,BufNewFile *.md
 "   endif
 " vim-plug で on, for など遅延ロードをする場合、
 " 起動時に読まれないので注意すること。
-call
-  \ map(
-    \ sort(
-      \ split(
-        \ globpath(&runtimepath, '_config/*.vim')
-      \ )
-    \ ),
-    \ {->[execute('exec "so" v:val')]}
-  \ )
+for val in sort(split(globpath(&runtimepath, '_config/*.vim')))
+  execute('exec "so" val')
+endfor
+" 以下は vim 7.4 では動かなかったため、CentOS7系が死滅するまでコメントアウトする
+"call
+"  \ map(
+"    \ sort(
+"      \ split(
+"        \ globpath(&runtimepath, '_config/*.vim')
+"      \ )
+"    \ ),
+"    \ {->[execute('exec "so" v:val')]}
+"  \ )

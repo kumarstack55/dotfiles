@@ -163,6 +163,12 @@
     },
     {
       "os": "unix",
+      "action": "chmod_600",
+      "path": "",
+      "target": "dot.ssh/config"
+    },
+    {
+      "os": "unix",
       "action": "symlink",
       "path": ".ssh/config",
       "target": "dot.ssh/config",

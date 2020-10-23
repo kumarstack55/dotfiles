@@ -1,7 +1,7 @@
 # .gitconfig_local.inc
 [user]
-	#email = xxx@example.com
-	#name = Last First
+	#email = kumarstack55@gmail.com
+	#name = kumarstack55
 [core]
 	#editor = vim -c \"set fenc=utf-8\"
 	#editor = gvim -c \"set fenc=utf-8\"
