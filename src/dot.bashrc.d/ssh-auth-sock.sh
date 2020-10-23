@@ -50,7 +50,7 @@ _ssh_auth_cleanup_ssh_add() {
 
   local symlink
   for symlink in $(find $auth_sock_dir -type l); do
-    if ! SSH_AUTH_SOCK="$symlink" ssh-add -l \
+    if ! SSH_AUTH_SOCK="$symlink" timeout 0.1 ssh-add -l \
         >/dev/null 2>/dev/null; then
       rm -f $symlink
     fi
