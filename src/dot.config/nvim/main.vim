@@ -48,8 +48,8 @@ set noequalalways
 " ビジュアルベルを無効にする
 set novisualbell
 
-" 行番号を表示させる
-set number
+" 行番号を表示させない
+set nonumber
 
 " カラースキームを設定する
 "colorscheme apprentice
