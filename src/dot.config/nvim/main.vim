@@ -48,6 +48,9 @@ set noequalalways
 " ビジュアルベルを無効にする
 set novisualbell
 
+" 検索時にのようなサーチカウントを表示する 例: [1/5]
+set shortmess-=S
+
 " 行番号を表示させない
 set nonumber
 
