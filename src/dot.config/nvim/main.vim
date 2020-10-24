@@ -43,35 +43,31 @@ endif
 behave xterm
 
 " ------------------------------------------------------------
-" 画面全体
+" クリップボード
 
-" 変化が見られないのでしばらくしたら消す
-" ESC応答を早めるため、キーコードシーケンス完了の待ち時間を
-" 短くする
-" https://qiita.com/k2nakamura/items/fa19806a041d0429fc9f
-"set ttimeoutlen=10
-
-" split,close時、ウィンドウの自動リサイズを行わない
-set noequalalways
-
-" ビジュアルベルを無効にする
-set novisualbell
-
-" 検索時にのようなサーチカウントを表示する 例: [1/5]
-set shortmess-=S
-
-" 行番号を表示させない
-set nonumber
-
-" カラースキームを設定する
-"colorscheme apprentice
-"colorscheme gruvbox
-colorscheme iceberg
-
+" 選択範囲をクリップボードに送る
+" VISUALで選択した範囲は即座にクリップボードに送られる
 if dotfiles#is_gui_running()
-  " フォントサイズを設定する
-  " また、プリント時に文字化けを回避するために追加した
-  MyFontSizeNormal
+  " 選択範囲をコピーする
+  set guioptions+=a
+elseif dotfiles#is_vim()
+  set clipboard=autoselect
+else
+  " autoselect を設定できない環境では
+  " autoselect に近い設定を noremap で設定しておく
+
+  " S-Insert でクリップボードをペーストする
+  nnoremap <S-Insert> "*p
+  inoremap <S-Insert> <ESC>"*pi
+
+  " マウス左ボタンを離したらクリップボードにコピーする
+  vnoremap <LeftRelease> "*ygv
+
+  " 選択範囲を変えたらコピーする
+  " カーソル移動のたびにコピーして選択しなおすのは高コストで、
+  " 選択の行数が多いときに使用に耐えない
+  " そこで、VISUALをやめるときだけコピーを行う
+  vnoremap <ESC> "*ygv<ESC>
 endif
 
 " ------------------------------------------------------------
@@ -83,7 +79,44 @@ if dotfiles#is_gui_running() && dotfiles#is_vim()
 endif
 
 " ------------------------------------------------------------
-" バッファ内
+" 画面
+
+" ビジュアルベルを無効にする
+set novisualbell
+
+if dotfiles#is_gui_running()
+  " フォントサイズを設定する
+  " また、プリント時に文字化けを回避するために追加した
+  MyFontSizeNormal
+endif
+
+" カラースキームを設定する
+"colorscheme apprentice
+"colorscheme gruvbox
+colorscheme iceberg
+
+" 検索時にのようなサーチカウントを表示する 例: [1/5]
+set shortmess-=S
+
+" ------------------------------------------------------------
+" バッファ管理
+
+" split,close時、ウィンドウの自動リサイズを行わない
+set noequalalways
+
+" ------------------------------------------------------------
+" プレビュー
+
+" 置換時に置換結果のプレビューをプレビューウィンドウで表示する
+if dotfiles#is_neovim()
+  set inccommand=split
+endif
+
+" ------------------------------------------------------------
+" バッファ
+
+" 行番号を表示させない
+set nonumber
 
 if dotfiles#is_gui_running()
   " insert モードで IM を OFF にする
@@ -93,8 +126,25 @@ if dotfiles#is_gui_running()
   set imsearch=-1
 endif
 
+" 検索キーワードを強調させない
+set nohlsearch
+
 " ------------------------------------------------------------
 " ファイルオープン
+
+" バックアップファイル (*~) を作らない
+set nobackup
+
+" 同ファイルの複数編集に気づけるようスワップファイルを作る
+set swapfile
+
+" Windows環境では次のパスにスワップを作る
+if dotfiles#is_windows()
+  set directory=$TEMP,c:\\tmp,c:\\temp,.
+endif
+
+" undo ファイル (un~) を作らない
+set noundofile
 
 " 既存ファイル編集時のエンコーディング候補順序を定める
 set fileencodings=utf-8,cp932,utf-16le
@@ -125,62 +175,6 @@ set textwidth=0
 if v:version > 704
   set breakindent
 endif
-
-" ------------------------------------------------------------
-" クリップボード
-
-" 選択範囲をクリップボードに送る
-" VISUALで選択した範囲は即座にクリップボードに送られる
-if dotfiles#is_gui_running()
-  " 選択範囲をコピーする
-  set guioptions+=a
-elseif dotfiles#is_vim()
-  set clipboard=autoselect
-else
-  " autoselect を設定できない環境では
-  " autoselect に近い設定を noremap で設定しておく
-
-  " S-Insert でクリップボードをペーストする
-  nnoremap <S-Insert> "*p
-  inoremap <S-Insert> <ESC>"*pi
-
-  " マウス左ボタンを離したらクリップボードにコピーする
-  vnoremap <LeftRelease> "*ygv
-
-  " 選択範囲を変えたらコピーする
-  " カーソル移動のたびにコピーして選択しなおすのは高コストで、
-  " 選択の行数が多いときに使用に耐えない
-  " そこで、VISUALをやめるときだけコピーを行う
-  vnoremap <ESC> "*ygv<ESC>
-endif
-
-" ------------------------------------------------------------
-" サーチ
-
-" 検索キーワードを強調させない
-set nohlsearch
-
-" 置換時に置換結果のプレビューをプレビューウィンドウで表示する
-if dotfiles#is_neovim()
-  set inccommand=split
-endif
-
-" ------------------------------------------------------------
-" ファイルオープン
-
-" バックアップファイル (*~) を作らない
-set nobackup
-
-" 同ファイルの複数編集に気づけるようスワップファイルを作る
-set swapfile
-
-" Windows環境では次のパスにスワップを作る
-if dotfiles#is_windows()
-  set directory=$TEMP,c:\\tmp,c:\\temp,.
-endif
-
-" undo ファイル (un~) を作らない
-set noundofile
 
 " ------------------------------------------------------------
 " ファイルタイプ
