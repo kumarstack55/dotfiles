@@ -4,6 +4,9 @@ let s:script_dir = expand('<sfile>:p:h')
 let s:plugins_file = s:script_dir . "/plugins.vim"
 execute "source " . s:plugins_file
 
+" ------------------------------------------------------------
+" コマンド定義
+
 " フォントサイズを設定する
 if dotfiles#is_gui_running()
   command! MyFontSizeSmall call dotfiles#set_gui_font(g:FONT_SIZE_SMALL)
@@ -27,6 +30,9 @@ command! MyModelineAppend call dotfiles#add_modeline()
 " Tagbar をリロードする
 command! MyTagbarReload call dotfiles#tagbar_reload()
 
+" ------------------------------------------------------------
+" マウス操作
+
 if dotfiles#is_gui_running()
   " すべてのモードでマウスを有効にする
   set mouse=a
@@ -35,6 +41,9 @@ endif
 " Visualモード時に１文字選択する
 " マウス動作をxtermライクのプロファイルにする
 behave xterm
+
+" ------------------------------------------------------------
+" 画面全体
 
 " 変化が見られないのでしばらくしたら消す
 " ESC応答を早めるため、キーコードシーケンス完了の待ち時間を
@@ -65,10 +74,16 @@ if dotfiles#is_gui_running()
   MyFontSizeNormal
 endif
 
+" ------------------------------------------------------------
+" ツールバー
+
 if dotfiles#is_gui_running() && dotfiles#is_vim()
   " ツールバーを非表示にする
   set guioptions-=T
 endif
+
+" ------------------------------------------------------------
+" バッファ内
 
 if dotfiles#is_gui_running()
   " insert モードで IM を OFF にする
@@ -77,6 +92,9 @@ if dotfiles#is_gui_running()
   " 検索パタンを入力時、 IM を iminsert 設定値で設定する
   set imsearch=-1
 endif
+
+" ------------------------------------------------------------
+" ファイルオープン
 
 " 既存ファイル編集時のエンコーディング候補順序を定める
 set fileencodings=utf-8,cp932,utf-16le
@@ -87,6 +105,9 @@ autocmd BufReadPost *
   \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
   \ |   exe "normal! g`\""
   \ | endif
+
+" ------------------------------------------------------------
+" 行
 
 " modelineの認識は先頭と末尾の行数を指定する
 set modelines=5
@@ -104,6 +125,9 @@ set textwidth=0
 if v:version > 704
   set breakindent
 endif
+
+" ------------------------------------------------------------
+" クリップボード
 
 " 選択範囲をクリップボードに送る
 " VISUALで選択した範囲は即座にクリップボードに送られる
@@ -130,6 +154,9 @@ else
   vnoremap <ESC> "*ygv<ESC>
 endif
 
+" ------------------------------------------------------------
+" サーチ
+
 " 検索キーワードを強調させない
 set nohlsearch
 
@@ -137,6 +164,9 @@ set nohlsearch
 if dotfiles#is_neovim()
   set inccommand=split
 endif
+
+" ------------------------------------------------------------
+" ファイルオープン
 
 " バックアップファイル (*~) を作らない
 set nobackup
@@ -151,6 +181,9 @@ endif
 
 " undo ファイル (un~) を作らない
 set noundofile
+
+" ------------------------------------------------------------
+" ファイルタイプ
 
 " *.yml
 autocmd BufRead,BufNewFile *.yml
@@ -172,6 +205,9 @@ autocmd BufRead,BufNewFile */.gitconfig_local.inc
 autocmd BufRead,BufNewFile *.md
   \ setlocal filetype=markdown shiftwidth=4 softtabstop=4
   \ tabstop=4 expandtab
+
+" ------------------------------------------------------------
+" プラグイン設定
 
 " ~/.config/nvim/_config/*.vim 等を読み込む
 " 各 *.vim で次のようにするとロード済みのプラグインなら設定される。
