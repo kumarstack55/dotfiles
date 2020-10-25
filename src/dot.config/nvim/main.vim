@@ -96,7 +96,9 @@ endif
 colorscheme iceberg
 
 " 検索時にのようなサーチカウントを表示する 例: [1/5]
-set shortmess-=S
+if has('patch 8.1.1270')
+  set shortmess-=S
+endif
 
 " ------------------------------------------------------------
 " ウィンドウ管理
