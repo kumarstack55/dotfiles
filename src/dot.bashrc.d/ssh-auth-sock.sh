@@ -50,7 +50,8 @@ _ssh_auth_cleanup_ssh_add() {
 
   local symlink
   for symlink in $(find $auth_sock_dir -type l); do
-    if ! SSH_AUTH_SOCK="$symlink" timeout 0.1 ssh-add -l \
+    # ssh-add -l は timeout 内で動作しなかった
+    if ! SSH_AUTH_SOCK="$symlink" ssh-add -l \
         >/dev/null 2>/dev/null; then
       rm -f $symlink
     fi
@@ -58,12 +59,16 @@ _ssh_auth_cleanup_ssh_add() {
 }
 
 _ssh_auth_cleanup() {
-  # _ssh_auth_cleanup_ss
+  _ssh_auth_cleanup_ss
   _ssh_auth_cleanup_ssh_add
 }
 
 _ssh_auth_pick_link() {
-  local oldest_sock=$(
+  local auth_sock_dir
+  auth_sock_dir="$1"; shift
+
+  local oldest_sock
+  oldest_sock=$(
     find $auth_sock_dir -type l \
     | while read -r symlink; do
         stat -Lc "%Y %n" $symlink
@@ -72,7 +77,7 @@ _ssh_auth_pick_link() {
     | head -1 \
     | awk '{print $2}'
   )
-  ln -fs $oldest_sock $HOME/.ssh/agent
+  echo ln -fs $oldest_sock $HOME/.ssh/agent
 }
 
 _ssh_auth_socket_set() {
@@ -80,7 +85,7 @@ _ssh_auth_socket_set() {
 
   _ssh_auth_make_link_in_socks
   _ssh_auth_cleanup
-  _ssh_auth_pick_link
+  #_ssh_auth_pick_link "$auth_sock_dir"
   if [[ -f $HOME/.ssh/agent ]]; then
     export SSH_AUTH_SOCK=$HOME/.ssh/agent
   fi
