@@ -151,7 +151,7 @@ main() {
   fi
 
   # インベントリを配置する
-  $bin_dir/inventory_to_sh.py $repo_dir/inventory.json \
+  $repo_dir/inventory.sh \
     | while read -r line; do
         (
           eval "$line"
