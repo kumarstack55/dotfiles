@@ -200,9 +200,6 @@ call plug#begin('~/.vim/plugged')
   " A simple Vimscript test framework
   Plug 'junegunn/vader.vim'
 
-  " Vim motions on speed!
-  Plug 'easymotion/vim-easymotion'
-
   " Syntax files for Bats (Bash Automated Testing System).
   "Plug 'aliou/bats.vim'
   Plug 'kumarstack55/bats.vim'
