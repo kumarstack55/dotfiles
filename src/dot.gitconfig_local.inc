@@ -7,5 +7,6 @@
 	#editor = gvim -c \"set fenc=utf-8\"
 [http]
 	#proxy = http://proxy.example.com:8080
+	#sslVerify = false
 [https]
 	#proxy = http://proxy.example.com:8080
