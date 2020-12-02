@@ -125,12 +125,13 @@ action_touch() {
 }
 
 action_directory() {
-  local options=""
   # shellcheck disable=SC2154
   if [[ -n ${item_mode+x} ]]; then
-    options="$options -m $item_mode"
+    # shellcheck disable=SC2174
+    mkdir -m "$item_mode" -pv "$HOME/$item_path"
+  else
+    mkdir -pv "$HOME/$item_path"
   fi
-  mkdir "$options" -pv "$HOME/$item_path"
 }
 
 action_chmod_600() {
@@ -170,19 +171,19 @@ main() {
   fi
 
   # インベントリを配置する
-  ensure "$repo_dir/inventory.sh" \
-    | while read -r line; do
-        (
-          item_action="invalid"
-          eval "$line"
+  while read -r line; do
+    (
+      item_action="invalid"
+      item_os="any"
+      eval "$line"
 
-          # shellcheck disable=SC2015
-          test_item_os "$item_os" \
-            && test_item_when \
-              && "action_${item_action}" \
-                || true
-        )
-      done
+      # shellcheck disable=SC2015
+      test_item_os "$item_os" \
+        && test_item_when \
+          && "action_${item_action}" \
+            || true
+    )
+  done <"$repo_dir/inventory.txt"
 
   # Pythonパッケージをインストールする
   if type python3 >/dev/null 2>&1 && type pip3 >/dev/null 2>&1; then
