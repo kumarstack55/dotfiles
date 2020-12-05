@@ -1,5 +1,10 @@
 #!/bin/bash
+# vim:ts=2 sw=2 sts=2 et ai:
+
 set -euo pipefail
+
+# shellcheck source=funcs.sh
+source "$(cd "$(dirname "$0")"; pwd -P)/funcs.sh"
 
 usage_exit() {
   echo "usage: $0 [options...]"
@@ -7,56 +12,6 @@ usage_exit() {
   echo "options:"
   echo "  -h, --help: display this help and exit"
   exit 1
-}
-
-echo_err() {
-  echo "$1" 1>&2
-}
-
-ensure() {
-    if ! "$@"; then echo_err "command failed: $*"; fi
-}
-
-ignore() {
-    "$@"
-}
-
-echo_err_badopt() {
-  local optarg
-  optarg="$1"
-  echo_err "$0: illegal option -- $optarg"
-}
-
-abspath() {
-  # https://stackoverflow.com/questions/3915040
-  # generate absolute path from relative path
-  # $1     : relative filename
-  # return : absolute path
-  if [ -d "$1" ]; then
-    # dir
-    (cd "$1"; pwd)
-  elif [ -f "$1" ]; then
-    # file
-    if [[ $1 = /* ]]; then
-      echo "$1"
-    elif [[ $1 == */* ]]; then
-      echo "$(cd "${1%/*}"; pwd)/${1##*/}"
-    else
-      echo "$(pwd)/$1"
-    fi
-  fi
-}
-
-echo_repo_dir() {
-  abspath "$(dirname "$0")/.."
-}
-
-echo_bin_dir() {
-  echo "$(echo_repo_dir)/bin"
-}
-
-echo_src_dir() {
-  echo "$(echo_repo_dir)/src"
 }
 
 test_item_os() {
@@ -208,5 +163,3 @@ main() {
 }
 
 main "$@"
-
-# vim:ts=2 sw=2 sts=2 et ai:

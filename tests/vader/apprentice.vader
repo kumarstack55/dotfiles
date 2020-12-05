@@ -1,0 +1,14 @@
+Execute (apprenticeを選べる):
+  let c = getcompletion('', 'color')
+  let pos = index(c, "apprentice")
+  Assert pos != -1
+
+Execute (gruvboxを選べる):
+  let c = getcompletion('', 'color')
+  let pos = index(c, "gruvbox")
+  Assert pos != -1
+
+Execute (icebergを選べる):
+  let c = getcompletion('', 'color')
+  let pos = index(c, "iceberg")
+  Assert pos != -1

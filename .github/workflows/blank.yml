@@ -89,4 +89,4 @@ jobs:
         pwd
         type python
         python --version
-        ./tests/run.sh
+        nvim -c "Vader ./tests/vader/*.vader"
