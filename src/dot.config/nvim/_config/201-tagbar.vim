@@ -23,6 +23,14 @@ let g:tagbar_type_ps1 = {
     \ ]
   \ }
 
+let g:tagbar_type_bats = {
+    \ 'ctagstype': 'bats',
+    \ 'kinds': [
+      \ 't:test'
+    \ ],
+    \ 'sort': 0,
+  \ }
+
 if dotfiles#has_mdctags()
   let g:tagbar_type_markdown = {
       \ 'ctagsbin': 'mdctags',

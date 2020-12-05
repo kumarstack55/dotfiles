@@ -2,11 +2,6 @@
 
 load test_helper.bash
 
-load_funcs() {
-  # shellcheck source=../../bin/funcs.sh
-  source "$(readlink -f "$BATS_TEST_DIRNAME/../../bin/funcs.sh")"
-}
-
 @test "echo_err は標準出力に出力しない" {
   load_funcs
 
@@ -16,7 +11,6 @@ load_funcs() {
 
   local stdout_lines
   mapfile -t stdout_lines <"$f1"
-
   [ "${#stdout_lines[*]}" -eq 0 ]
 }
 
@@ -29,7 +23,6 @@ load_funcs() {
 
   local stderr_lines
   mapfile -t stderr_lines <"$f1"
-
   [ "${#stderr_lines[*]}" -eq 1 ]
   [ "${stderr_lines[0]}" == "line" ]
 }
@@ -51,21 +44,20 @@ load_funcs() {
 
   local stderr_lines
   mapfile -t stderr_lines <"$f1"
-
   [ "${#stderr_lines[*]}" -eq 1 ]
   [ "${stderr_lines[0]}" == "line" ]
-}
-
-@test "ensure は引数実行結果が非ゼロのとき異常終了する" {
-  load_funcs
-  run call_func_may_exit ensure false
-  [ "$status" -ne 0 ]
 }
 
 @test "ensure は引数実行結果がゼロのときゼロを返す" {
   load_funcs
   run call_func_may_exit ensure true
   [ "$status" -eq 0 ]
+}
+
+@test "ensure は引数実行結果が非ゼロのとき異常終了する" {
+  load_funcs
+  run call_func_may_exit ensure false
+  [ "$status" -ne 0 ]
 }
 
 @test "ignore は引数実行結果がゼロのときゼロを返す" {
@@ -120,4 +112,34 @@ load_funcs() {
   [ "$status" -eq 0 ]
   [ "${#lines[*]}" -eq 1 ]
   [ "${lines[0]}" == "$tmp_dir/d1" ]
+}
+
+@test "echo_abspath は存在するファイル指定で絶対パスを出力する" {
+  load_funcs
+
+  local tmp_dir
+  tmp_dir=$(mktemp -d)
+  mkdir -p "$tmp_dir/d1/c/d2"
+  cd "$tmp_dir/d1/c"
+  touch "$tmp_dir/d1/c/f2"
+
+  run echo_abspath "./f2"
+  [ "$status" -eq 0 ]
+  [ "${#lines[*]}" -eq 1 ]
+  [ "${lines[0]}" == "$tmp_dir/d1/c/f2" ]
+}
+
+@test "echo_abspath は存在しないファイル指定で絶対パスを出力する" {
+  skip "未実装のためテスト失敗する"
+  #load_funcs
+
+  #local tmp_dir
+  #tmp_dir=$(mktemp -d)
+  #mkdir -p "$tmp_dir/d1/c/d2"
+  #cd "$tmp_dir/d1/c"
+
+  #run echo_abspath "./f2"
+  #[ "$status" -eq 0 ]
+  #[ "${#lines[*]}" -eq 1 ]
+  #[ "${lines[0]}" == "$tmp_dir/d1/c/f2" ]
 }

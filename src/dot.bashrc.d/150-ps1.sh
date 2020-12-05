@@ -1,4 +1,4 @@
-# ps1.sh
+#!/bin/bash
 declare __my_ps1_prefix="__my_ps1_impl_"
 declare __my_ps1_next_index=0
 
@@ -17,11 +17,12 @@ function __my_ps1_impl_centos {
 
 function __my_ps1_impl_date {
   if __my_term_256_colors; then
-    PS1='\n\e[38;5;240m$(date "+%F %T")\e[39m\n[\u@\h \W]\$ '
+    PS1='\n\[\e[38;5;240m\]$(date "+%F %T")\[\e[39m\]\n[\u@\h \W]\$ '
   else
+    # shellcheck disable=SC2089
     PS1='\n$(date "+%F %T")\n[\u@\h \W]\$ '
   fi
-  export PS1
+  export "PS1"
 }
 
 function __my_ps1_impl_simple {
@@ -30,11 +31,12 @@ function __my_ps1_impl_simple {
 
 function __my_ps1_impl_simple_date {
   if __my_term_256_colors; then
-    PS1='\n\e[38;5;240m$(date "+%F %T")\e[39m\n\u@\h:\W \$ '
+    PS1='\n\[\e[38;5;240m\]$(date "+%F %T")\[\e[39m\]\n\u@\h:\W \$ '
   else
+    # shellcheck disable=SC2089
     PS1='\n$(date "+%F %T")\n\u@\h:\W \$ '
   fi
-  export PS1
+  export "PS1"
 }
 
 function __my_ps1_funcs {
@@ -42,11 +44,12 @@ function __my_ps1_funcs {
 }
 
 function __my_ps1_find_index {
-  local -a ps1_funcs=($(__my_ps1_funcs))
+  local -a ps1_funcs
+  mapfile -t ps1_funcs < <(__my_ps1_funcs)
   local i
   for ((i=0; i < ${#ps1_funcs[@]}; i++)); do
     if [[ ${ps1_funcs[$i]} == "${__my_ps1_prefix}$1" ]]; then
-      echo $i
+      echo "$i"
       return 0
     fi
   done
@@ -54,14 +57,16 @@ function __my_ps1_find_index {
 }
 
 function my_ps1_switch {
-  local -a ps1_funcs=($(__my_ps1_funcs))
-  local f="${ps1_funcs[$__my_ps1_next_index]}"
-  echo "Switched to $(echo $f | sed -e "s/^$__my_ps1_prefix//") PS1"
+  local -a ps1_funcs
+  mapfile -t ps1_funcs < <(__my_ps1_funcs)
+  local f
+  f="${ps1_funcs[$__my_ps1_next_index]}"
   eval "$f"
-  let __my_ps1_next_index+=1
+  echo "Switched to ${f//__my_ps1_prefix/}"
+  __my_ps1_next_index=$((__my_ps1_next_index+1))
   if [[ $__my_ps1_next_index -ge ${#ps1_funcs[@]} ]]; then
-    let __my_ps1_next_index=0
+    __my_ps1_next_index=0
   fi
 }
 
-__my_ps1_next_index=$(__my_ps1_find_index simple)
+__my_ps1_next_index=$(__my_ps1_find_index simple_date)
