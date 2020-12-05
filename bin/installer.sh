@@ -4,7 +4,7 @@
 set -euo pipefail
 
 # shellcheck source=funcs.sh
-source "$(cd "$(dirname "$0")"; pwd -P)/funcs.sh"
+source "$(cd "$(dirname "${BASH_SOURCE:-$0}")"; pwd -P)/funcs.sh"
 
 usage_exit() {
   echo "usage: $0 [options...]"

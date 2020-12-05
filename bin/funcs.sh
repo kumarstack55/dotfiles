@@ -4,8 +4,13 @@ echo_err() {
   echo "$1" 1>&2
 }
 
+err_exit() {
+  echo_err "$1"
+  exit 1
+}
+
 ensure() {
-  if ! "$@"; then echo_err "command failed: $*"; fi
+  if ! "$@"; then err_exit "command failed: $*"; fi
 }
 
 ignore() {
@@ -19,7 +24,10 @@ echo_err_badopt() {
 }
 
 echo_abspath() {
-  # https://stackoverflow.com/questions/3915040
+  ## shellcheck disable=SC2164
+  #echo "$(cd "$(dirname "$1")"; pwd -P)/$(basename "$1")"
+  #return
+
   # generate absolute path from relative path
   # $1     : relative filename
   # return : absolute path
@@ -33,6 +41,8 @@ echo_abspath() {
     else
       echo "$(pwd)/$1"
     fi
+  else
+    return 1
   fi
 }
 
