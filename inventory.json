@@ -129,6 +129,11 @@
       "target": "dot.vim"
     },
     {
+      "os": "windows",
+      "action": "directory",
+      "path": "vimfiles/autoload"
+    },
+    {
       "os": "unix",
       "action": "symlink",
       "path": ".bashrc.d",

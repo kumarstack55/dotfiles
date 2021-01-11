@@ -17,6 +17,7 @@ item_action='symlink' item_path='.tmux.conf' item_when='tmux_vesion_lt_2pt1' ite
 item_action='symlink' item_path='.tmux.conf' item_when='tmux_vesion_ge_2pt1' item_os='unix' item_target='dot.tmux.conf.ge_v2.1'
 item_action='symlink' item_path='.tmux.conf.all' item_os='unix' item_target='dot.tmux.conf.all'
 item_action='symlink' item_path='.vimrc' item_os='any' item_target='dot.vimrc'
+item_action='directory' item_path='vimfiles/autoload' item_os='windows'
 item_action='symlink' item_path='AppData/Local/nvim' item_os='windows' item_target='AppData/Local/nvim'
 item_action='symlink' item_path='.vim' item_os='any' item_target='dot.vim'
 item_action='symlink' item_path='.bashrc.d' item_os='unix' item_target='dot.bashrc.d'
