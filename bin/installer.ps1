@@ -140,24 +140,18 @@ Function Main {
     }
 
     # vim-plug をインストールする
-    if (-not (Test-Path $HOME/.vim/autoload/plug.vim)) {
+    $cli = New-Object System.Net.WebClient
+    $utf8WithoutBom = New-Object "System.Text.UTF8Encoding" -ArgumentList @($false)
+    if (-not (Test-Path $HOME/.vimfiles/autoload/plug.vim)) {
         $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-        (New-Object Net.WebClient).DownloadFile(
-            $uri,
-            $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(
-            "~\vimfiles\autoload\plug.vim"
-            )
-        )
+        $str = $cli.DownloadString($uri)
+        [System.IO.File]::WriteAllText("$HOME\vimfiles\autoload\plug.vim", @($str), $utf8WithoutBom)
     }
     if (-not (Test-Path $HOME/AppData/Local/nvim/autoload/plug.vim)) {
         md -Force ~\AppData\Local\nvim\autoload
         $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-        (New-Object Net.WebClient).DownloadFile(
-            $uri,
-            $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(
-            "~\AppData\Local\nvim\autoload\plug.vim"
-            )
-        )
+        $str = $cli.DownloadString($uri)
+        [System.IO.File]::WriteAllText("$HOME\AppData\Local\nvim\autoload\plug.vim", @($str), $utf8WithoutBom)
     }
 
     if (Test-CommandExists nvim) {
