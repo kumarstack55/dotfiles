@@ -245,4 +245,10 @@ call plug#begin('~/.vim/plugged')
     " lambdalisue/nerdfont.vim.
     Plug 'lambdalisue/fern-renderer-nerdfont.vim'
   endif
+
+  if has('nvim') || has('patch-8.0.902')
+    Plug 'mhinz/vim-signify'
+  else
+    Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
+  endif
 call plug#end()
