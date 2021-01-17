@@ -1,0 +1,6 @@
+Execute (NERDTreeのquickhelpを表示できる):
+  NERDTreeToggle
+  execute "normal ?"
+  let line = getline(1)
+  let pos = stridx(line, "NERDTree")
+  Assert pos != -1

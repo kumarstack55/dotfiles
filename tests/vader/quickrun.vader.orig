@@ -1,0 +1,5 @@
+Given python (Pythonコードを書く)
+  print(1 + 1)
+
+Execute (QuickRunを実行すると新バッファに出力結果が得られる):
+  QuickRun python
