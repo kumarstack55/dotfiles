@@ -1,0 +1,6 @@
+Execute (Buffer Explorerのヘルプを表示できる):
+  BufExplorer
+  execute "normal \<F1>"
+  let line = getline(1)
+  let pos = stridx(line, "Buffer Explorer")
+  Assert pos != -1
