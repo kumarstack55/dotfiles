@@ -11,6 +11,9 @@
 	# 日本語のパスがあってもクォートしない
 	quotepath=false
 
+	# git diff で末尾に ^M が表示されることを回避する
+	# https://stackoverflow.com/a/28076848/12786161
+	whitespace=cr-at-eol
 [color]
 	diff=false
 	status=false
