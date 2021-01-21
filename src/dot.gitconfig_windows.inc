@@ -8,6 +8,7 @@
 	# nvim-qt を設定すると TERM=cygwin でも表示は崩れなかった。
 	#editor = nvim-qt
 
+	# 日本語のパスがあってもクォートしない
 	quotepath=false
 
 [color]
