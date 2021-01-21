@@ -15,8 +15,8 @@
 	# https://stackoverflow.com/a/28076848/12786161
 	whitespace=cr-at-eol
 [color]
-	diff=false
-	status=false
-	branch=false
-	interactive=false
+	diff=true
+	status=true
+	branch=true
+	interactive=true
 # vim:ft=conf:
