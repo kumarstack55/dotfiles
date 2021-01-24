@@ -246,6 +246,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'lambdalisue/fern-renderer-nerdfont.vim'
   endif
 
+  " Signify (or just Sy) uses the sign column to indicate added, modified
+  " and removed lines in a file that is managed by a version control
+  " system (VCS).
   if has('nvim') || has('patch-8.0.902')
     Plug 'mhinz/vim-signify'
   else
