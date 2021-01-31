@@ -63,6 +63,12 @@
     {
       "os": "any",
       "action": "symlink",
+      "path": ".czrc",
+      "target": "dot.czrc"
+    },
+    {
+      "os": "any",
+      "action": "symlink",
       "path": ".hgrc",
       "target": "dot.hgrc"
     },

@@ -1,0 +1,29 @@
+{
+  "name": "dotfiles",
+  "version": "1.0.0",
+  "description": "![CI](https://github.com/kumarstack55/dotfiles/workflows/CI/badge.svg)",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "cz-conventional-changelog": "^3.3.0"
+  },
+  "devDependencies": {
+    "commitizen": "^4.2.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "commit": "cz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kumarstack55/dotfiles.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kumarstack55/dotfiles/issues"
+  },
+  "homepage": "https://github.com/kumarstack55/dotfiles#readme"
+}

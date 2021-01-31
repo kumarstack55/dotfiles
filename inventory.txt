@@ -8,6 +8,7 @@ item_action='symlink' item_path='.bashrc_local.sh' item_os='unix' item_target='d
 item_action='symlink' item_path='.ctags' item_os='any' item_target='dot.ctags'
 item_action='symlink' item_path='.editorconfig' item_os='any' item_target='dot.editorconfig'
 item_action='symlink' item_path='.gitconfig' item_os='any' item_target='dot.gitconfig'
+item_action='symlink' item_path='.czrc' item_os='any' item_target='dot.czrc'
 item_action='symlink' item_path='.hgrc' item_os='any' item_target='dot.hgrc'
 item_action='symlink' item_path='.gitconfig_windows.inc' item_os='windows' item_target='dot.gitconfig_windows.inc'
 item_action='symlink' item_path='.gvimrc' item_os='unix' item_target='dot.gvimrc'

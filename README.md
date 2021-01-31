@@ -29,6 +29,13 @@ cd $HOME/dotfiles/bin
 ./installer.sh
 
 pip install --user flake8
+
+# dotfiles を変更する場合
+cd $HOME/dotfiles
+npm install commitizen
+npm install cz-conventional-changelog
+exec $SHELL -l
+npm run commit
 ```
 
 ### Windows+PowerShell
