@@ -1,0 +1,18 @@
+snippet "def input_int"
+def input_int():
+    import sys
+    return int(sys.stdin.readline())
+
+
+$0
+endsnippet
+
+snippet "def input_list_int"
+def input_list_int():
+    import sys
+    return [int(x) for x in sys.stdin.readline().split()]
+
+
+$0
+endsnippet
+
