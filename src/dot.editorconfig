@@ -62,6 +62,11 @@ tab_width = 4
 # https://google.github.io/styleguide/shell.xml#Formatting
 end_of_line = lf
 
+[*.stpl]
+indent_size = 8
+tab_width = 8
+indent_style = tab
+
 [{*.vim,_gvimrc}]
 
 [*.{yml{,.j2},yaml{,.j2}}]

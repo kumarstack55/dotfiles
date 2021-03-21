@@ -254,4 +254,7 @@ call plug#begin('~/.vim/plugged')
   else
     Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
   endif
+
+  " Easy and high speed coding method.
+  Plug 'mattn/vim-sonictemplate'
 call plug#end()
