@@ -84,6 +84,9 @@ endif
 " ビジュアルベルを無効にする
 set novisualbell
 
+" ベル音を無効にする
+set belloff=all
+
 if dotfiles#is_gui_running()
   " フォントサイズを設定する
   " また、プリント時に文字化けを回避するために追加した

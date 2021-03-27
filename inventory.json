@@ -129,6 +129,17 @@
       "target": "AppData/Local/nvim"
     },
     {
+      "os": "windows",
+      "action": "directory",
+      "path": "AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/"
+    },
+    {
+      "os": "windows",
+      "action": "symlink",
+      "path": "AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState",
+      "target": "AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState"
+    },
+    {
       "os": "any",
       "action": "symlink",
       "path": ".vim",
