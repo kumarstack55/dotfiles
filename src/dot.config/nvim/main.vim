@@ -208,6 +208,10 @@ autocmd BufRead,BufNewFile *.md
   \ setlocal filetype=markdown shiftwidth=4 softtabstop=4
   \ tabstop=4 expandtab
 
+" vim-sonictemplate
+autocmd BufRead,BufNewFile *.stpl
+  \ setlocal list listchars=tab:>-
+
 " ------------------------------------------------------------
 " プラグイン設定
 

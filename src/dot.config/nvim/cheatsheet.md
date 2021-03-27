@@ -120,6 +120,21 @@ C-c C-c                   --> 2回目以降は pane 指定不要となる
 
 ## ファイルタイプ共通
 
+### vim-sonictemplate
+
+```
+$ vim hoge.py
+:Template <tab>
+  --> テンプレート一覧が表示される
+
+in.ii<c-y><c-b>
+  --> 後置補完を行う
+
+<esc>
+echo g:sonictemplate_vim_template_dir
+  --> 保管定義のディレクトリパスが表示される
+```
+
 ### vim-snippets
 
 ```

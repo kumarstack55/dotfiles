@@ -1,3 +1,35 @@
 \(\S\+\)\.if$
 	if {{$1}}:
 	    {{_cursor_}}
+
+\(\S\+\)\.i$
+	{{$1}} = input()
+	{{_cursor_}}
+
+\(\S\+\)\.input$
+	{{$1}} = input()
+	{{_cursor_}}
+
+\(\S\+\)\.input_li$
+	{{$1}} = input_li()
+	{{_cursor_}}
+
+\(\S\+\)\.ili$
+	{{$1}} = input_li()
+	{{_cursor_}}
+
+\(\S\+\)\.input_l$
+	{{$1}} = input_l()
+	{{_cursor_}}
+
+\(\S\+\)\.il$
+	{{$1}} = input_l()
+	{{_cursor_}}
+
+\(\S\+\)\.input_i$
+	{{$1}} = input_i()
+	{{_cursor_}}
+
+\(\S\+\)\.ii$
+	{{$1}} = input_i()
+	{{_cursor_}}
