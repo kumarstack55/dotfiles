@@ -38,7 +38,13 @@
 
             // フォントを指定する
             "fontFace": "Cica",
-            "fontSize": 12
+            "fontSize": 12,
+
+            // ウィンドウ内の padding をデフォルトの 8 からより狭くする
+            "padding": 1,
+
+            // ベルを音で鳴らさない
+            "bellStyle": "visual"
         },
         "list":
         [
