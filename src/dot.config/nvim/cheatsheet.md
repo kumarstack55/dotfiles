@@ -1,6 +1,12 @@
 # Cheatsheet
 
-## ツリービュアー
+## ファイルパスを探す
+
+### ctrlp.vim
+
+C-p 後に編集したいファイル名の一部を入力する。
+
+### Fern
 
 ```
 :Fern .
@@ -29,13 +35,13 @@ lcd %:h
 :Fern bookmark:///
 ```
 
-### nerdtree
+### NERDTree
 
 ```
 :NERDTree
 ```
 
-## ファイル
+## ディレクトリ内を探す
 
 ### VimFiler
 
@@ -45,11 +51,7 @@ lcd %:h
 
 `:Unite file buffer`
 
-### ctrlp.vim
-
-C-p 後に編集したいファイル名の一部を入力する。
-
-## ステータス
+## ステータスを制御する
 
 ### vim-devicons
 
@@ -59,7 +61,13 @@ MyDevIconsDisable
 MyDevIconsToggle
 ```
 
-## ウィンドウ
+## バッファ群を制御する
+
+### bufexplorer
+
+`:BufExplorer`
+
+## ウィンドウを制御する
 
 ### submode
 
@@ -70,12 +78,6 @@ vim
 C-w +++---
 C-w >>><<<
 ```
-
-## バッファ
-
-### bufexplorer
-
-`:BufExplorer`
 
 ### vim-indent-guides
 
@@ -94,14 +96,14 @@ v/t<enter>nn
 S"
 ```
 
+## 外部コマンドを実行する
+
 ### vim-quickrun
 
 バッファ内を実行して、結果が別バッファで得られる。
 Python 等のコードを書いて実行する等が便利。
 
 `:QuickRun<enter>`
-
-## 行
 
 ### vim-slime
 
@@ -118,7 +120,7 @@ tmux target pane: :0.0    --> 初回はどの pane に出力するか決める
 C-c C-c                   --> 2回目以降は pane 指定不要となる
 ```
 
-## ファイルタイプ共通
+## スニペットを使う
 
 ### vim-sonictemplate
 
@@ -133,6 +135,35 @@ in.ii<c-y><c-b>
 <esc>
 echo g:sonictemplate_vim_template_dir
   --> 保管定義のディレクトリパスが表示される
+```
+
+#### python
+
+```
+:Template<tab>
+```
+
+```
+:Template main
+```
+
+```
+i
+a.i
+c-y c-b
+    --> a = input()
+
+a.ili
+c-y c-b
+    --> a = input_li()
+```
+
+#### markdown
+
+```
+i
+console.pre
+c-y c-b
 ```
 
 ### vim-snippets
@@ -159,6 +190,8 @@ $ vim a.sh
 ia() {
 }<ESC>:1<CR>\d
 ```
+
+## コード開発を支援する
 
 ### ale
 
@@ -207,7 +240,7 @@ $ vim x.py
 F7
 ```
 
-## ansible
+## Ansible
 
 ### ansible-vim
 
