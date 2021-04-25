@@ -1,4 +1,4 @@
-import math,itertools,sys
+import math, itertools, sys
 inf = 10**20
 def input_li(): return list(map(int, input().split()))
 def input_l(): return list(input().split())
