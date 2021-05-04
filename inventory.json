@@ -151,6 +151,12 @@
       "target": "AppData/Local/gtk-3.0/settings.ini"
     },
     {
+      "os": "windows",
+      "action": "symlink",
+      "path": "AppData/Roaming/alacritty",
+      "target": "AppData/Roaming/alacritty"
+    },
+    {
       "os": "any",
       "action": "symlink",
       "path": ".vim",
