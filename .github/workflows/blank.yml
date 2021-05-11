@@ -68,12 +68,3 @@ jobs:
         exec 1>&2
         nvim -c "checkhealth | w! /tmp/checkhealth.txt | qall!"
         cat /tmp/checkhealth.txt
-
-    - name: Run tests
-      run: |
-        set -x
-        exec 1>&2
-        pwd
-        type python
-        python --version
-        nvim -c "Vader ./tests/vader/*.vader"
