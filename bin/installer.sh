@@ -140,13 +140,6 @@ main() {
     )
   done <"$repo_dir/inventory.txt"
 
-  # Pythonパッケージをインストールする
-  if type python3 >/dev/null 2>&1 && type pip3 >/dev/null 2>&1; then
-    local req_path
-    req_path="$repo_dir/requirements.txt"
-    ensure pip3 install --user -r "$req_path"
-  fi
-
   # vim-plug をインストールする
   if [[ ! -f ~/.vim/autoload/plug.vim ]]; then
     ensure curl -fLo ~/.vim/autoload/plug.vim --create-dirs \

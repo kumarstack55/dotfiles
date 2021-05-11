@@ -28,6 +28,7 @@ git clone git@github.com:kumarstack55/dotfiles.git
 cd $HOME/dotfiles/bin
 ./installer.sh
 
+pip install -U --user pynvim
 pip install --user flake8
 
 # dotfiles を変更する場合
