@@ -57,4 +57,3 @@ echo_bin_dir() {
 echo_src_dir() {
   echo "$(echo_repo_dir)/src"
 }
-
