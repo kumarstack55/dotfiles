@@ -23,7 +23,7 @@ jobs:
         echo $SHELL
         type bash
         bash --version
-        echo $TERM
+        echo "TERM: $TERM"
         pwd
         ls
         type tmux
