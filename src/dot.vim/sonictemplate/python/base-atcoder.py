@@ -5,9 +5,4 @@ def input_l(): return list(input().split())
 def input_i(): return int(input())
 
 
-def main():
-	{{_cursor_}}
-
-
-if __name__ == '__main__':
-	main()
+{{_cursor_}}
