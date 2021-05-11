@@ -53,19 +53,6 @@ jobs:
         sudo apt install neovim
         nvim --version
 
-    - name: Install ansible 2.5
-      run: |
-        set -x
-        exec 1>&2
-        sudo apt update
-        sudo apt install software-properties-common
-        sudo apt-add-repository --yes --update \
-          ppa:ansible/ansible
-        sudo apt-cache showpkg ansible
-        sudo apt-get remove ansible
-        sudo apt install ansible=2.5.1+dfsg-1ubuntu0.1
-        ansible --version
-
     - name: Install the dotfiles
       run: |
         set -x
