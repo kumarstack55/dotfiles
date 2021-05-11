@@ -50,6 +50,7 @@ git clone git@github.com:kumarstack55/dotfiles.git
 cd $HOME/dotfiles/bin
 ./installer.ps1
 
+pip install -U --user pynvim
 pip install --user flake8
 ```
 
