@@ -132,13 +132,6 @@ Function Main {
         Where-Object { Test-ItemWhen -Item $_ } |
         Foreach-Object { Invoke-ItemAction -Item $_ }
 
-    if (Test-CommandExists python) {
-        if ($PSCmdlet.ShouldProcess('python', 'pip install --user')) {
-            $ReqPath = Join-Path $RepoDir requirements.txt
-            pip install --user -r $ReqPath
-        }
-    }
-
     # vim-plug をインストールする
     $cli = New-Object System.Net.WebClient
     $utf8WithoutBom = New-Object "System.Text.UTF8Encoding" -ArgumentList @($false)
