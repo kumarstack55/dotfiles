@@ -62,6 +62,9 @@ call plug#begin('~/.vim/plugged')
   " Iceberg is well-designed, bluish color scheme for Vim and Neovim.
   Plug 'kumarstack55/iceberg.vim'
 
+  " Theme for various programs, designed with love for iceberg.vim theme.
+  Plug 'gkeep/iceberg-dark'
+
   " EditorConfig Vim Plugin
   Plug 'editorconfig/editorconfig-vim'
 

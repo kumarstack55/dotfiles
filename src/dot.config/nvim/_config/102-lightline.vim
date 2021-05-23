@@ -4,7 +4,8 @@ endif
 
 set laststatus=2 " 常にステータスを表示させる
 let g:lightline = {}
-let g:lightline.colorscheme = 'jellybeans'
+"let g:lightline.colorscheme = 'jellybeans'
+let g:lightline.colorscheme =  'icebergDark'
 let g:lightline.separator = { 'left': '' }
 let g:lightline.subseparator = { 'left': '|', 'right': '|' }
 let g:lightline.active = {}
