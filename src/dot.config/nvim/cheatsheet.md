@@ -98,6 +98,27 @@ S"
 
 ## 外部コマンドを実行する
 
+### Terminal を操作する
+
+ターミナルを開く。
+ターミナルは Terminal-Normal モードになる。
+
+```
+:Terminal
+```
+
+モードを `Terminal-Normal` から `Terminal-Job` モードに変える。
+
+```
+i
+```
+
+モードを `Terminal-Job` から `Terminal-Normal` モードに変える。
+
+```
+Ctrl-\ Ctrl-n
+```
+
 ### vim-quickrun
 
 バッファ内を実行して、結果が別バッファで得られる。
