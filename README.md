@@ -23,13 +23,6 @@ cd $HOME/dotfiles/bin
 
 pip install -U --user pynvim
 pip install --user flake8
-
-# dotfiles を変更する場合
-cd $HOME/dotfiles
-npm install commitizen
-npm install cz-conventional-changelog
-exec $SHELL -l
-npm run commit
 ```
 
 ### Windows+PowerShell
@@ -45,4 +38,14 @@ cd $HOME/dotfiles/bin
 
 pip install -U --user pynvim
 pip install --user flake8
+```
+
+## 変更する場合
+
+```sh
+cd $HOME/dotfiles
+npm install commitizen
+npm install cz-conventional-changelog
+exec $SHELL -l
+npm run commit
 ```
