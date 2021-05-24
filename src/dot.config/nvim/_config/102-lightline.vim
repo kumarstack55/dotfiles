@@ -1,33 +1,39 @@
-if empty(globpath(&rtp, 'autoload/lightline.vim'))
-  finish
-endif
+"if empty(globpath(&rtp, 'autoload/lightline.vim'))
+"  finish
+"endif
 
 set laststatus=2 " 常にステータスを表示させる
-let g:lightline = {}
-"let g:lightline.colorscheme = 'jellybeans'
-let g:lightline.colorscheme =  'icebergDark'
-let g:lightline.separator = { 'left': '' }
-let g:lightline.subseparator = { 'left': '|', 'right': '|' }
-let g:lightline.active = {}
-let g:lightline.active.left = [
-    \ [ 'paste' ],
-    \ [ 'fugitive', 'filename' ]
-  \ ]
-let g:lightline.active.right = [
-    \ ['filetype', 'fileencoding', 'fileformat'],
-    \ ['percent'],
-    \ ['lineinfo']
-  \ ]
-let g:lightline.component_function = {
-    \ 'fileformat': 'LightLineFileformat',
-    \ 'filename': 'LightLineFilename',
-    \ 'filetype': 'LightLineFiletype',
-    \ 'fugitive': 'LightLineFugitive',
-    \ 'lineinfo': 'LightLineLineColumnInfo',
-    \ 'modified': 'LightLineModified',
-    \ 'percent': 'LightLinePercent',
-    \ 'readonly': 'LightLineReadonly',
+"let g:lightline = { 'colorscheme': 'jellybeans' }
+"let g:lightline = { 'colorscheme': 'iceberg' }
+"let g:lightline = { 'colorscheme': 'landscape' }
+
+let g:lightline = {
+  \ 'colorscheme': 'icebergDark',
+  \ 'active': {
+    \ 'left': [
+      \ [ 'paste' ],
+      \ [ 'fugitive', 'filename' ],
+    \ ],
+    \ 'right': [
+      \ ['filetype', 'fileencoding', 'fileformat'],
+      \ ['percent'],
+      \ ['lineinfo'],
+    \ ],
+    \ 'component_function': {
+      \ 'fileformat': 'LightLineFileformat',
+      \ 'filename': 'LightLineFilename',
+      \ 'filetype': 'LightLineFiletype',
+      \ 'fugitive': 'LightLineFugitive',
+      \ 'lineinfo': 'LightLineLineColumnInfo',
+      \ 'modified': 'LightLineModified',
+      \ 'percent': 'LightLinePercent',
+      \ 'readonly': 'LightLineReadonly',
+    \ },
+  \ },
+  \ 'separator': { 'left': '' },
+  \ 'subseparator': { 'left': '|', 'right': '|' },
   \ }
+
 if dotfiles#version_ge_8()
   let g:lightline.component_expand = {
       \ 'linter_checking': 'lightline#ale#checking',
