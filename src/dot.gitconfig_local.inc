@@ -5,6 +5,7 @@
 [core]
 	#editor = vim -c \"set fenc=utf-8\"
 	#editor = gvim -c \"set fenc=utf-8\"
+	#editor = nvim -c \"set fenc=utf-8\"
 [http]
 	#proxy = http://proxy.example.com:8080
 	#sslVerify = false
