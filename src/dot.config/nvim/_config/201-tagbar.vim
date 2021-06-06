@@ -1,3 +1,11 @@
+if empty(globpath(&runtimepath, 'autoload/tagbar.vim'))
+  finish
+endif
+
+function! s:has_mdctags()
+  return executable('mdctags')
+endfunction
+
 let g:tagbar_type_ansible = {
     \ 'ctagstype' : 'yaml',
     \ 'kinds' : [ 't:tasks' ],
@@ -31,7 +39,7 @@ let g:tagbar_type_bats = {
     \ 'sort': 0,
   \ }
 
-if dotfiles#has_mdctags()
+if s:has_mdctags()
   let g:tagbar_type_markdown = {
       \ 'ctagsbin': 'mdctags',
       \ 'ctagsargs': '',

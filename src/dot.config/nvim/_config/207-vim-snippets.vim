@@ -1,3 +1,7 @@
+if empty(globpath(&runtimepath, 'autoload/vim_snippets.vim'))
+  finish
+endif
+
 " 他にもスニペット管理があるが、
 " ansible-vim のディレクトリ名にあわせて UltiSnips を選択した。
 

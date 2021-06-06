@@ -1,3 +1,7 @@
+if empty(globpath(&runtimepath, 'autoload/submode.vim'))
+  finish
+endif
+
 " ウィンドウの大きさを C-w <>+- で変更する
 call submode#enter_with('winsize', 'n', '', '<C-w>>', '<C-w>>')
 call submode#enter_with('winsize', 'n', '', '<C-w><', '<C-w><')

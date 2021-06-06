@@ -1,4 +1,4 @@
-if empty(globpath(&rtp, 'autoload/nerdtree.vim'))
+if empty(globpath(&runtimepath, 'autoload/nerdtree.vim'))
   finish
 endif
 
