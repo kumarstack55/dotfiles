@@ -147,11 +147,11 @@ Function Main {
         [System.IO.File]::WriteAllText("$HOME\AppData\Local\nvim\autoload\plug.vim", @($str), $utf8WithoutBom)
     }
 
-    if (Test-CommandExists nvim) {
-        if ($PSCmdlet.ShouldProcess('nvim', 'PlugInstall')) {
-            nvim -u "~/.config/nvim/plugins.vim " -c "try | PlugInstall --sync | finally | qall! | endtry"
-        }
-    }
+    #if (Test-CommandExists nvim) {
+    #    if ($PSCmdlet.ShouldProcess('nvim', 'PlugInstall')) {
+    #        nvim -u "~/.config/nvim/plugins.vim " -c "try | PlugInstall --sync | finally | qall! | endtry"
+    #    }
+    #}
 }
 
 # ファンクションの中でスクリプトパスを取得できないため、ここで得る
