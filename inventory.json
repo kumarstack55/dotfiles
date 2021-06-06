@@ -117,6 +117,12 @@
       "target": "dot.tmux.conf.all"
     },
     {
+      "os": "unix",
+      "action": "symlink",
+      "path": ".tmux",
+      "target": "dot.tmux"
+    },
+    {
       "os": "any",
       "action": "symlink",
       "path": ".vimrc",
