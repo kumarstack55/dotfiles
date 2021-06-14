@@ -65,17 +65,11 @@ call plug#begin('~/.vim/plugged')
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight',
         \ { 'on': 'NERDTreeToggle' }
 
-  " A dark, low-contrast, Vim colorscheme.
-  Plug 'romainl/Apprentice'
-
-  " Retro groove color scheme for Vim
-  Plug 'morhetz/gruvbox'
-
   " Pgmnt is a template engine for creating Vim color schemes.
   Plug 'cocopon/pgmnt.vim'
 
   " Iceberg is well-designed, bluish color scheme for Vim and Neovim.
-  Plug 'kumarstack55/iceberg.vim'
+  Plug 'cocopon/iceberg.vim'
 
   " Theme for various programs, designed with love for iceberg.vim theme.
   Plug 'gkeep/iceberg-dark'
@@ -87,7 +81,8 @@ call plug#begin('~/.vim/plugged')
   Plug 'kana/vim-submode'
 
   " Vim plugin that displays tags in a window, ordered by scope
-  Plug 'majutsushi/tagbar', { 'for': [
+  Plug 'majutsushi/tagbar', {
+        \ 'for': [
           \ 'bats',
           \ 'c',
           \ 'go',
@@ -151,11 +146,12 @@ call plug#begin('~/.vim/plugged')
   Plug 'kumarstack55/vim-snippets-local'
 
   " A vim plugin for syntax highlighting Ansible's common filetypes
-  Plug 'pearofducks/ansible-vim',
-        \ {
-          \ 'for': 'yaml.ansible',
-          \ 'do': 'which ansible && ./UltiSnips/generate.sh --style dictionary'
-        \ }
+  if !has('win32') && executable("ansible")
+    Plug 'pearofducks/ansible-vim', { 'for': 'yaml.ansible',
+          \ 'do': './UltiSnips/generate.sh --style dictionary' }
+  else
+    Plug 'pearofducks/ansible-vim', { 'for': 'yaml.ansible' }
+  endif
 
   " vim-markdown を利用するために必要なプラグイン
   " vim-markdown より前である必要がある
@@ -176,7 +172,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'jszakmeister/rst2ctags'
 
   " Flake8 plugin for Vim
-  Plug 'nvie/vim-flake8', { 'for': 'python' }
+  "Plug 'nvie/vim-flake8', { 'for': 'python' }
 
   if has('python3')
     " UltiSnips is the ultimate solution for snippets in Vim.
@@ -190,10 +186,10 @@ call plug#begin('~/.vim/plugged')
   if v:version >= 800
     " Check syntax in Vim asynchronously and fix files,
     " with Language Server Protocol (LSP) support
-    Plug 'dense-analysis/ale', { 'for': ['python', 'sh'] }
+    "Plug 'dense-analysis/ale', { 'for': ['python', 'sh'] }
 
     " ALE indicator for the lightline vim plugin
-    Plug 'maximbaz/lightline-ale'
+    "Plug 'maximbaz/lightline-ale'
   endif
 
   " VimDevIcons - Add Icons to Your Plugins
@@ -211,14 +207,14 @@ call plug#begin('~/.vim/plugged')
   Plug 'mattn/vim-lexiv'
 
   " vim-coverage is a utility for visualizing test coverage results in vim.
-  if !has('win32')
-    Plug 'google/vim-maktaba'
-    Plug 'google/vim-coverage'
-    Plug 'google/vim-glaive'
-  endif
+  "if !has('win32')
+  "  Plug 'google/vim-maktaba'
+  "  Plug 'google/vim-coverage'
+  "  Plug 'google/vim-glaive'
+  "endif
 
   " A simple Vimscript test framework
-  Plug 'junegunn/vader.vim'
+  "Plug 'junegunn/vader.vim'
 
   " Syntax files for Bats (Bash Automated Testing System).
   "Plug 'aliou/bats.vim'

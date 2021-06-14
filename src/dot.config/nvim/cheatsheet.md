@@ -8,15 +8,15 @@ C-p 後に編集したいファイル名の一部を入力する。
 
 ### Fern
 
-```
+```vim
 :Fern .
 ```
 
-```
+```vim
 :Fern . -drawer
 ```
 
-```
+```vim
 :Fern %:h
 ```
 
@@ -25,19 +25,19 @@ C-p 後に編集したいファイル名の一部を入力する。
 
 選択したファイルのあるディレクトリに cd する:
 
-```
-lcd %:h
+```vim
+:lcd %:h
 ```
 
 ブックマークを開く:
 
-```
+```vim
 :Fern bookmark:///
 ```
 
 ### NERDTree
 
-```
+```vim
 :NERDTree
 ```
 
@@ -45,27 +45,33 @@ lcd %:h
 
 ### VimFiler
 
-`:VimFiler`
+```vim
+:VimFiler
+```
 
 ### unite
 
-`:Unite file buffer`
+```vim
+:Unite file buffer
+```
 
 ## ステータスを制御する
 
 ### vim-devicons
 
-```
-MyDevIconsEnable
-MyDevIconsDisable
-MyDevIconsToggle
+```vim
+:MyDevIconsEnable
+:MyDevIconsDisable
+:MyDevIconsToggle
 ```
 
 ## バッファ群を制御する
 
 ### bufexplorer
 
-`:BufExplorer`
+```vim
+:BufExplorer
+```
 
 ## ウィンドウを制御する
 
@@ -103,7 +109,7 @@ S"
 ターミナルを開く。
 ターミナルは Terminal-Normal モードになる。
 
-```
+```vim
 :Terminal
 ```
 
@@ -160,11 +166,11 @@ echo g:sonictemplate_vim_template_dir
 
 #### python
 
-```
+```vim
 :Template<tab>
 ```
 
-```
+```vim
 :Template main
 ```
 
@@ -237,16 +243,15 @@ $ nvim x.py
 * コミット予定の差分を確認する
     * `:Git! diff --cached`
 * コミットする
-    * `:Greview`
-    * `:Gcommit`
+    * `:Git commit`
 * プッシュする
-    * `:Gpush`
+    * `:Git push`
 
 ## Python
 
 ### vim-coverage
 
-```
+```sh
 $ pip install --user coverage
 $ nvim a.py
 :CoverageShow
@@ -256,7 +261,7 @@ $ nvim a.py
 
 flake8 を実行し、quickfix に表示する。
 
-```
+```sh
 $ vim x.py
 F7
 ```
@@ -267,7 +272,7 @@ F7
 
 初期設定:
 
-```
+```sh
 $ sudo yum install epel-release -y
 $ sudo yum-config-manager --disable epel
 $ sudo yum --enablerepo=epel install ansible -y
@@ -277,9 +282,11 @@ $ ./generate.py
 
 使い方:
 
-```
+```sh
 $ mkdir -pv /tmp/playbooks
 $ vim /tmp/playbooks/hoge.yml
 i- name: hoge<enter>lineinfile<tab>
   --> lineinfile の引数が列挙される
 ```
+
+<!-- vim:set foldlevelstart=99: -->
