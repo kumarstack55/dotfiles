@@ -3,13 +3,13 @@ scriptencoding utf-8
 " 設定用のファンクションを定義する。 {{{
 
 function! s:get_enable_dev_icons()
-  return has('nvim') || exists('g:ginit_loaded') || has('gui_running')
+  return has('nvim') || has('gui_running')
 endfunction
 
-if has('windows')
-  set runtimepath+=~/.config/nvim
-endif
-runtime library/dotfiles.vim
+" if has('windows')
+"   set runtimepath+=~/.config/nvim
+" endif
+" runtime library/dotfiles.vim
 
 " Windows + nvim では Python3 を使う
 if has('win32') && has('nvim')
