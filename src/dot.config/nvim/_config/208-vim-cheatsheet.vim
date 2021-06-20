@@ -1,3 +1,4 @@
-" vim-cheatsheet は :Cheat が呼ばれたときに runtimepath に追加されるので、
-" 起動時に常に設定する。
+" 動的にロードされるため runtimepath によるロード可否判定を行わない。
+
+" ファイルパスを設定する。
 let g:cheatsheet#cheat_file = '~/.config/nvim/cheatsheet.md'

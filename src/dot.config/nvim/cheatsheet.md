@@ -220,6 +220,16 @@ ia() {
 
 ## コード開発を支援する
 
+### vim-lsp
+
+```
+:LspDocumentDiagnostics
+```
+
+```
+:LspNextDiagnostics
+```
+
 ### ale
 
 ```
@@ -289,4 +299,4 @@ i- name: hoge<enter>lineinfile<tab>
   --> lineinfile の引数が列挙される
 ```
 
-<!-- vim:set foldlevelstart=99: -->
+<!-- vim:set nofoldenable: -->

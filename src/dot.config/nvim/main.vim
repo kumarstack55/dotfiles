@@ -6,9 +6,9 @@ function! s:get_enable_dev_icons()
   return has('nvim') || has('gui_running')
 endfunction
 
-" if has('windows')
-"   set runtimepath+=~/.config/nvim
-" endif
+if has('windows')
+  set runtimepath+=~/.config/nvim
+endif
 " runtime library/dotfiles.vim
 
 " Windows + nvim では Python3 を使う
