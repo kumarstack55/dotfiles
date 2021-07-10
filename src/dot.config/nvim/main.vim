@@ -672,7 +672,8 @@ function! LightLineReadonly()
   if &filetype == "help"
     return ""
   elseif &readonly
-    return g:enable_devicons ? "" : "[RO]"
+    "return g:enable_devicons ? "" : "[RO]"
+    return g:enable_devicons ? "[RO]" : "[RO]"
   else
     return ""
   endif
