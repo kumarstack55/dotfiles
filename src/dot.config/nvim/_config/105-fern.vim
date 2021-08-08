@@ -1,4 +1,4 @@
-if empty(globpath(&runtimepath, 'autoload/nerdfont.vim'))
+if empty(globpath(&runtimepath, 'autoload/fern.vim'))
   finish
 endif
 
