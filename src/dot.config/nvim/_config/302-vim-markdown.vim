@@ -1,4 +1,4 @@
-if empty(globpath(&runtimepath, 'markdown.vim'))
+if empty(globpath(&runtimepath, 'syntax/markdown.vim'))
   finish
 endif
 
