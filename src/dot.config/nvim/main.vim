@@ -374,6 +374,14 @@ if exists('g:ginit_loaded') || has('gui_running')
   set guioptions-=T
 endif
 
+if has('win32') && (exists('g:ginit_loaded') || has('gui_running'))
+  " gvim で encoding=utf8 かつメニューを日本語で表示させると、
+  " 表示がおかしくなるため、英語表示とする。
+  set langmenu=en_US
+  source $VIMRUNTIME/delmenu.vim
+  source $VIMRUNTIME/menu.vim
+endif
+
 " }}}
 " マウス操作を設定する。 {{{
 
@@ -389,6 +397,22 @@ set selection=inclusive
 
 " 右クリックは xterm のように選択範囲を拡張する。
 set mousemodel=extend
+
+" }}}
+" エンコーディングを設定する。 {{{
+
+" vim内で使うエンコーディングを指定する。
+" ヘルプより、強く推奨されている。
+" > NOTE: For GTK+ 2 or later, it is highly recommended to set 'encoding'
+" > to "utf-8".
+set encoding=utf8
+
+" }}}
+" 文字表示を設定する。 {{{
+
+" 絵文字などの表示を期待通りにするために、
+" East Asian Width Class Ambiguous を2文字幅で扱う
+set ambiwidth=double
 
 " }}}
 " ベルを設定する。 {{{
@@ -527,29 +551,6 @@ augroup vimrc
     \ setlocal list listchars=tab:>-
 
 augroup END
-
-" }}}
-" プラグイン間で利用するファンクションを定義する。 {{{
-
-" }}}
-" vim-devicons を設定する。 {{{
-
-" vim内で使うエンコーディングを指定する。
-" ヘルプより、強く推奨されている。
-" > NOTE: For GTK+ 2 or later, it is highly recommended to set 'encoding'
-" > to "utf-8".
-set encoding=utf8
-
-" East Asian Width Class Ambiguous を2文字幅で扱う
-set ambiwidth=double
-
-if has('win32') && (exists('g:ginit_loaded') || has('gui_running'))
-  " gvim で encoding=utf8 かつメニューを日本語で表示させると、
-  " 表示がおかしくなるため、英語表示とする。
-  set langmenu=en_US
-  source $VIMRUNTIME/delmenu.vim
-  source $VIMRUNTIME/menu.vim
-endif
 
 " }}}
 " lightline を設定する。 {{{
