@@ -57,14 +57,6 @@ C-p 後に編集したいファイル名の一部を入力する。
 
 ## ステータスを制御する
 
-### vim-devicons
-
-```vim
-:MyDevIconsEnable
-:MyDevIconsDisable
-:MyDevIconsToggle
-```
-
 ## バッファ群を制御する
 
 ### bufexplorer

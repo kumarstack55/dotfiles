@@ -2,10 +2,6 @@ scriptencoding utf-8
 
 " 設定用のファンクションを定義する。 {{{
 
-function! s:get_enable_dev_icons()
-  return has('nvim') || has('gui_running')
-endfunction
-
 if has('windows')
   set runtimepath+=~/.config/nvim
 endif
@@ -43,10 +39,6 @@ if has('win32') && !has('nvim')
     let &pythonthreedll=g:python36dll_path
   endif
 endif
-
-" 初期状態として有効にするか決定する。
-" ターミナルの表示が崩れる等の場合は無効にすればよい。
-let g:enable_devicons = s:get_enable_dev_icons()
 
 " }}}
 " プラグインを管理する。 {{{
@@ -192,11 +184,6 @@ call plug#begin('~/.vim/plugged')
     "Plug 'maximbaz/lightline-ale'
   endif
 
-  " VimDevIcons - Add Icons to Your Plugins
-  if g:enable_devicons
-    Plug 'ryanoasis/vim-devicons'
-  endif
-
   " (Do)cumentation (Ge)nerator 15+ languages
   if has('nvim') || (v:version > 700 && has('patch-7.4.2119'))
     " Vim v7.4.2119+ is required.
@@ -250,15 +237,6 @@ call plug#begin('~/.vim/plugged')
 
     " A plugin for fern.vim which provides simple bookmark feature.
     Plug 'lambdalisue/fern-bookmark.vim'
-
-    " A simplified version of vim-devicons which does NOT provide any 3rd
-    " party integrations in itself. In otherwords, it is a fundemental
-    " plugin to handle Nerd Fonts from Vim.
-    Plug 'lambdalisue/nerdfont.vim'
-
-    " fern.vim plugin which add file type icons through
-    " lambdalisue/nerdfont.vim.
-    Plug 'lambdalisue/fern-renderer-nerdfont.vim'
   endif
 
   " Signify (or just Sy) uses the sign column to indicate added, modified
@@ -553,54 +531,24 @@ augroup END
 " }}}
 " プラグイン間で利用するファンクションを定義する。 {{{
 
-function! s:devicons_enable()
-  let g:enable_devicons = 1
-  let g:lightline#ale#indicator_checking = "\uf110"
-  let g:lightline#ale#indicator_warnings = "\uf071"
-  let g:lightline#ale#indicator_errors = "\uf05e"
-  let g:lightline#ale#indicator_ok = "\uf00c"
-endfunction
-
-function! s:devicons_disable()
-  let g:enable_devicons = 0
-  let g:lightline#ale#indicator_warnings = 'W: '
-  let g:lightline#ale#indicator_errors = 'E: '
-  let g:lightline#ale#indicator_ok = 'OK'
-  let g:lightline#ale#indicator_checking = 'Linting...'
-endfunction
-
-function! s:devicons_toggle()
-  if g:enable_devicons
-    call s:devicons_disable()
-  else
-    call s:devicons_enable()
-  endif
-endfunction
-
-command! MyDevIconsEnable call s:devicons_enable()
-command! MyDevIconsDisable call s:devicons_disable()
-command! MyDevIconsToggle call s:devicons_toggle()
-
 " }}}
 " vim-devicons を設定する。 {{{
 
-" vim内で使うエンコーディングを指定する
+" vim内で使うエンコーディングを指定する。
+" ヘルプより、強く推奨されている。
+" > NOTE: For GTK+ 2 or later, it is highly recommended to set 'encoding'
+" > to "utf-8".
 set encoding=utf8
 
 " East Asian Width Class Ambiguous を2文字幅で扱う
 set ambiwidth=double
 
-if g:enable_devicons
-  if has('win32') && (exists('g:ginit_loaded') || has('gui_running'))
-    " gvim で encoding=utf8 かつメニューを日本語で表示させると、
-    " 表示がおかしくなるため、英語表示とする。
-    set langmenu=en_US
-    source $VIMRUNTIME/delmenu.vim
-    source $VIMRUNTIME/menu.vim
-  endif
-
-  " フォルダアイコンの表示をON
-  let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+if has('win32') && (exists('g:ginit_loaded') || has('gui_running'))
+  " gvim で encoding=utf8 かつメニューを日本語で表示させると、
+  " 表示がおかしくなるため、英語表示とする。
+  set langmenu=en_US
+  source $VIMRUNTIME/delmenu.vim
+  source $VIMRUNTIME/menu.vim
 endif
 
 " }}}
@@ -648,11 +596,6 @@ if v:version >= 800
   call insert(g:lightline.active.right[0], 'linter_warnings', 0)
   call insert(g:lightline.active.right[0], 'linter_errors', 0)
   call insert(g:lightline.active.right[0], 'linter_checking', 0)
-  if g:enable_devicons
-    call s:devicons_enable()
-  else
-    call s:devicons_disable()
-  endif
 endif
 
 function! LightLinePercent()
@@ -663,7 +606,7 @@ endfunction
 function! LightLineFugitive()
   if exists("*fugitive#head")
     let _ = fugitive#head()
-    return strlen(_) ? (g:enable_devicons ? '' : '') . _ : ''
+    return strlen(_) ? _ : ''
   endif
   return ''
 endfunction
@@ -672,8 +615,7 @@ function! LightLineReadonly()
   if &filetype == "help"
     return ""
   elseif &readonly
-    "return g:enable_devicons ? "" : "[RO]"
-    return g:enable_devicons ? "[RO]" : "[RO]"
+    return "[RO]"
   else
     return ""
   endif
@@ -699,29 +641,11 @@ endfunction
 
 function! LightLineFiletype()
   return
-    \ winwidth(0) > 70 ? (
-      \ strlen(&filetype) ?
-        \ &filetype . (
-          \ g:enable_devicons ?
-            \ ' ' . WebDevIconsGetFileTypeSymbol() : ''
-        \ ) : 'no ft'
-      \ ) :
-      \ strlen(&filetype) ? (
-        \ g:enable_devicons ?
-          \ WebDevIconsGetFileTypeSymbol() : ''
-      \ ) : ''
+    \ winwidth(0) > 70 ? ( strlen(&filetype) ? &filetype : 'no ft' ) : ''
 endfunction
 
 function! LightLineFileformat()
-  return
-    \ winwidth(0) > 70 ? (
-      \ &fileformat . (
-          \ g:enable_devicons ?
-          \ ' ' . WebDevIconsGetFileFormatSymbol()
-          \ : ''
-        \ )
-      \ ) :
-      \ (g:enable_devicons ? WebDevIconsGetFileFormatSymbol() : '')
+  return winwidth(0) > 70 ? &fileformat : ''
 endfunction
 
 function! LightLineLineColumnInfo()
