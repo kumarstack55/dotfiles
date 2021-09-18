@@ -211,21 +211,22 @@ call plug#begin('~/.vim/plugged')
   Plug 'kumarstack55/bats.vim'
 
   if v:version >= 800
+    " Async Language Server Protocol plugin for vim8 and neovim.
+    Plug 'prabirshrestha/vim-lsp'
+
+    " Auto configurations for Language Servers for vim-lsp.
+    Plug 'mattn/vim-lsp-settings'
+
     " normalize async job control api for vim and neovim
-    Plug 'prabirshrestha/async.vim'
+    "Plug 'prabirshrestha/async.vim'
 
     " Async autocompletion for Vim 8 and Neovim with |timers|.
     Plug 'prabirshrestha/asyncomplete.vim'
-
-    " Async Language Server Protocol plugin for vim8 and neovim.
-    Plug 'prabirshrestha/vim-lsp'
 
     " Provide Language Server Protocol autocompletion source for
     " asyncomplete.vim and vim-lsp.
     Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
-    " Auto configurations for Language Servers for vim-lsp.
-    Plug 'mattn/vim-lsp-settings'
   endif
 
   " fernのNoteの記述に従いnvimでは適用する
