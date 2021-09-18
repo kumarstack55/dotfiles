@@ -96,6 +96,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'Shougo/vimfiler.vim'
   Plug 'Shougo/unite.vim'
 
+  " Vaffle is a lightweight file manager for Vim.
+  Plug 'cocopon/vaffle.vim'
+
   " ctrlp.vim - Full path fuzzy file, buffer, mru, tag, ...
   " finder for Vim.
   Plug 'ctrlpvim/ctrlp.vim'
