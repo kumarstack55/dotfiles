@@ -178,15 +178,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'SirVer/ultisnips', { 'tag': '3.1' }
   endif
 
-  if v:version >= 800
-    " Check syntax in Vim asynchronously and fix files,
-    " with Language Server Protocol (LSP) support
-    "Plug 'dense-analysis/ale', { 'for': ['python', 'sh'] }
-
-    " ALE indicator for the lightline vim plugin
-    "Plug 'maximbaz/lightline-ale'
-  endif
-
   " (Do)cumentation (Ge)nerator 15+ languages
   if has('nvim') || (v:version > 700 && has('patch-7.4.2119'))
     " Vim v7.4.2119+ is required.
@@ -227,6 +218,15 @@ call plug#begin('~/.vim/plugged')
     " asyncomplete.vim and vim-lsp.
     Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
+  endif
+
+  if v:version >= 800
+    " Check syntax in Vim asynchronously and fix files,
+    " with Language Server Protocol (LSP) support
+    Plug 'dense-analysis/ale', { 'for': ['sh'] }
+
+    " ALE indicator for the lightline vim plugin
+    Plug 'maximbaz/lightline-ale'
   endif
 
   " fernのNoteの記述に従いnvimでは適用する
@@ -487,6 +487,9 @@ endif
 
 " カーソル行を表示させる
 set cursorline
+
+" neovide のときカーソル移動のアニメーションを設定する。
+let g:neovide_cursor_vfx_mode = "railgun"
 
 " 長い行を入力するときvimが改行を入れないようにする
 set textwidth=0
