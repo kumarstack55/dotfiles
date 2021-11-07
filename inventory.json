@@ -202,6 +202,18 @@
     },
     {
       "os": "windows",
+      "action": "directory",
+      "path": "Documents/PowerShell"
+    },
+    {
+      "os": "windows",
+      "action": "copy",
+      "path": "Documents/PowerShell/Microsoft.PowerShell_profile.ps1",
+      "target": "Documents/PowerShell/Microsoft.PowerShell_profile.ps1",
+      "when": "path_not_exists"
+    },
+    {
+      "os": "windows",
       "action": "symlink",
       "path": ".powershellrc.ps1",
       "target": "dot.powershellrc.ps1"
