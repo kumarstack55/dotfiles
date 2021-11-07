@@ -1,0 +1,22 @@
+{
+  "profiles": [
+    {
+      "id": "profile1",
+      "config": {
+        "user":{
+          "email": "profile1@example.com",
+          "name": "profile1"
+        }
+      }
+    },
+    {
+      "id": "profile2",
+      "config": {
+        "user":{
+          "email": "profile2@example.com",
+          "name": "profile2"
+        }
+      }
+    }
+  ]
+}

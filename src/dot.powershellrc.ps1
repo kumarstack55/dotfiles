@@ -30,6 +30,56 @@ function Test-MyPSVersionMajorEq5 {
     Get-MyPSVersionMajor -eq 5
 }
 
+function Get-MyGitConfigProfiles {
+    <#
+        .SYNOPSIS
+        git configのプロファイルを得る。
+    #>
+    $JsonPath = Join-Path $HOME ".gitconfig_profiles.json"
+    if (-not (Test-Path $JsonPath)) {
+        throw "ファイル $JsonPath が存在しなかった。"
+    }
+    $Data = Get-Content $JsonPath | ConvertFrom-Json
+    $Data.profiles
+}
+
+function Get-MyGitConfigProfileIdToConfigHashtable {
+    <#
+        .SYNOPSIS
+        git configのプロファイルのIDと設定のハッシュテーブルを得る。
+    #>
+    $Hashtable = @{}
+
+    Get-MyGitConfigProfiles |
+    ForEach-Object {
+        $Hashtable[$_.id] = $_.config
+    }
+
+    $Hashtable
+}
+
+function Set-MyGitConfig {
+    <#
+        .SYNOPSIS
+        git configを設定する。
+    #>
+    [CmdletBinding(SupportsShouldProcess)]
+    param([parameter(Mandatory)][String]$ProfileId)
+
+    $IdConfigHashtable = Get-MyGitConfigProfileIdToConfigHashtable
+    $ProfileConfig = $IdConfigHashtable[$ProfileId]
+    $User = $ProfileConfig.user
+    $User.psobject.Properties.Name |
+    ForEach-Object {
+        $Name = "user.$_"
+        $Value = $User.$_
+        $Target = "git config $Name $Value"
+        if($PSCmdlet.ShouldProcess($Target)){
+            git config $Name $Value
+        }
+    }
+}
+
 # 既定では、タブキーでの補完は、完全なコマンドを出力する。
 # タブキーでの補完は、bashのようにファイルの途中までにする。
 Set-PSReadlineKeyHandler -Key Tab -Function Complete

@@ -187,6 +187,13 @@
       "when": "path_not_exists"
     },
     {
+      "os": "windows",
+      "action": "symlink",
+      "path": ".gitconfig_profiles.json.sample",
+      "target": "dot.gitconfig_profiles.json.sample",
+      "when": "path_not_exists"
+    },
+    {
       "os": "any",
       "action": "copy",
       "path": ".hgrc_local.ini",
