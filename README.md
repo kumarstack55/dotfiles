@@ -15,6 +15,15 @@
 ### macOS, EL7, debian, Windows+mintty
 
 ```bash
+cd /tmp
+curl -LO https://raw.githubusercontent.com/kumarstack55/dotfiles/master/bootstrap.sh
+chmod +x bootstrap.sh
+./bootstrap.sh
+```
+
+または
+
+```bash
 cd $HOME
 git clone git@github.com:kumarstack55/dotfiles.git
 
