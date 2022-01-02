@@ -50,6 +50,9 @@ call plug#begin('~/.vim/plugged')
   " everyone can agree on.
   Plug 'tpope/vim-sensible'
 
+  " Vaffle is a lightweight file manager for Vim.
+  Plug 'cocopon/vaffle.vim'
+
   " NERDTree
   Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
@@ -95,9 +98,6 @@ call plug#begin('~/.vim/plugged')
   " vimfiler - A powerful file explorer implemented in Vim script
   Plug 'Shougo/vimfiler.vim'
   Plug 'Shougo/unite.vim'
-
-  " Vaffle is a lightweight file manager for Vim.
-  Plug 'cocopon/vaffle.vim'
 
   " ctrlp.vim - Full path fuzzy file, buffer, mru, tag, ...
   " finder for Vim.
