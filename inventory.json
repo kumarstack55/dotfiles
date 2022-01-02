@@ -226,6 +226,17 @@
       "target": "dot.powershellrc.ps1"
     },
     {
+      "os": "windows",
+      "action": "directory",
+      "path": ".ssh"
+    },
+    {
+      "os": "windows",
+      "action": "symlink",
+      "path": ".ssh/wsl-ssh-pageant",
+      "target": "dot.ssh_windows/wsl-ssh-pageant"
+    },
+    {
       "os": "unix",
       "action": "chmod_600",
       "path": "",
