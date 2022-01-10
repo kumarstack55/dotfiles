@@ -57,6 +57,8 @@ indent_size = 4
 tab_width = 4
 
 [*.rst]
+indent_size = 2
+tab_width = 2
 
 [{*.sh,*.sh.j2,*.bash,*.bats}]
 # https://google.github.io/styleguide/shell.xml#Formatting
