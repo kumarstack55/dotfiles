@@ -3,7 +3,20 @@
 # 既定では、プロンプト表示はカレントディレクトリの完全なパスを含む。
 # プロンプト表示はカレントディレクトリの名前とする。
 function Prompt {
-    "PS " + $(Split-Path (Get-Location) -Leaf) + "> "
+    $Identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+    $Principal = [Security.Principal.WindowsPrincipal] $Identity
+    $AdminRole = [Security.Principal.WindowsBuiltInRole]::Administrator
+    $Ver = $PSVersionTable.PSVersion
+
+    "`r`n" +
+    $(if (Test-Path variable:/PSDebugContext) { '[DBG]: ' }
+    elseif($Principal.IsInRole($AdminRole)) { '[ADMIN]: ' }
+    else { '' }
+    ) +
+    'v' + $Ver.Major + '.' + $Ver.Minor + ' ' +
+    $env:UserName + '@' + $Env:Computername + ':' + $(Split-Path (Get-Location) -Leaf) + ' ' +
+    "`r`n" +
+    'PS ' + $(if ($NestedPromptLevel -ge 1) { '>>' }) + '> '
 }
 
 function Get-MyPSVersionMajor {
