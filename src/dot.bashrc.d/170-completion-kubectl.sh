@@ -1,4 +1,4 @@
 #!/bin/bash
-if type kubectl 2>&1 >/dev/null; then
+if type kubectl >/dev/null 2>&1; then
   source <(kubectl completion bash)
 fi
