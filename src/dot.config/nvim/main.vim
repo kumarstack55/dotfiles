@@ -362,6 +362,22 @@ endfunction
 
 command! MyTagbarReload call s:tagbar_reload()
 
+" Tagbar の表示を左と右で切り替える。
+function! s:tagbar_position_switch_left_right()
+  let pos_left = 'topleft vertical'
+  let pos_right = 'botright vertical'
+  if exists("g:tagbar_position") && g:tagbar_position == pos_left
+    let g:tagbar_position = pos_right
+    call s:tagbar_reload()
+  elseif exists("g:tagbar_position") && g:tagbar_position == pos_right
+    let g:tagbar_position = pos_left
+    call s:tagbar_reload()
+  endif
+endfunction
+
+command! MyTagbarPositionSwitchLeftRight
+  \ call s:tagbar_position_switch_left_right()
+
 " }}}
 " クリップボードを設定する。 {{{
 
