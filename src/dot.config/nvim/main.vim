@@ -95,10 +95,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'jszakmeister/markdown2ctags', { 'for': ['markdown'] }
   endif
 
-  " vimfiler - A powerful file explorer implemented in Vim script
-  Plug 'Shougo/vimfiler.vim'
-  Plug 'Shougo/unite.vim'
-
   " ctrlp.vim - Full path fuzzy file, buffer, mru, tag, ...
   " finder for Vim.
   Plug 'ctrlpvim/ctrlp.vim'
