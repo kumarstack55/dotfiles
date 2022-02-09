@@ -182,6 +182,12 @@ echo g:sonictemplate_vim_template_dir
   --> 保管定義のディレクトリパスが表示される
 ```
 
+```
+$ vim hoge.md
+
+ipython.code<c-y><c-b>
+```
+
 #### python
 
 ```vim

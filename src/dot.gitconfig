@@ -1,4 +1,5 @@
-# .gitconfig
+# dotfiles managed
+# 環境個別の設定は .gitconfig_local.inc を編集してください。
 [push]
 	default = simple
 [include]
