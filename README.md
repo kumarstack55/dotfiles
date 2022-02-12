@@ -12,7 +12,7 @@
 
 ## インストール
 
-### macOS, EL7, debian, Windows+mintty
+### macOS, EL7, Debian, Ubuntu, Windows+mintty
 
 ```bash
 cd /tmp
