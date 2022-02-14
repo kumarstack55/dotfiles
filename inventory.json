@@ -220,6 +220,12 @@
       "when": "path_not_exists"
     },
     {
+      "os": "linux",
+      "action": "symlink",
+      "path": "dot.config/powershell/Microsoft.PowerShell_profile.ps1",
+      "target": ".config/powershell/Microsoft.PowerShell_profile.ps1"
+    },
+    {
       "os": "windows",
       "action": "symlink",
       "path": ".powershellrc.ps1",
