@@ -27,7 +27,7 @@ function Prompt {
     $ParentDirectory = $(Split-Path (Get-Location) -Leaf)
 
     $Prompt = ''
-    if ($Script:MyDotfilePrompt -eq $Script:MyDotfilePromptSimple) {
+    if ($Script:MyDotfilePrompt -ne $Script:MyDotfilePromptSimple) {
         $Prompt += "`r`n"
         $Prompt += $DebugRole + $VersionString + ' ' + $UserName + '@' + $HostName + ':' + $ParentDirectory + ' ' + "`r`n"
     }
