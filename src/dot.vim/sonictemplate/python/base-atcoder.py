@@ -1,4 +1,4 @@
-# import sys
+import sys
 # from math import ceil
 # from math import factorial
 # from math import log2
@@ -11,10 +11,6 @@
 # import heapq
 
 
-# sys.setrecursionlimit(100000)
-# INF = 10**20
-# MOD = 998244353
-# MOD = 1000000007
 # def combinations_count(n: int, r: int):
 #     """ 異なるn個のものからr個を選ぶ場合の数を得る。 """
 #     return math.factorial(n) // (math.factorial(n - r) * math.factorial(r))
@@ -28,15 +24,20 @@
 #     """ 初項a, 公比r, 項数n の等比数列の和を得る。 """
 #     return a * (1 - r ** n) // (1 - r)
 
+CAPITAL_YES = 'Yes'
+CAPITAL_NO = 'No'
+INF = 10**20
+MOD = 998244353
+# MOD = 1000000007
 
-def ili(): return list(map(int, input().split()))
-def il(): return list(input().split())
-def ii(): return int(input())
+sys.setrecursionlimit(100000)
 
+debug = True
+# debug = False {{_cursor_}}
+N = int(input())
+A = list(map(int, input().split()))
+N, M = list(map(int, input().split()))
+S1, S2 = input().split()
 
-{{_cursor_}}
-# N = ii()
-# N, M = ili()
-# A = ili()
 ans = -1
 print(ans)
