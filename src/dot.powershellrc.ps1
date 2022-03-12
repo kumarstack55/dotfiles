@@ -1,7 +1,7 @@
 ﻿# このファイルは $PROFILE から呼ばれる。
 
 $Script:MyDotfilePromptSimple = 0
-$Script:MyDotfilePrompt = 0
+$Script:MyDotfilePrompt = 1
 
 function PromptSwitch {
     $Script:MyDotfilePrompt += 1
@@ -17,19 +17,26 @@ function Prompt {
     $Version = $PSVersionTable.PSVersion
 
     $DebugRole = $(
-        if (Test-Path variable:/PSDebugContext) { '[DBG]: ' }
-        elseif ($Principal.IsInRole($AdminRole)) { '[ADMIN]: ' }
+        if (Test-Path variable:/PSDebugContext) { '[DBG] ' }
+        elseif ($Principal.IsInRole($AdminRole)) { '[ADMIN] ' }
         else { '' }
     )
+
+    $Poetry = $(
+        if (Test-Path env:POETRY_ACTIVE) { '[Poetry] ' }
+        else { '' }
+    )
+
     $VersionString = 'v' + $Version.Major + '.' + $Version.Minor
     $UserName = $env:UserName
     $HostName = $Env:Computername
+    $UserHostName = $UserName + '@' + $HostName
     $ParentDirectory = $(Split-Path (Get-Location) -Leaf)
 
     $Prompt = ''
     if ($Script:MyDotfilePrompt -ne $Script:MyDotfilePromptSimple) {
         $Prompt += "`r`n"
-        $Prompt += $DebugRole + $VersionString + ' ' + $UserName + '@' + $HostName + ':' + $ParentDirectory + ' ' + "`r`n"
+        $Prompt += $DebugRole + $Poetry + $VersionString + ' ' + $UserHostName + ':' + $ParentDirectory + ' ' + "`r`n"
     }
     $Prompt += 'PS ' + $(if ($NestedPromptLevel -ge 1) { '>>' }) + '> '
 
