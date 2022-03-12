@@ -33,7 +33,7 @@ MOD = 998244353
 sys.setrecursionlimit(100000)
 
 debug = True
-# debug = False {{_cursor_}}
+# debug = False{{_cursor_}}
 N = int(input())
 A = list(map(int, input().split()))
 N, M = list(map(int, input().split()))
