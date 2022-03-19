@@ -29,6 +29,14 @@ function __my_ps1_impl_simple {
   export PS1='\u@\h:\W \$ '
 }
 
+function __my_ps1_impl_simple2 {
+  export PS1='\W \$ '
+}
+
+function __my_ps1_impl_simple3 {
+  export PS1='\$ '
+}
+
 function __my_ps1_impl_simple_date {
   if __my_term_256_colors; then
     PS1='\n\[\e[38;5;240m\]$(date "+%F %T")\[\e[39m\]\n\u@\h:\W \$ '
