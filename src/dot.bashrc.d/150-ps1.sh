@@ -30,6 +30,10 @@ function __my_ps1_impl_simple {
 }
 
 function __my_ps1_impl_simple2 {
+  export PS1='\W \$ '
+}
+
+function __my_ps1_impl_simple3 {
   export PS1='\$ '
 }
 

@@ -1,22 +1,46 @@
 ﻿# このファイルは $PROFILE から呼ばれる。
 
+$Script:MyDotfilePromptSimple = 0
+$Script:MyDotfilePrompt = 1
+
+function PromptSwitch {
+    $Script:MyDotfilePrompt += 1
+    $Script:MyDotfilePrompt %= 2
+}
+
 # 既定では、プロンプト表示はカレントディレクトリの完全なパスを含む。
 # プロンプト表示はカレントディレクトリの名前とする。
 function Prompt {
     $Identity = [Security.Principal.WindowsIdentity]::GetCurrent()
     $Principal = [Security.Principal.WindowsPrincipal] $Identity
     $AdminRole = [Security.Principal.WindowsBuiltInRole]::Administrator
-    $Ver = $PSVersionTable.PSVersion
+    $Version = $PSVersionTable.PSVersion
 
-    "`r`n" +
-    $(if (Test-Path variable:/PSDebugContext) { '[DBG]: ' }
-    elseif($Principal.IsInRole($AdminRole)) { '[ADMIN]: ' }
-    else { '' }
-    ) +
-    'v' + $Ver.Major + '.' + $Ver.Minor + ' ' +
-    $env:UserName + '@' + $Env:Computername + ':' + $(Split-Path (Get-Location) -Leaf) + ' ' +
-    "`r`n" +
-    'PS ' + $(if ($NestedPromptLevel -ge 1) { '>>' }) + '> '
+    $DebugRole = $(
+        if (Test-Path variable:/PSDebugContext) { '[DBG] ' }
+        elseif ($Principal.IsInRole($AdminRole)) { '[ADMIN] ' }
+        else { '' }
+    )
+
+    $Poetry = $(
+        if (Test-Path env:POETRY_ACTIVE) { '[Poetry] ' }
+        else { '' }
+    )
+
+    $VersionString = 'v' + $Version.Major + '.' + $Version.Minor
+    $UserName = $env:UserName
+    $HostName = $Env:Computername
+    $UserHostName = $UserName + '@' + $HostName
+    $ParentDirectory = $(Split-Path (Get-Location) -Leaf)
+
+    $Prompt = ''
+    if ($Script:MyDotfilePrompt -ne $Script:MyDotfilePromptSimple) {
+        $Prompt += "`r`n"
+        $Prompt += $DebugRole + $Poetry + $VersionString + ' ' + $UserHostName + ':' + $ParentDirectory + ' ' + "`r`n"
+    }
+    $Prompt += 'PS ' + $(if ($NestedPromptLevel -ge 1) { '>>' }) + '> '
+
+    $Prompt
 }
 
 function Get-MyPSVersionMajor {
