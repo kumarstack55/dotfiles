@@ -14,13 +14,18 @@ err() {
   echo "$1" 1>&2
 }
 
+err_exit() {
+  err "$1"
+  exit 1
+}
+
 executable() {
   type "$1" >/dev/null 2>&1
 }
 
 main() {
   local opt
-  while getopts -- "-:h" opt; do
+  while getopts 'h' opt; do
     case $opt in
       h)  usage_exit;;
       \?) usage_exit;;
@@ -28,7 +33,7 @@ main() {
   done
   shift $((OPTIND-1))
 
-  cd $HOME
+  cd "$HOME" || err_exit "failed to cd"
 
   if ! executable git; then
     err "git: command not found."
@@ -36,13 +41,12 @@ main() {
   fi
 
   if [ ! -d dotfiles ]; then
-    git clone git@github.com:kumarstack55/dotfiles.git
-    if [[ $? -ne 0 ]]; then
+    if git clone git@github.com:kumarstack55/dotfiles.git; then
       git clone https://github.com/kumarstack55/dotfiles.git
     fi
   fi
 
-  cd $HOME/dotfiles/bin
+  cd "$HOME/dotfiles/bin" || err_exit "failed to cd"
   ./installer.sh
 }
 
