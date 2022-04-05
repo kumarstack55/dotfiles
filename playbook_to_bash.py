@@ -1,12 +1,20 @@
 #!/usr/bin/env python3
 from abc import ABC
 from typing import List
+from textwrap import dedent
 import argparse
 import copy
 import json
+import re
 
 
 class Module(ABC):
+    def get_module_name(self) -> str:
+        return re.sub(r'^Module', '', self.__class__.__name__)
+
+    def get_func(self) -> str:
+        raise NotImplementedError()
+
     def get_cmd(self) -> str:
         raise NotImplementedError()
 
@@ -29,11 +37,18 @@ class ModuleSymlink(Module):
     def force(self):
         return self.force
 
+    def get_func(self):
+        return dedent('''\
+          module_symlink() {
+            local src="$1" link_name="$2"
+            local target link_name
+            target=$(readlink -f "$src")
+            link_name=$(readlink -f "$link_name")
+            ln -fnsv "$target" "$link_name"
+          }''')
+
     def get_cmd(self) -> str:
-        target = f'$(readlink -f "{self.src}")'
-        link_name = f'$(readlink -f .)/{self.path})'
-        cmd = f'ln -fnsv "{target}" "{link_name}"'
-        return cmd
+        return dedent(f'module_symlink "{self.src}" "{self.path}"')
 
 
 class ModuleDirectory(Module):
@@ -49,12 +64,20 @@ class ModuleDirectory(Module):
     def mode(self):
         return self._mode
 
+    def get_func(self):
+        return dedent('''\
+          module_directory() {
+            local path="$1" mode="$2"
+            if [ "${mode+x}" ]; then
+              mkdir -pv -m "{self.mode} "$path"
+            else
+              mkdir -pv "$path"
+            fi
+          }''')
+
     def get_cmd(self) -> str:
-        cmd = 'mkdir'
-        if self._mode:
-            cmd += f' -m "{self.mode}"'
-        cmd += f'"$(readlink -f .)/{self.path}"'
-        return cmd
+        mode = self.mode if self.mode else ''
+        return f'module_directory "{self.path}" "{mode}"'
 
 
 class ModuleCopy(Module):
@@ -75,8 +98,21 @@ class ModuleCopy(Module):
     def force(self):
         return self._force
 
+    def get_func(self):
+        return dedent('''\
+          module_copy() {
+            local src="$1" path="$2" force="$3"
+            exists=$(test -e "$path" && echo 'y')
+            if [ ! "${exists+x}" ]; then
+              cp -av "$src" "$path"
+            elif [ "${exists+x}" && "${force+x}" ]; then
+              cp -afv "$src" "$path"
+            fi
+          }''')
+
     def get_cmd(self):
-        raise RuntimeError()
+        force = self.force if self.force else ''
+        return f'module_copy "{self.src}" "{self.path}" "{force}"'
 
 
 class ModuleTouch(Module):
@@ -92,6 +128,15 @@ class ModuleTouch(Module):
     def force(self):
         return self._force
 
+    def get_func(self):
+        return dedent('''\
+          module_touch() {
+            touch "$1"
+          }''')
+
+    def get_cmd(self):
+        return f'module_touch "{self.path}"'
+
 
 class ModuleLineinfile(Module):
     def __init__(self, path=None, line=None):
@@ -105,6 +150,23 @@ class ModuleLineinfile(Module):
     @property
     def line(self):
         return self._line
+
+    def get_func(self):
+        return dedent('''\
+          module_lineinfile() {
+            local path="$1" line="$2"
+            # shellcheck disable=SC2154
+            if ! grep -Fq "$line" "$path"; then
+              cp -afv "$path"{,"-$(date "+%F.%s")"}
+              {
+                echo ""
+                echo "$line"
+              } | tee -a "$path" >/dev/null
+            fi
+          }''')
+
+    def get_cmd(self):
+        return f'module_lineinfile "{self.path}" "{self.line}"'
 
 
 class Task(ABC):
@@ -218,7 +280,7 @@ class TextBuilder(object):
     def __init__(self):
         self._lines = list()
 
-    def add_line(self, line: str):
+    def add_text(self, line: str):
         self._lines.append(line)
 
     def get(self) -> str:
@@ -238,30 +300,45 @@ class TranslatorV1(Translator):
         super().__init__(**kwargs)
 
     def _add_shebang(self, b: TextBuilder):
-        b.add_line('#!/bin/bash')
+        b.add_text('#!/bin/bash')
 
     def _add_when_functions(self, b: TextBuilder):
-        b.add_line('when_is_unix() { return 0; }')
-        b.add_line('when_is_windows() { return 1; }')
-        b.add_line('executable() { type "$1" >/dev/null 2>&1; }')
-        b.add_line('tmux_ver_int() {')
-        b.add_line('  printf "%d%02d" \\')
-        b.add_line('    $(tmux -V | cut -d' ' -f2 | grep -Po "\\d+")')
-        b.add_line('}')
-        b.add_line('when_tmux_version_lt_2pt1() {')
-        b.add_line('  executable "$1" && [[ $(tmux_ver_int) -lt 201 ]]')
-        b.add_line('}')
-        b.add_line('when_tmux_version_ge_2pt1() {')
-        b.add_line('  executable "$1" && [[ $(tmux_ver_int) -ge 201 ]]')
-        b.add_line('}')
+        b.add_text(dedent('''\
+should_process() {
+  local target="$1" operation="$2"
+  if [[ "${whatif+x}" ]]; then
+    echo "WhatIf: The operation '$operation' is executed on the target '$target'.
+    return 1
+  fi
+  return 0
+}
+is_unix() {
+  return 0
+}
+is_windows() {
+  return 1
+}
+executable() {
+  type "$1" >/dev/null 2>&1
+}
+tmux_ver_int() {
+  printf "%d%02d" \\
+    $(tmux -V | cut -d' ' -f2 | grep -Po "\\d+")
+}
+tmux_version_lt_2pt1() {
+  executable "$1" && [[ $(tmux_ver_int) -lt 201 ]]
+}
+tmux_version_ge_2pt1() {
+  executable "$1" && [[ $(tmux_ver_int) -ge 201 ]]
+}'''))
 
     def _add_module_functions(self, b: TextBuilder):
-        b.add_line('abspath() { readlink -f "$1"; }')
-        b.add_line('module_symlink {')
-        b.add_line('  local src="$1"; shift')
-        b.add_line('  local path="$1"; shift')
-        b.add_line('  ln -fnsv $(abspath "$src") $(abspath "$path")')
-        b.add_line('}')
+        module_exists = dict()
+        for task in self._playbook.tasks:
+            module_name = task.module.get_module_name()
+            if module_name not in module_exists:
+                b.add_text(task.module.get_func())
+                module_exists[module_name] = True
 
     def _add_functions(self, b: TextBuilder):
         self._add_when_functions(b)
@@ -269,7 +346,7 @@ class TranslatorV1(Translator):
 
     def _get_when_str(self, when: list) -> str:
         assert len(when) == 2
-        ret = '( '
+        ret = ''
         if when[0] == 'true':
             ret += 'true'
             if len(when[1]) != 0:
@@ -282,33 +359,37 @@ class TranslatorV1(Translator):
             ret += 'is_windows'
             if len(when[1]) != 0:
                 raise RuntimeError(when)
-        elif when[0] == 'tmux_vesion_lt_2pt1':
-            ret += 'tmux_vesion_lt_2pt1'
+        elif when[0] == 'tmux_version_lt_2pt1':
+            ret += 'tmux_version_lt_2pt1'
+            if len(when[1]) != 0:
+                raise RuntimeError(when)
+        elif when[0] == 'tmux_version_ge_2pt1':
+            ret += 'tmux_version_ge_2pt1'
             if len(when[1]) != 0:
                 raise RuntimeError(when)
         elif when[0] == 'and':
             when2 = list()
             for w in when[1]:
-                print('a: ' + str(w))
-                when2.append(self._get_when_str(w))
+                when2.append('(' + self._get_when_str(w) + ')')
             ret += ' && '.join(when2)
         else:
             raise RuntimeError(when)
-        ret += ' )'
         return ret
 
     def translate(self) -> str:
         b = TextBuilder()
         self._add_shebang(b)
         self._add_functions(b)
+
         for task in self._playbook.tasks:
-            b.add_line(f'echo "# TASK [{task.name}]"')
-            b.add_line('# %s' % (task.module))
-            b.add_line('# %s' % (task.when))
+            b.add_text('# ' + ('-' * 70))
+            b.add_text(f'echo "# TASK [{task.name}]"')
             cond = self._get_when_str(
                     task.when if task.when else ['true', []])
-            print(self, task, task.__dict__)
-            print(f'{cond} && {task.module.get_cmd()}')
+            b.add_text(dedent(f'''\
+              if [ {cond} ]; then
+                {task.module.get_cmd()}
+              fi'''))
         return b.get()
 
 

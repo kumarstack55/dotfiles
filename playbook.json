@@ -147,7 +147,7 @@
       "when": [
         "and", [
           [ "is_unix", [] ],
-          [ "tmux_vesion_lt_2pt1", [] ]
+          [ "tmux_version_lt_2pt1", [] ]
         ]
       ]
     },
@@ -158,7 +158,7 @@
         "path": ".tmux.conf",
         "src": "dotfiles/src/dot.tmux.conf.ge_v2.1"
       },
-      "when": [ "and", [ [ "is_unix", [] ], [ "tmux_vesion_lt_2pt1", [] ] ]
+      "when": [ "and", [ [ "is_unix", [] ], [ "tmux_version_lt_2pt1", [] ] ]
       ]
     },
     {
