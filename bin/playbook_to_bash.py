@@ -20,7 +20,7 @@ class Module(ABC):
 
 
 class ModuleSymlink(Module):
-    def __init__(self, path=None, src=None, force=None):
+    def __init__(self, path=None, src=None, force=False):
         self._path = path
         self._src = src
         self._froce = force
@@ -40,11 +40,16 @@ class ModuleSymlink(Module):
     def get_func(self):
         return dedent('''\
           module_symlink() {
-            local src="$1" link_name="$2"
-            local target link_name
+            local src="$1" path="$2"
+            local target
+            if [ ! -f "$src" ]; then
+              echo "No such file or directory: $src"
+              return 1
+            fi
             target=$(readlink -f "$src")
-            link_name=$(readlink -f "$link_name")
-            ln -fnsv "$target" "$link_name"
+            if should_process "make symlink" "$target --> $path"; then
+              ln -fnsv "$target" "$path"
+            fi
           }''')
 
     def get_cmd(self) -> str:
@@ -68,10 +73,13 @@ class ModuleDirectory(Module):
         return dedent('''\
           module_directory() {
             local path="$1" mode="$2"
-            if [ "${mode+x}" ]; then
-              mkdir -pv -m "{self.mode} "$path"
-            else
+            if should_process "mkdir" "$path"; then
               mkdir -pv "$path"
+            fi
+            if [ "${mode+x}" ]; then
+              if should_process "chmod" "mode: $mode, path: $path"; then
+                chmod -v "$mode" "$path"
+              fi
             fi
           }''')
 
@@ -81,7 +89,7 @@ class ModuleDirectory(Module):
 
 
 class ModuleCopy(Module):
-    def __init__(self, path=None, src=None, force=None):
+    def __init__(self, path=None, src=None, force=False):
         self._path = path
         self._src = src
         self._force = force
@@ -104,9 +112,13 @@ class ModuleCopy(Module):
             local src="$1" path="$2" force="$3"
             exists=$(test -e "$path" && echo 'y')
             if [ ! "${exists+x}" ]; then
-              cp -av "$src" "$path"
-            elif [ "${exists+x}" && "${force+x}" ]; then
-              cp -afv "$src" "$path"
+              if should_process "copy" "$src to $path"; then
+                cp -av "$src" "$path"
+              fi
+            elif [ "${exists+x}" ] && [ "${force+x}" ]; then
+              if should_process "copy" "$src to $path"; then
+                cp -afv "$src" "$path"
+              fi
             fi
           }''')
 
@@ -116,22 +128,19 @@ class ModuleCopy(Module):
 
 
 class ModuleTouch(Module):
-    def __init__(self, path=None, force=None):
+    def __init__(self, path=None):
         self._path = path
-        self._force = force
 
     @property
     def path(self):
         return self._path
 
-    @property
-    def force(self):
-        return self._force
-
     def get_func(self):
         return dedent('''\
           module_touch() {
-            touch "$1"
+            if should_process "touch" "$path"; then
+              touch "$1"
+            fi
           }''')
 
     def get_cmd(self):
@@ -155,13 +164,15 @@ class ModuleLineinfile(Module):
         return dedent('''\
           module_lineinfile() {
             local path="$1" line="$2"
-            # shellcheck disable=SC2154
-            if ! grep -Fq "$line" "$path"; then
-              cp -afv "$path"{,"-$(date "+%F.%s")"}
-              {
-                echo ""
-                echo "$line"
-              } | tee -a "$path" >/dev/null
+            if [ -f "$path" ]; then
+              if ! grep -Fq "$line" "$path"; then
+                if should_process "make backup" "$path"; then
+                  cp -afv "$path"{,"-$(date "+%F.%s")"}
+                fi
+                if should_process "append" "line: $line, path: $path"; then
+                  { echo ""; echo "$line"; } | tee -a "$path" >/dev/null
+                fi
+              fi
             fi
           }''')
 
@@ -304,10 +315,11 @@ class TranslatorV1(Translator):
 
     def _add_when_functions(self, b: TextBuilder):
         b.add_text(dedent('''\
+whatif=y
 should_process() {
-  local target="$1" operation="$2"
+  local operation="$1" target="$2"
   if [[ "${whatif+x}" ]]; then
-    echo "WhatIf: The operation '$operation' is executed on the target '$target'.
+    echo "WhatIf: The operation '$operation' is executed on the target '$target'."
     return 1
   fi
   return 0
@@ -322,14 +334,17 @@ executable() {
   type "$1" >/dev/null 2>&1
 }
 tmux_ver_int() {
-  printf "%d%02d" \\
-    $(tmux -V | cut -d' ' -f2 | grep -Po "\\d+")
+  local ver_str major minor
+  ver_str=$(tmux -V | cut -d' ' -f2)
+  major=$(echo "$ver_str" | cut -d. -f 1)
+  minor=$(echo "$ver_str" | cut -d. -f 2 | grep -Po '\\d+')
+  printf "%d%02d" "$major" "$minor"
 }
 tmux_version_lt_2pt1() {
-  executable "$1" && [[ $(tmux_ver_int) -lt 201 ]]
+  executable tmux && [[ $(tmux_ver_int) -lt 201 ]]
 }
 tmux_version_ge_2pt1() {
-  executable "$1" && [[ $(tmux_ver_int) -ge 201 ]]
+  executable tmux && [[ $(tmux_ver_int) -ge 201 ]]
 }'''))
 
     def _add_module_functions(self, b: TextBuilder):
@@ -370,7 +385,7 @@ tmux_version_ge_2pt1() {
         elif when[0] == 'and':
             when2 = list()
             for w in when[1]:
-                when2.append('(' + self._get_when_str(w) + ')')
+                when2.append('( ' + self._get_when_str(w) + ' )')
             ret += ' && '.join(when2)
         else:
             raise RuntimeError(when)
@@ -382,12 +397,11 @@ tmux_version_ge_2pt1() {
         self._add_functions(b)
 
         for task in self._playbook.tasks:
-            b.add_text('# ' + ('-' * 70))
             b.add_text(f'echo "# TASK [{task.name}]"')
             cond = self._get_when_str(
                     task.when if task.when else ['true', []])
             b.add_text(dedent(f'''\
-              if [ {cond} ]; then
+              if {cond}; then
                 {task.module.get_cmd()}
               fi'''))
         return b.get()

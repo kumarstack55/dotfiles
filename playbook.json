@@ -158,7 +158,7 @@
         "path": ".tmux.conf",
         "src": "dotfiles/src/dot.tmux.conf.ge_v2.1"
       },
-      "when": [ "and", [ [ "is_unix", [] ], [ "tmux_version_lt_2pt1", [] ] ]
+      "when": [ "and", [ [ "is_unix", [] ], [ "tmux_version_ge_2pt1", [] ] ]
       ]
     },
     {
@@ -188,7 +188,7 @@
       }
     },
     {
-      "name": "Ensure that nvim is configured.",
+      "name": "Ensure that nvim is configured",
       "module": "symlink",
       "params": {
         "path": "AppData/Local/nvim",
@@ -379,8 +379,7 @@
       "name": "Ensure that .bashrc exists",
       "module": "touch",
       "params": {
-        "path": ".bashrc",
-        "force": false
+        "path": ".bashrc"
       },
       "when": [ "is_unix", [] ]
     },
