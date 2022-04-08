@@ -1,0 +1,147 @@
+#!/bin/bash
+
+what_if=y
+
+usage_exit() {
+  err "usage: $0 [options...]"
+  err ""
+  err "optional arguments"
+  err "  -f  disable dry-run mode"
+  err "  -c  enable dry-run mode"
+  err "  -h  show this help message and exit"
+  exit 1
+}
+
+err() {
+  echo "$1" 1>&2
+}
+
+should_process() {
+  local op="$1" target="$2"
+  if [[ "${what_if:+x}" ]]; then
+    echo "WhatIf: The operation '$op' is executed on the target '$target'."
+    return 1
+  fi
+  return 0
+}
+
+is_unix() {
+  return 0
+}
+
+is_windows() {
+  return 1
+}
+
+executable() {
+  type "$1" >/dev/null 2>&1
+}
+
+tmux_ver_int() {
+  local ver_str major minor
+  ver_str=$(tmux -V | cut -d' ' -f2)
+  major=$(echo "$ver_str" | cut -d. -f 1)
+  minor=$(echo "$ver_str" | cut -d. -f 2 | grep -Po '\d+')
+  printf "%d%02d" "$major" "$minor"
+}
+
+tmux_version_lt_2pt1() {
+  executable tmux && [[ $(tmux_ver_int) -lt 201 ]]
+}
+
+tmux_version_ge_2pt1() {
+  executable tmux && [[ $(tmux_ver_int) -ge 201 ]]
+}
+
+module_symlink() {
+  local src="$1" path="$2"
+  local target
+  if [ ! -e "$src" ]; then
+    echo "No such file or directory: $src"
+    return 1
+  fi
+  target=$(readlink -f "$src")
+  if should_process "make symlink" "$target --> $path"; then
+    ln -fnsv "$target" "$path"
+  fi
+}
+
+module_directory() {
+  local path="$1" mode="$2"
+  if should_process "mkdir" "$path"; then
+    mkdir -pv "$path"
+  fi
+  if [ "${mode:+x}" ]; then
+    if should_process "chmod" "mode: $mode, path: $path"; then
+      chmod -v "$mode" "$path"
+    fi
+  fi
+}
+
+module_copy() {
+  local src="$1" path="$2" force="$3"
+  exists=$(test -e "$path" && echo 'y')
+  if [ ! "${exists:+x}" ]; then
+    if should_process "copy" "$src to $path"; then
+      cp -av "$src" "$path"
+    fi
+  elif [ "${exists:+x}" ] && [ "${force:+x}" ]; then
+    if should_process "copy" "$src to $path"; then
+      cp -afv "$src" "$path"
+    fi
+  fi
+}
+
+module_touch() {
+  local path="$1"
+  if should_process "touch" "$path"; then
+    touch "$path"
+  fi
+}
+
+module_lineinfile() {
+  local path="$1" line="$2"
+  if [ -f "$path" ]; then
+    if ! grep -Fq "$line" "$path"; then
+      if should_process "make backup" "$path"; then
+        cp -afv "$path"{,"-$(date "+%F.%s")"}
+      fi
+      if should_process "append" "line: $line, path: $path"; then
+        { echo ""; echo "$line"; } | tee -a "$path" >/dev/null
+      fi
+    fi
+  fi
+}
+
+execute_tasks() {
+{% for task in tasks %}
+  echo "# TASK [{{ task.name }}]"
+  echo "# ************************************************************"
+  if {{task.cond}}; then
+    {{task.command}} && echo 'ok' || echo 'failed'
+  else
+    echo "skipping."
+  fi
+  echo
+{% endfor %}
+}
+
+parse_options() {
+  local opt
+  while getopts cfh opt; do
+    case $opt in
+      c) what_if=y;;
+      f) what_if=;;
+      h) usage_exit;;
+      \?) usage_exit;;
+    esac
+  done
+  shift $((OPTIND-1))
+}
+
+main() {
+  parse_options "$@"
+  execute_tasks
+}
+
+main "$@"

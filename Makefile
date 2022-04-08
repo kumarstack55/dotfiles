@@ -8,8 +8,8 @@ inventory.txt: inventory.json
 	./bin/inventory_to_sh.py $< >$@.tmp
 	mv -fv $@.tmp $@
 
-bin/installer.sh: playbook.json bin/playbook_to_bash.py
-	python3 bin/playbook_to_bash.py --source $< >$@.tmp
+bin/installer.sh: playbook.json templates/installer.sh.j2 bin/playbook_to_bash.py
+	python bin/playbook_to_bash.py --source $< >$@.tmp
 	chmod +x $@.tmp
 	mv -fv $@.tmp $@
 

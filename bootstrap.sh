@@ -46,8 +46,8 @@ main() {
     fi
   fi
 
-  cd "$HOME/dotfiles/bin" || err_exit "failed to cd"
-  ./installer.sh
+  cd "$HOME" || err_exit "failed to cd"
+  dotfiles/bin/installer.sh
 }
 
 main "$@"

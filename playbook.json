@@ -311,7 +311,7 @@
       "when": [ "is_windows", [] ]
     },
     {
-      "name": "Ensure that Microsoft.PowerShell_profile.ps1 exists",
+      "name": "Ensure that PowerShell is configured",
       "module": "copy",
       "params": {
         "path": "Documents/PowerShell/Microsoft.PowerShell_profile.ps1",
@@ -321,11 +321,11 @@
       "when": [ "is_windows", [] ]
     },
     {
-      "name": "Ensure that Microsoft.PowerShell_profile.ps1 exists",
+      "name": "Ensure that PowerShell is configured",
       "module": "symlink",
       "params": {
-        "path": "dot.config/powershell/Microsoft.PowerShell_profile.ps1",
-        "src": "dotfiles/src/.config/powershell/Microsoft.PowerShell_profile.ps1"
+        "path": ".config/powershell",
+        "src": "dotfiles/src/dot.config/powershell"
       },
       "when": [ "is_unix", [] ]
     },
