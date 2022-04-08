@@ -7,7 +7,6 @@ import argparse
 import copy
 import json
 import re
-import sys
 
 
 class Module(ABC):
