@@ -131,6 +131,7 @@ class ModuleSymlink : Module {
         $Params['That'] = $this
         ConstructModuleSymlinkForSplatting @Params
     }
+
     run() {
         $HomeDir = (Get-Item Env:\USERPROFILE).Value
 
@@ -143,7 +144,6 @@ class ModuleSymlink : Module {
         if ( ( Test-Path $FullPath ) -And ( Test-Path $Path2 -PathType Container ) ) {
             (Get-Item $FullPath).Delete()
         }
-        write-host New-Item -Force -Path $Path2 -Name $Name -Value $SrcFullPath -ItemType SymbolicLink
         New-Item -Force -Path $Path2 -Name $Name -Value $SrcFullPath -ItemType SymbolicLink
     }
 }
@@ -160,10 +160,12 @@ function ConstractModuleDirectoryForSplatting {
 class ModuleDirectory : Module {
     [string]$Path
     [string]$Mode
+
     ModuleDirectory([hashtable]$Params) {
         $Params['That'] = $this
         ConstractModuleDirectoryForSplatting @Params
     }
+
     run() {
         $HomeDir = (Get-Item Env:\USERPROFILE).Value
         $Path2 = Join-Path $HomeDir (Split-Path $this.Path -Parent)
@@ -211,6 +213,7 @@ function ConstructModuleTouchForSplatting{
 
 class ModuleTouch : Module {
     [string]$Path
+
     ModuleTouch([hashtable]$Params) {
         $Params['That'] = $this
         ConstructModuleTouchForSplatting @Params
@@ -229,6 +232,7 @@ function ConstructModuleLineinfileForSplatting {
 class ModuleLineinfile : Module {
     [string]$Path
     [string]$Line
+
     ModuleLineinfile([hashtable]$Params) {
         $Params['That'] = $this
         ConstructModuleLineinfileForSplatting @Params
@@ -239,6 +243,7 @@ class Task {
     [string]$Name
     [Module]$Module
     $When
+
     Task([string]$Name, [Module]$Module, $When) {
         $this.Name = $Name
         $this.Module = $Module
@@ -249,6 +254,7 @@ class Task {
 class Playbook {
     [int]$PlaybookVersion
     $Tasks
+
     Playbook([int]$PlaybookVersion, $Tasks) {
         $this.PlaybookVersion = $PlaybookVersion
         $this.Tasks = $Tasks
@@ -257,12 +263,15 @@ class Playbook {
 
 class ModuleFactory {
     $ModuleNameToClass
+
     ModuleFactory() {
         $this.ModuleNameToClass = @{}
     }
+
     add([string]$ModuleName, $ModuleClass) {
         $this.ModuleNameToClass[$ModuleName] = $ModuleClass
     }
+
     [Module]create([string]$ModuleName, [hashtable]$Params) {
         $ModuleClass = $this.ModuleNameToClass[$ModuleName]
         return $ModuleClass::new($Params)
@@ -271,9 +280,11 @@ class ModuleFactory {
 
 class TaskFactory {
     [ModuleFactory]$ModuleFactory
+
     TaskFactory([ModuleFactory]$ModuleFactory) {
         $this.ModuleFactory = $ModuleFactory
     }
+
     [Task]create([PSCustomObject]$TaskObject) {
         $Name = $TaskObject.name
         $ModuleName = $TaskObject.module
@@ -294,9 +305,11 @@ class TaskFactory {
 
 class PlaybookLoader {
     [TaskFactory]$TaskFactory
+
     PlaybookLoader([TaskFactory]$TaskFactory) {
         $this.TaskFactory = $TaskFactory
     }
+
     [Playbook]load([string]$PlaybookPath) {
         $Data = Get-Content $PlaybookPath | ConvertFrom-Json
 
@@ -388,14 +401,6 @@ function Main {
         Write-Host ""
     }
 
-#    # インベントリを配置する
-#    Get-Content (Join-Path $RepoDir inventory.json) |
-#        ConvertFrom-Json |
-#        Select-Object -ExpandProperty inventory |
-#        Where-Object { Test-ItemOs -ItemOs $_.os } |
-#        Where-Object { Test-ItemWhen -Item $_ } |
-#        Foreach-Object { Invoke-ItemAction -Item $_ }
-#
 #    # vim-plug をインストールする
 #    $cli = New-Object System.Net.WebClient
 #    $utf8WithoutBom = New-Object "System.Text.UTF8Encoding" -ArgumentList @($false)
@@ -410,12 +415,6 @@ function Main {
 #        $str = $cli.DownloadString($uri)
 #        [System.IO.File]::WriteAllText("$HOME\AppData\Local\nvim\autoload\plug.vim", @($str), $utf8WithoutBom)
 #    }
-#
-#    #if (Test-CommandExists nvim) {
-#    #    if ($PSCmdlet.ShouldProcess('nvim', 'PlugInstall')) {
-#    #        nvim -u "~/.config/nvim/plugins.vim " -c "try | PlugInstall --sync | finally | qall! | endtry"
-#    #    }
-#    #}
 }
 
 # ファンクションの中でスクリプトパスを取得できないため、ここで得る
