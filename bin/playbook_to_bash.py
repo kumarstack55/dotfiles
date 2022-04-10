@@ -109,6 +109,15 @@ class ModuleLineinfile(Module):
         return f"module_lineinfile '{self.path}' '{self.line}'"
 
 
+class ModuleGetUrl(Module):
+    def __init__(self, url=None, path=None):
+        self._url = url
+        self._path = path
+
+    def get_cmd(self):
+        return f"module_get_url '{self._url}' '{self._path}'"
+
+
 class Task(ABC):
     def __init__(self, name=None, module=None, when=None):
         self._name = name
@@ -299,6 +308,7 @@ def main():
     module_factory.add('copy', ModuleCopy)
     module_factory.add('touch', ModuleTouch)
     module_factory.add('lineinfile', ModuleLineinfile)
+    module_factory.add('get_url', ModuleGetUrl)
 
     task_factory: TaskFactory = TaskFactoryV1(module_factory)
 

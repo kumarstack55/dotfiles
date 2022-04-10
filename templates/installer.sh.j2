@@ -113,14 +113,42 @@ module_lineinfile() {
   fi
 }
 
+module_get_url() {
+  local url="$1" path="$2"
+
+  if [ ! -f "$path" ]; then
+    if should_process "write file" "$path"; then
+      curl -Lo "$path" "$url"
+    fi
+  fi
+}
+
+echo_ok() {
+  tput setaf 2
+  echo 'ok'
+  tput sgr0
+}
+
+echo_skipping() {
+  tput setaf 3
+  echo 'skipping'
+  tput sgr0
+}
+
+echo_failed() {
+  tput setaf 1
+  echo 'failed'
+  tput sgr0
+}
+
 execute_tasks() {
 {% for task in tasks %}
   echo "# TASK [{{ task.name }}]"
   echo "# ************************************************************"
   if {{task.cond}}; then
-    {{task.command}} && echo 'ok' || echo 'failed'
+    {{task.command}} && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 {% endfor %}

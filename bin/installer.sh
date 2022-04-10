@@ -1,6 +1,6 @@
 #!/bin/bash
 
-what_if=y
+what_if=
 
 usage_exit() {
   err "usage: $0 [options...]"
@@ -113,401 +113,474 @@ module_lineinfile() {
   fi
 }
 
+module_get_url() {
+  local url="$1" path="$2"
+
+  if [ ! -f "$path" ]; then
+    if should_process "write file" "$path"; then
+      curl -Lo "$path" "$url"
+    fi
+  fi
+}
+
+echo_ok() {
+  tput setaf 2
+  echo 'ok'
+  tput sgr0
+}
+
+echo_skipping() {
+  tput setaf 3
+  echo 'skipping'
+  tput sgr0
+}
+
+echo_failed() {
+  tput setaf 1
+  echo 'failed'
+  tput sgr0
+}
+
 execute_tasks() {
 
-  echo "# TASK [Ensure that Ansible configured]"
+  echo "# TASK [Ensure that XDG_CONFIG_HOME directory exists]"
+  echo "# ************************************************************"
+  if true; then
+    module_directory '.config' '' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Vim | Ensure that .vimrc is configured]"
+  echo "# ************************************************************"
+  if true; then
+    module_symlink 'dotfiles/src/dot.vimrc' '.vimrc' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Vim | Ensure that .vim directory is configured]"
+  echo "# ************************************************************"
+  if true; then
+    module_symlink 'dotfiles/src/dot.vim' '.vim' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Vim | Ensure that .gvimrc is configured]"
   echo "# ************************************************************"
   if is_unix; then
-    module_symlink 'dotfiles/src/dot.ansible.cfg' '.ansible.cfg' && echo 'ok' || echo 'failed'
+    module_symlink 'dotfiles/src/dot.gvimrc' '.gvimrc' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that XDG_CONFIG_HOME exists]"
-  echo "# ************************************************************"
-  if true; then
-    module_directory '.config' '' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that config/nvim exists]"
-  echo "# ************************************************************"
-  if true; then
-    module_symlink 'dotfiles/src/dot.config/nvim' '.config/nvim' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that pip configured]"
-  echo "# ************************************************************"
-  if is_unix; then
-    module_symlink 'dotfiles/src/dot.config/pip' '.config/pip' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that gh configured]"
-  echo "# ************************************************************"
-  if true; then
-    module_symlink 'dotfiles/src/dot.config/gh' '.config/gh' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that ssh exists]"
-  echo "# ************************************************************"
-  if is_unix; then
-    module_directory '.ssh' '0700' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that bashrc_local.sh exists]"
-  echo "# ************************************************************"
-  if is_unix; then
-    module_symlink 'dotfiles/src/dot.bashrc_local.sh' '.bashrc_local.sh' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that ctags is configured]"
-  echo "# ************************************************************"
-  if true; then
-    module_symlink 'dotfiles/src/dot.ctags' '.ctags' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that EditorConfig is configured]"
-  echo "# ************************************************************"
-  if true; then
-    module_symlink 'dotfiles/src/dot.editorconfig' '.editorconfig' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that gitconfig exists]"
-  echo "# ************************************************************"
-  if true; then
-    module_symlink 'dotfiles/src/dot.gitconfig' '.gitconfig' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that Commitizen is configured]"
-  echo "# ************************************************************"
-  if true; then
-    module_symlink 'dotfiles/src/dot.czrc' '.czrc' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that Mercurial is configured]"
-  echo "# ************************************************************"
-  if true; then
-    module_symlink 'dotfiles/src/dot.hgrc' '.hgrc' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that gitconfig_windows.inc exists]"
+  echo "# TASK [Vim | Ensure that _gvimrc is configured]"
   echo "# ************************************************************"
   if is_windows; then
-    module_symlink 'dotfiles/src/dot.gitconfig_windows.inc' '.gitconfig_windows.inc' && echo 'ok' || echo 'failed'
+    module_symlink 'dotfiles/src/dot.gvimrc' '_gvimrc' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that gvimrc exists]"
-  echo "# ************************************************************"
-  if is_unix; then
-    module_symlink 'dotfiles/src/dot.gvimrc' '.gvimrc' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that gvimrc exists]"
+  echo "# TASK [Vim | Ensure that AppData/Local/nvim is configured]"
   echo "# ************************************************************"
   if is_windows; then
-    module_symlink 'dotfiles/src/dot.gvimrc' '_gvimrc' && echo 'ok' || echo 'failed'
+    module_symlink 'dotfiles/src/AppData/Local/nvim' 'AppData/Local/nvim' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that inputrc exists]"
+  echo "# TASK [Vim | Ensure that .config/nvim is configured]"
+  echo "# ************************************************************"
+  if true; then
+    module_symlink 'dotfiles/src/dot.config/nvim' '.config/nvim' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Vim | Ensure that .vim/autoload directory exists]"
   echo "# ************************************************************"
   if is_unix; then
-    module_symlink 'dotfiles/src/dot.inputrc' '.inputrc' && echo 'ok' || echo 'failed'
+    module_directory '.vim/autoload' '' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that tmux.conf exists when version is less than v2.1]"
+  echo "# TASK [Vim | Ensure that .vim/autoload/plug.vim for Vim exists]"
+  echo "# ************************************************************"
+  if is_unix; then
+    module_get_url 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' '.vim/autoload/plug.vim' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Vim | Ensure that vimfiles/autoload directory exists]"
+  echo "# ************************************************************"
+  if is_windows; then
+    module_directory 'vimfiles/autoload' '' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Vim | Ensure that vimfiles/autoload/plug.vim for Vim exists]"
+  echo "# ************************************************************"
+  if is_windows; then
+    module_get_url 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' 'vimfiles/autoload/plug.vim' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Vim | Windows | Ensure that AppData/Local/nvim/autoload directory exists]"
+  echo "# ************************************************************"
+  if is_windows; then
+    module_directory 'AppData/Local/nvim/autoload' '' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Vim | Ensure that plug.vim for NeoVim exists]"
+  echo "# ************************************************************"
+  if is_windows; then
+    module_get_url 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' 'AppData/Local/nvim/autoload/plug.vim' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Git | Ensure that .gitconfig is configured]"
+  echo "# ************************************************************"
+  if true; then
+    module_symlink 'dotfiles/src/dot.gitconfig' '.gitconfig' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Git | Ensure that .gitconfig_local.inc is configured]"
+  echo "# ************************************************************"
+  if true; then
+    module_copy 'dotfiles/src/dot.gitconfig_local.inc' '.gitconfig_local.inc' '' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Git | Ensure that .gitconfig_windows.inc is configured]"
+  echo "# ************************************************************"
+  if is_windows; then
+    module_symlink 'dotfiles/src/dot.gitconfig_windows.inc' '.gitconfig_windows.inc' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Git | Ensure that .gitconfig_profiles.json.sample is configured]"
+  echo "# ************************************************************"
+  if is_windows; then
+    module_symlink 'dotfiles/src/dot.gitconfig_profiles.json.sample' '.gitconfig_profiles.json.sample' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [GitHub | Ensure that .config/gh directory is configured]"
+  echo "# ************************************************************"
+  if true; then
+    module_symlink 'dotfiles/src/dot.config/gh' '.config/gh' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Commitizen | Ensure that .czrc is configured]"
+  echo "# ************************************************************"
+  if true; then
+    module_symlink 'dotfiles/src/dot.czrc' '.czrc' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Mercurial | Ensure that .hgrc is configured]"
+  echo "# ************************************************************"
+  if true; then
+    module_symlink 'dotfiles/src/dot.hgrc' '.hgrc' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Mercurial | Ensure that .hgrc_local.ini is configured]"
+  echo "# ************************************************************"
+  if true; then
+    module_copy 'dotfiles/src/dot.hgrc_local.ini' '.hgrc_local.ini' '' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Ansible | Ensure that .ansible.cfg is configured]"
+  echo "# ************************************************************"
+  if is_unix; then
+    module_symlink 'dotfiles/src/dot.ansible.cfg' '.ansible.cfg' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Python | Ensure that pip directory is configured]"
+  echo "# ************************************************************"
+  if is_unix; then
+    module_symlink 'dotfiles/src/dot.config/pip' '.config/pip' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [OpenSSH | Ensure that ssh directory exists]"
+  echo "# ************************************************************"
+  if is_unix; then
+    module_directory '.ssh' '0700' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Universal Ctags | Ensure that .ctags is configured]"
+  echo "# ************************************************************"
+  if true; then
+    module_symlink 'dotfiles/src/dot.ctags' '.ctags' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [EditorConfig | Ensure that .editorconfig is configured]"
+  echo "# ************************************************************"
+  if true; then
+    module_symlink 'dotfiles/src/dot.editorconfig' '.editorconfig' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [tmux | Ensure that .tmux.conf is configured (version < v2.1)]"
   echo "# ************************************************************"
   if ( is_unix ) && ( tmux_version_lt_2pt1 ); then
-    module_symlink 'dotfiles/src/dot.tmux.conf.lt_v2.1' '.tmux.conf' && echo 'ok' || echo 'failed'
+    module_symlink 'dotfiles/src/dot.tmux.conf.lt_v2.1' '.tmux.conf' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that tmux.conf exists when version is equal or greater than v2.1]"
+  echo "# TASK [tmux | Ensure that .tmux.conf is configured (version >= v2.1)]"
   echo "# ************************************************************"
   if ( is_unix ) && ( tmux_version_ge_2pt1 ); then
-    module_symlink 'dotfiles/src/dot.tmux.conf.ge_v2.1' '.tmux.conf' && echo 'ok' || echo 'failed'
+    module_symlink 'dotfiles/src/dot.tmux.conf.ge_v2.1' '.tmux.conf' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that tmux.conf.all is configured]"
+  echo "# TASK [tmux | Ensure that .tmux.conf.all is configured]"
   echo "# ************************************************************"
   if is_unix; then
-    module_symlink 'dotfiles/src/dot.tmux.conf.all' '.tmux.conf.all' && echo 'ok' || echo 'failed'
+    module_symlink 'dotfiles/src/dot.tmux.conf.all' '.tmux.conf.all' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that .tmux directory exists]"
+  echo "# TASK [tmux | Ensure that .tmux directory is configured]"
   echo "# ************************************************************"
   if is_unix; then
-    module_symlink 'dotfiles/src/dot.tmux' '.tmux' && echo 'ok' || echo 'failed'
+    module_symlink 'dotfiles/src/dot.tmux' '.tmux' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that .vimrc exists]"
-  echo "# ************************************************************"
-  if true; then
-    module_symlink 'dotfiles/src/dot.vimrc' '.vimrc' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that nvim is configured]"
+  echo "# TASK [Windows Terminal | Ensure that WindowsTerminal directory exists]"
   echo "# ************************************************************"
   if is_windows; then
-    module_symlink 'dotfiles/src/AppData/Local/nvim' 'AppData/Local/nvim' && echo 'ok' || echo 'failed'
+    module_directory 'AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/' '' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that WindowsTerminal directory exists]"
+  echo "# TASK [Windows Terminal | Ensure that WindowsTerminal is configured]"
   echo "# ************************************************************"
   if is_windows; then
-    module_directory 'AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/' '' && echo 'ok' || echo 'failed'
+    module_symlink 'dotfiles/src/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState' 'AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that WindowsTerminal is configured]"
+  echo "# TASK [Alacritty | Ensure that AppData/Roaming/alacritty directory is configured]"
   echo "# ************************************************************"
   if is_windows; then
-    module_symlink 'dotfiles/src/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState' 'AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState' && echo 'ok' || echo 'failed'
+    module_symlink 'dotfiles/src/AppData/Roaming/alacritty' 'AppData/Roaming/alacritty' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that gtk directory exists]"
+  echo "# TASK [Meld | Ensure that AppData/Local/gtk-3.0 directory exists]"
   echo "# ************************************************************"
   if is_windows; then
-    module_directory 'AppData/Local/gtk-3.0/' '' && echo 'ok' || echo 'failed'
+    module_directory 'AppData/Local/gtk-3.0' '' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that gtk is configured]"
+  echo "# TASK [Meld | Ensure that AppData/Local/gtk-3.0/settings.ini is configured]"
   echo "# ************************************************************"
   if is_windows; then
-    module_symlink 'dotfiles/src/AppData/Local/gtk-3.0/settings.ini' 'AppData/Local/gtk-3.0/settings.ini' && echo 'ok' || echo 'failed'
+    module_symlink 'dotfiles/src/AppData/Local/gtk-3.0/settings.ini' 'AppData/Local/gtk-3.0/settings.ini' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that alacritty is configured]"
+  echo "# TASK [PowerShell | Ensure that Microsoft.PowerShell_profile.ps1 is configured]"
   echo "# ************************************************************"
   if is_windows; then
-    module_symlink 'dotfiles/src/AppData/Roaming/alacritty' 'AppData/Roaming/alacritty' && echo 'ok' || echo 'failed'
+    module_copy 'dotfiles/src/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1' 'Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1' '' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that .vim exists]"
-  echo "# ************************************************************"
-  if true; then
-    module_symlink 'dotfiles/src/dot.vim' '.vim' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that vimfiles/autoload directory exists]"
+  echo "# TASK [PowerShell | Ensure that Documents/PowerShell directory exists]"
   echo "# ************************************************************"
   if is_windows; then
-    module_directory 'vimfiles/autoload' '' && echo 'ok' || echo 'failed'
+    module_directory 'Documents/PowerShell' '' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that .bashrc.d exists]"
+  echo "# TASK [PowerShell | Ensure that Microsoft.PowerShell_profile.ps1 is configured]"
+  echo "# ************************************************************"
+  if is_windows; then
+    module_copy 'dotfiles/src/Documents/PowerShell/Microsoft.PowerShell_profile.ps1' 'Documents/PowerShell/Microsoft.PowerShell_profile.ps1' '' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [PowerShell | Ensure that .config/powershell directory is configured]"
   echo "# ************************************************************"
   if is_unix; then
-    module_symlink 'dotfiles/src/dot.bashrc.d' '.bashrc.d' && echo 'ok' || echo 'failed'
+    module_symlink 'dotfiles/src/dot.config/powershell' '.config/powershell' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that .gitconfig_local.inc exists]"
-  echo "# ************************************************************"
-  if true; then
-    module_copy 'dotfiles/src/dot.gitconfig_local.inc' '.gitconfig_local.inc' '' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that .gitconfig_profiles.json.sample exists]"
+  echo "# TASK [PowerShell | Ensure that .powershellrc.ps1 is configured]"
   echo "# ************************************************************"
   if is_windows; then
-    module_symlink 'dotfiles/src/dot.gitconfig_profiles.json.sample' '.gitconfig_profiles.json.sample' && echo 'ok' || echo 'failed'
+    module_symlink 'dotfiles/src/dot.powershellrc.ps1' '.powershellrc.ps1' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that .hgrc_local.inc exists]"
-  echo "# ************************************************************"
-  if true; then
-    module_copy 'dotfiles/src/dot.hgrc_local.ini' '.hgrc_local.ini' '' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that Microsoft.PowerShell_profile.ps1 exists]"
+  echo "# TASK [OpenSSH | Ensure that .ssh directory exists]"
   echo "# ************************************************************"
   if is_windows; then
-    module_copy 'dotfiles/src/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1' 'Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1' '' && echo 'ok' || echo 'failed'
+    module_directory '.ssh' '' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that Documents/PowerShell exists]"
-  echo "# ************************************************************"
-  if is_windows; then
-    module_directory 'Documents/PowerShell' '' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that PowerShell is configured]"
-  echo "# ************************************************************"
-  if is_windows; then
-    module_copy 'dotfiles/src/Documents/PowerShell/Microsoft.PowerShell_profile.ps1' 'Documents/PowerShell/Microsoft.PowerShell_profile.ps1' '' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that PowerShell is configured]"
+  echo "# TASK [OpenSSH | Ensure that .ssh/config is configured]"
   echo "# ************************************************************"
   if is_unix; then
-    module_symlink 'dotfiles/src/dot.config/powershell' '.config/powershell' && echo 'ok' || echo 'failed'
+    module_symlink 'dotfiles/src/dot.ssh/config' '.ssh/config' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that .powershellrc.ps1 exists]"
+  echo "# TASK [Pageant | Ensure that .ssh/wsl-ssh-pageant directory is configured]"
   echo "# ************************************************************"
   if is_windows; then
-    module_symlink 'dotfiles/src/dot.powershellrc.ps1' '.powershellrc.ps1' && echo 'ok' || echo 'failed'
+    module_symlink 'dotfiles/src/dot.ssh_windows/wsl-ssh-pageant' '.ssh/wsl-ssh-pageant' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that .ssh exists]"
-  echo "# ************************************************************"
-  if is_windows; then
-    module_directory '.ssh' '' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that .ssh/wsl-ssh-pageant exists]"
-  echo "# ************************************************************"
-  if is_windows; then
-    module_symlink 'dotfiles/src/dot.ssh_windows/wsl-ssh-pageant' '.ssh/wsl-ssh-pageant' && echo 'ok' || echo 'failed'
-  else
-    echo "skipping."
-  fi
-  echo
-
-  echo "# TASK [Ensure that .ssh/config exists]"
+  echo "# TASK [Bash | Ensure that .bashrc.d directory is configured]"
   echo "# ************************************************************"
   if is_unix; then
-    module_symlink 'dotfiles/src/dot.ssh/config' '.ssh/config' && echo 'ok' || echo 'failed'
+    module_symlink 'dotfiles/src/dot.bashrc.d' '.bashrc.d' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that .bash_profile exists]"
+  echo "# TASK [Bash | Ensure that .bashrc_local.sh is configured]"
   echo "# ************************************************************"
   if is_unix; then
-    module_copy 'dotfiles/src/dot.bash_profile' '.bash_profile' '' && echo 'ok' || echo 'failed'
+    module_symlink 'dotfiles/src/dot.bashrc_local.sh' '.bashrc_local.sh' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that .bashrc exists]"
+  echo "# TASK [Bash | Ensure that .bashrc is configured]"
   echo "# ************************************************************"
   if is_unix; then
-    module_touch '.bashrc' && echo 'ok' || echo 'failed'
+    module_touch '.bashrc' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
   fi
   echo
 
-  echo "# TASK [Ensure that .bashrc is configured]"
+  echo "# TASK [Bash | Ensure that .bashrc_local.sh is configured]"
   echo "# ************************************************************"
   if is_unix; then
-    module_lineinfile '.bashrc' 'source $HOME/.bashrc_local.sh' && echo 'ok' || echo 'failed'
+    module_lineinfile '.bashrc' 'source $HOME/.bashrc_local.sh' && echo_ok || echo 'failed'
   else
-    echo "skipping."
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Bash | Ensure that .bash_profile is configured]"
+  echo "# ************************************************************"
+  if is_unix; then
+    module_copy 'dotfiles/src/dot.bash_profile' '.bash_profile' '' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Readline | Ensure that .inputrc is configured]"
+  echo "# ************************************************************"
+  if is_unix; then
+    module_symlink 'dotfiles/src/dot.inputrc' '.inputrc' && echo_ok || echo 'failed'
+  else
+    echo_skipping
   fi
   echo
 
