@@ -2,116 +2,30 @@
   "playbook_version": 1,
   "tasks": [
     {
-      "name": "Ensure that Ansible configured",
-      "module": "symlink",
-      "params": {
-        "path": ".ansible.cfg",
-        "src": "dotfiles/src/dot.ansible.cfg"
-      },
-      "when": [ "is_unix", [] ]
-    },
-    {
-      "name": "Ensure that XDG_CONFIG_HOME exists",
+      "name": "Ensure that XDG_CONFIG_HOME directory exists",
       "module": "directory",
       "params": {
         "path": ".config"
       }
     },
     {
-      "name": "Ensure that config/nvim exists",
+      "name": "Vim | Ensure that .vimrc is configured",
       "module": "symlink",
       "params": {
-        "path": ".config/nvim",
-        "src": "dotfiles/src/dot.config/nvim"
+        "path": ".vimrc",
+        "src": "dotfiles/src/dot.vimrc"
       }
     },
     {
-      "name": "Ensure that pip configured",
+      "name": "Vim | Ensure that .vim directory is configured",
       "module": "symlink",
       "params": {
-        "path": ".config/pip",
-        "src": "dotfiles/src/dot.config/pip"
-      },
-      "when": [ "is_unix", [] ]
-    },
-    {
-      "name": "Ensure that gh configured",
-      "module": "symlink",
-      "params": {
-        "path": ".config/gh",
-        "src": "dotfiles/src/dot.config/gh",
-        "force": false
+        "path": ".vim",
+        "src": "dotfiles/src/dot.vim"
       }
     },
     {
-      "name": "Ensure that ssh exists",
-      "module": "directory",
-      "params": {
-        "path": ".ssh",
-        "mode": "0700"
-      },
-      "when": [ "is_unix", [] ]
-    },
-    {
-      "name": "Ensure that bashrc_local.sh exists",
-      "module": "symlink",
-      "params": {
-        "path": ".bashrc_local.sh",
-        "src": "dotfiles/src/dot.bashrc_local.sh"
-      },
-      "when": [ "is_unix", [] ]
-    },
-    {
-      "name": "Ensure that ctags is configured",
-      "module": "symlink",
-      "params": {
-        "path": ".ctags",
-        "src": "dotfiles/src/dot.ctags"
-      }
-    },
-    {
-      "name": "Ensure that EditorConfig is configured",
-      "module": "symlink",
-      "params": {
-        "path": ".editorconfig",
-        "src": "dotfiles/src/dot.editorconfig"
-      }
-    },
-    {
-      "name": "Ensure that gitconfig exists",
-      "module": "symlink",
-      "params": {
-        "path": ".gitconfig",
-        "src": "dotfiles/src/dot.gitconfig"
-      }
-    },
-    {
-      "name": "Ensure that Commitizen is configured",
-      "module": "symlink",
-      "params": {
-        "path": ".czrc",
-        "src": "dotfiles/src/dot.czrc"
-      }
-    },
-    {
-      "name": "Ensure that Mercurial is configured",
-      "module": "symlink",
-      "params": {
-        "path": ".hgrc",
-        "src": "dotfiles/src/dot.hgrc"
-      }
-    },
-    {
-      "name": "Ensure that gitconfig_windows.inc exists",
-      "module": "symlink",
-      "params": {
-        "path": ".gitconfig_windows.inc",
-        "src": "dotfiles/src/dot.gitconfig_windows.inc"
-      },
-      "when": [ "is_windows", [] ]
-    },
-    {
-      "name": "Ensure that gvimrc exists",
+      "name": "Vim | Ensure that .gvimrc is configured",
       "module": "symlink",
       "params": {
         "path": ".gvimrc",
@@ -120,7 +34,7 @@
       "when": [ "is_unix", [] ]
     },
     {
-      "name": "Ensure that gvimrc exists",
+      "name": "Vim | Ensure that _gvimrc is configured",
       "module": "symlink",
       "params": {
         "path": "_gvimrc",
@@ -129,16 +43,171 @@
       "when": [ "is_windows", [] ]
     },
     {
-      "name": "Ensure that inputrc exists",
+      "name": "Vim | Ensure that AppData/Local/nvim is configured",
       "module": "symlink",
       "params": {
-        "path": ".inputrc",
-        "src": "dotfiles/src/dot.inputrc"
+        "path": "AppData/Local/nvim",
+        "src": "dotfiles/src/AppData/Local/nvim"
+      },
+      "when": [ "is_windows", [] ]
+    },
+    {
+      "name": "Vim | Ensure that .config/nvim is configured",
+      "module": "symlink",
+      "params": {
+        "path": ".config/nvim",
+        "src": "dotfiles/src/dot.config/nvim"
+      }
+    },
+    {
+      "name": "Vim | Ensure that vimfiles/autoload directory exists",
+      "module": "directory",
+      "params": {
+        "path": "vimfiles/autoload"
+      },
+      "when": [ "is_windows", [] ]
+    },
+    {
+      "name": "Vim | Ensure that plug.vim for Vim exists",
+      "module": "get_url",
+      "params": {
+        "url": "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim",
+        "path": "vimfiles/autoload/plug.vim"
+      },
+      "when": [ "is_windows", [] ]
+    },
+    {
+      "name": "Vim | Ensure that AppData/Local/nvim/autoload directory exists",
+      "module": "directory",
+      "params": {
+        "path": "AppData/Local/nvim/autoload"
+      },
+      "when": [ "is_windows", [] ]
+    },
+    {
+      "name": "Vim | Ensure that plug.vim for NeoVim exists",
+      "module": "get_url",
+      "params": {
+        "url": "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim",
+        "path": "AppData/Local/nvim/autoload/plug.vim"
+      },
+      "when": [ "is_windows", [] ]
+    },
+    {
+      "name": "Git | Ensure that .gitconfig is configured",
+      "module": "symlink",
+      "params": {
+        "path": ".gitconfig",
+        "src": "dotfiles/src/dot.gitconfig"
+      }
+    },
+    {
+      "name": "Git | Ensure that .gitconfig_local.inc is configured",
+      "module": "copy",
+      "params": {
+        "path": ".gitconfig_local.inc",
+        "src": "dotfiles/src/dot.gitconfig_local.inc",
+        "force": false
+      }
+    },
+    {
+      "name": "Git | Ensure that .gitconfig_windows.inc is configured",
+      "module": "symlink",
+      "params": {
+        "path": ".gitconfig_windows.inc",
+        "src": "dotfiles/src/dot.gitconfig_windows.inc"
+      },
+      "when": [ "is_windows", [] ]
+    },
+    {
+      "name": "Git | Ensure that .gitconfig_profiles.json.sample is configured",
+      "module": "symlink",
+      "params": {
+        "path": ".gitconfig_profiles.json.sample",
+        "src": "dotfiles/src/dot.gitconfig_profiles.json.sample",
+        "force": false
+      },
+      "when": [ "is_windows", [] ]
+    },
+    {
+      "name": "GitHub | Ensure that .config/gh directory is configured",
+      "module": "symlink",
+      "params": {
+        "path": ".config/gh",
+        "src": "dotfiles/src/dot.config/gh",
+        "force": false
+      }
+    },
+    {
+      "name": "Commitizen | Ensure that .czrc is configured",
+      "module": "symlink",
+      "params": {
+        "path": ".czrc",
+        "src": "dotfiles/src/dot.czrc"
+      }
+    },
+    {
+      "name": "Mercurial | Ensure that .hgrc is configured",
+      "module": "symlink",
+      "params": {
+        "path": ".hgrc",
+        "src": "dotfiles/src/dot.hgrc"
+      }
+    },
+    {
+      "name": "Mercurial | Ensure that .hgrc_local.ini is configured",
+      "module": "copy",
+      "params": {
+        "path": ".hgrc_local.ini",
+        "src": "dotfiles/src/dot.hgrc_local.ini",
+        "force": false
+      }
+    },
+    {
+      "name": "Ansible | Ensure that .ansible.cfg is configured",
+      "module": "symlink",
+      "params": {
+        "path": ".ansible.cfg",
+        "src": "dotfiles/src/dot.ansible.cfg"
       },
       "when": [ "is_unix", [] ]
     },
     {
-      "name": "Ensure that tmux.conf exists when version is less than v2.1",
+      "name": "Python | Ensure that pip directory is configured",
+      "module": "symlink",
+      "params": {
+        "path": ".config/pip",
+        "src": "dotfiles/src/dot.config/pip"
+      },
+      "when": [ "is_unix", [] ]
+    },
+    {
+      "name": "OpenSSH | Ensure that ssh directory exists",
+      "module": "directory",
+      "params": {
+        "path": ".ssh",
+        "mode": "0700"
+      },
+      "when": [ "is_unix", [] ]
+    },
+    {
+      "name": "Universal Ctags | Ensure that .ctags is configured",
+      "module": "symlink",
+      "params": {
+        "path": ".ctags",
+        "src": "dotfiles/src/dot.ctags"
+      }
+    },
+    {
+      "name": "EditorConfig | Ensure that .editorconfig is configured",
+      "module": "symlink",
+      "params": {
+        "path": ".editorconfig",
+        "src": "dotfiles/src/dot.editorconfig"
+      }
+    },
+    {
+      "name": "tmux | Ensure that .tmux.conf is configured (version < v2.1)",
       "module": "symlink",
       "params": {
         "path": ".tmux.conf",
@@ -152,7 +221,7 @@
       ]
     },
     {
-      "name": "Ensure that tmux.conf exists when version is equal or greater than v2.1",
+      "name": "tmux | Ensure that .tmux.conf is configured (version >= v2.1)",
       "module": "symlink",
       "params": {
         "path": ".tmux.conf",
@@ -162,7 +231,7 @@
       ]
     },
     {
-      "name": "Ensure that tmux.conf.all is configured",
+      "name": "tmux | Ensure that .tmux.conf.all is configured",
       "module": "symlink",
       "params": {
         "path": ".tmux.conf.all",
@@ -171,7 +240,7 @@
       "when": [ "is_unix", [] ]
     },
     {
-      "name": "Ensure that .tmux directory exists",
+      "name": "tmux | Ensure that .tmux directory is configured",
       "module": "symlink",
       "params": {
         "path": ".tmux",
@@ -180,24 +249,7 @@
       "when": [ "is_unix", [] ]
     },
     {
-      "name": "Ensure that .vimrc exists",
-      "module": "symlink",
-      "params": {
-        "path": ".vimrc",
-        "src": "dotfiles/src/dot.vimrc"
-      }
-    },
-    {
-      "name": "Ensure that nvim is configured",
-      "module": "symlink",
-      "params": {
-        "path": "AppData/Local/nvim",
-        "src": "dotfiles/src/AppData/Local/nvim"
-      },
-      "when": [ "is_windows", [] ]
-    },
-    {
-      "name": "Ensure that WindowsTerminal directory exists",
+      "name": "Windows Terminal | Ensure that WindowsTerminal directory exists",
       "module": "directory",
       "params": {
         "path": "AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/"
@@ -205,7 +257,7 @@
       "when": [ "is_windows", [] ]
     },
     {
-      "name": "Ensure that WindowsTerminal is configured",
+      "name": "Windows Terminal | Ensure that WindowsTerminal is configured",
       "module": "symlink",
       "params": {
         "path": "AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState",
@@ -214,24 +266,7 @@
       "when": [ "is_windows", [] ]
     },
     {
-      "name": "Ensure that gtk directory exists",
-      "module": "directory",
-      "params": {
-        "path": "AppData/Local/gtk-3.0/"
-      },
-      "when": [ "is_windows", [] ]
-    },
-    {
-      "name": "Ensure that gtk is configured",
-      "module": "symlink",
-      "params": {
-        "path": "AppData/Local/gtk-3.0/settings.ini",
-        "src": "dotfiles/src/AppData/Local/gtk-3.0/settings.ini"
-      },
-      "when": [ "is_windows", [] ]
-    },
-    {
-      "name": "Ensure that alacritty is configured",
+      "name": "Alacritty | Ensure that AppData/Roaming/alacritty directory is configured",
       "module": "symlink",
       "params": {
         "path": "AppData/Roaming/alacritty",
@@ -240,60 +275,24 @@
       "when": [ "is_windows", [] ]
     },
     {
-      "name": "Ensure that .vim exists",
-      "module": "symlink",
-      "params": {
-        "path": ".vim",
-        "src": "dotfiles/src/dot.vim"
-      }
-    },
-    {
-      "name": "Ensure that vimfiles/autoload directory exists",
+      "name": "Meld | Ensure that AppData/Local/gtk-3.0 directory exists",
       "module": "directory",
       "params": {
-        "path": "vimfiles/autoload"
+        "path": "AppData/Local/gtk-3.0"
       },
       "when": [ "is_windows", [] ]
     },
     {
-      "name": "Ensure that .bashrc.d exists",
+      "name": "Meld | Ensure that AppData/Local/gtk-3.0/settings.ini is configured",
       "module": "symlink",
       "params": {
-        "path": ".bashrc.d",
-        "src": "dotfiles/src/dot.bashrc.d"
-      },
-      "when": [ "is_unix", [] ]
-    },
-    {
-      "name": "Ensure that .gitconfig_local.inc exists",
-      "module": "copy",
-      "params": {
-        "path": ".gitconfig_local.inc",
-        "src": "dotfiles/src/dot.gitconfig_local.inc",
-        "force": false
-      }
-    },
-    {
-      "name": "Ensure that .gitconfig_profiles.json.sample exists",
-      "module": "symlink",
-      "params": {
-        "path": ".gitconfig_profiles.json.sample",
-        "src": "dotfiles/src/dot.gitconfig_profiles.json.sample",
-        "force": false
+        "path": "AppData/Local/gtk-3.0/settings.ini",
+        "src": "dotfiles/src/AppData/Local/gtk-3.0/settings.ini"
       },
       "when": [ "is_windows", [] ]
     },
     {
-      "name": "Ensure that .hgrc_local.inc exists",
-      "module": "copy",
-      "params": {
-        "path": ".hgrc_local.ini",
-        "src": "dotfiles/src/dot.hgrc_local.ini",
-        "force": false
-      }
-    },
-    {
-      "name": "Ensure that Microsoft.PowerShell_profile.ps1 exists",
+      "name": "PowerShell | Ensure that Microsoft.PowerShell_profile.ps1 is configured",
       "module": "copy",
       "params": {
         "path": "Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1",
@@ -303,7 +302,7 @@
       "when": [ "is_windows", [] ]
     },
     {
-      "name": "Ensure that Documents/PowerShell exists",
+      "name": "PowerShell | Ensure that Documents/PowerShell directory exists",
       "module": "directory",
       "params": {
         "path": "Documents/PowerShell"
@@ -311,7 +310,7 @@
       "when": [ "is_windows", [] ]
     },
     {
-      "name": "Ensure that PowerShell is configured",
+      "name": "PowerShell | Ensure that Microsoft.PowerShell_profile.ps1 is configured",
       "module": "copy",
       "params": {
         "path": "Documents/PowerShell/Microsoft.PowerShell_profile.ps1",
@@ -321,7 +320,7 @@
       "when": [ "is_windows", [] ]
     },
     {
-      "name": "Ensure that PowerShell is configured",
+      "name": "PowerShell | Ensure that .config/powershell directory is configured",
       "module": "symlink",
       "params": {
         "path": ".config/powershell",
@@ -330,7 +329,7 @@
       "when": [ "is_unix", [] ]
     },
     {
-      "name": "Ensure that .powershellrc.ps1 exists",
+      "name": "PowerShell | Ensure that .powershellrc.ps1 is configured",
       "module": "symlink",
       "params": {
         "path": ".powershellrc.ps1",
@@ -339,7 +338,7 @@
       "when": [ "is_windows", [] ]
     },
     {
-      "name": "Ensure that .ssh exists",
+      "name": "OpenSSH | Ensure that .ssh directory exists",
       "module": "directory",
       "params": {
         "path": ".ssh"
@@ -347,16 +346,7 @@
       "when": [ "is_windows", [] ]
     },
     {
-      "name": "Ensure that .ssh/wsl-ssh-pageant exists",
-      "module": "symlink",
-      "params": {
-        "path": ".ssh/wsl-ssh-pageant",
-        "src": "dotfiles/src/dot.ssh_windows/wsl-ssh-pageant"
-      },
-      "when": [ "is_windows", [] ]
-    },
-    {
-      "name": "Ensure that .ssh/config exists",
+      "name": "OpenSSH | Ensure that .ssh/config is configured",
       "module": "symlink",
       "params": {
         "path": ".ssh/config",
@@ -366,7 +356,51 @@
       "when": [ "is_unix", [] ]
     },
     {
-      "name": "Ensure that .bash_profile exists",
+      "name": "Pageant | Ensure that .ssh/wsl-ssh-pageant directory is configured",
+      "module": "symlink",
+      "params": {
+        "path": ".ssh/wsl-ssh-pageant",
+        "src": "dotfiles/src/dot.ssh_windows/wsl-ssh-pageant"
+      },
+      "when": [ "is_windows", [] ]
+    },
+    {
+      "name": "Bash | Ensure that .bashrc.d directory is configured",
+      "module": "symlink",
+      "params": {
+        "path": ".bashrc.d",
+        "src": "dotfiles/src/dot.bashrc.d"
+      },
+      "when": [ "is_unix", [] ]
+    },
+    {
+      "name": "Bash | Ensure that .bashrc_local.sh is configured",
+      "module": "symlink",
+      "params": {
+        "path": ".bashrc_local.sh",
+        "src": "dotfiles/src/dot.bashrc_local.sh"
+      },
+      "when": [ "is_unix", [] ]
+    },
+    {
+      "name": "Bash | Ensure that .bashrc is configured",
+      "module": "touch",
+      "params": {
+        "path": ".bashrc"
+      },
+      "when": [ "is_unix", [] ]
+    },
+    {
+      "name": "Bash | Ensure that .bashrc_local.sh is configured",
+      "module": "lineinfile",
+      "params": {
+        "path": ".bashrc",
+        "line": "source $HOME/.bashrc_local.sh"
+      },
+      "when": [ "is_unix", [] ]
+    },
+    {
+      "name": "Bash | Ensure that .bash_profile is configured",
       "module": "copy",
       "params": {
         "path": ".bash_profile",
@@ -376,19 +410,11 @@
       "when": [ "is_unix", [] ]
     },
     {
-      "name": "Ensure that .bashrc exists",
-      "module": "touch",
+      "name": "Readline | Ensure that .inputrc is configured",
+      "module": "symlink",
       "params": {
-        "path": ".bashrc"
-      },
-      "when": [ "is_unix", [] ]
-    },
-    {
-      "name": "Ensure that .bashrc is configured",
-      "module": "lineinfile",
-      "params": {
-        "path": ".bashrc",
-        "line": "source $HOME/.bashrc_local.sh"
+        "path": ".inputrc",
+        "src": "dotfiles/src/dot.inputrc"
       },
       "when": [ "is_unix", [] ]
     }

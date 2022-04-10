@@ -14,6 +14,10 @@ function EnsureUserHasAdminPriviledge {
     }
 }
 
+function GetHomeDir {
+    return (Get-Item Env:\USERPROFILE).Value
+}
+
 function ConvertFromPsoToHashtable {
     param([PSCustomObject]$Pso)
     $Hashtable = @{}
@@ -57,18 +61,28 @@ class ModuleSymlink : Module {
     }
 
     run() {
-        $HomeDir = (Get-Item Env:\USERPROFILE).Value
+        $HomeDir = GetHomeDir
 
-        $FullPath = Join-Path $HomeDir $this.Path
-        $Path2 = Split-Path $FullPath -Parent
-        $Name = Split-Path $FullPath -Leaf
+        $LinkAbsPath = Join-Path $HomeDir $this.Path
+        $LinkDir = Split-Path $LinkAbsPath -Parent
+        $LinkName = Split-Path $LinkAbsPath -Leaf
 
-        $SrcFullPath = Join-Path $HomeDir $this.src
+        $LinkToAbsPath = Join-Path $HomeDir $this.src
 
-        if ( ( Test-Path $FullPath ) -And ( Test-Path $Path2 -PathType Container ) ) {
-            (Get-Item $FullPath).Delete()
+        $LinkAbsPathExists = Test-Path $LinkAbsPath
+
+        if ((-not $LinkAbsPathExists) -Or ($LinkAbsPathExists -And $this.Force))  {
+            if ($LinkAbsPathExists) {
+                $LinkItem = Get-Item $LinkAbsPath
+                if ($LinkItem.Target -ceq $LinkToAbsPath) {
+                    return
+                }
+                if ($this.Force) {
+                    $LinkItem.Delete()
+                }
+            }
+            New-Item -Force -Path $LinkDir -Name $LinkName -Value $LinkToAbsPath -ItemType SymbolicLink
         }
-        New-Item -Force -Path $Path2 -Name $Name -Value $SrcFullPath -ItemType SymbolicLink
     }
 }
 
@@ -91,10 +105,10 @@ class ModuleDirectory : Module {
     }
 
     run() {
-        $HomeDir = (Get-Item Env:\USERPROFILE).Value
-        $Path2 = Join-Path $HomeDir (Split-Path $this.Path -Parent)
-        $Name = Split-Path $this.Path -Leaf
-        New-Item -Force -Path $Path2 -Name $Name -ItemType Directory
+        $HomeDir = GetHomeDir
+        $DirParentAbsPath = Join-Path $HomeDir (Split-Path $this.Path -Parent)
+        $DirName = Split-Path $this.Path -Leaf
+        New-Item -Force -Path $DirParentAbsPath -Name $DirName -ItemType Directory
     }
 }
 
@@ -121,14 +135,16 @@ class ModuleCopy : Module {
     }
 
     run() {
-        $HomeDir = (Get-Item Env:\USERPROFILE).Value
+        $HomeDir = GetHomeDir
         $DestPath = Join-Path $HomeDir $this.Path
         $SrcPath = Join-Path $HomeDir $this.Src
-        Copy-Item -LiteralPath $SrcPath -Destination $DestPath
+        if ((-not (Test-Path $DestPath)) -or $this.Force) {
+            Copy-Item -LiteralPath $SrcPath -Destination $DestPath
+        }
     }
 }
 
-function ConstructModuleTouchForSplatting{
+function ConstructModuleTouchForSplatting {
     param(
         [Parameter(Mandatory)]$That,
         [Parameter(Mandatory)][string]$Path)
@@ -163,6 +179,39 @@ class ModuleLineinfile : Module {
     }
 }
 
+function ConstructModuleGetUrlForSplatting {
+    param(
+        [Parameter(Mandatory)]$That,
+        [Parameter(Mandatory)][string]$Url,
+        [Parameter(Mandatory)][string]$Path)
+    $That.Url = $Url
+    $That.Path = $Path
+}
+
+class ModuleGetUrl : Module {
+    [string]$Url
+    [string]$Path
+
+    ModuleGetUrl([hashtable]$Params) {
+        $Params['That'] = $this
+        ConstructModuleGetUrlForSplatting @Params
+    }
+
+    run() {
+        $HomeDir = GetHomeDir
+        $DestAbsPath = Join-Path $HomeDir $this.Path
+
+        $Client = New-Object System.Net.WebClient
+        $Utf8WithoutBom = New-Object "System.Text.UTF8Encoding" -ArgumentList @($false)
+        if (-not (Test-Path $DestAbsPath)) {
+            $Text = $Client.DownloadString($this.Url)
+            if ($PSCmdlet.ShouldProcess($DestAbsPath, 'Write file')) {
+                [System.IO.File]::WriteAllText($DestAbsPath, @($Text), $Utf8WithoutBom)
+            }
+        }
+    }
+}
+
 class Task {
     [string]$Name
     [Module]$Module
@@ -186,19 +235,19 @@ class Playbook {
 }
 
 class ModuleFactory {
-    $ModuleNameToClass
+    $ModuleNameToType
 
     ModuleFactory() {
-        $this.ModuleNameToClass = @{}
+        $this.ModuleNameToType  = @{}
     }
 
     add([string]$ModuleName, $ModuleClass) {
-        $this.ModuleNameToClass[$ModuleName] = $ModuleClass
+        $this.ModuleNameToType[$ModuleName] = $ModuleClass
     }
 
     [Module]create([string]$ModuleName, [hashtable]$Params) {
-        $ModuleClass = $this.ModuleNameToClass[$ModuleName]
-        return $ModuleClass::new($Params)
+        $ModuleType = $this.ModuleNameToType[$ModuleName]
+        return $ModuleType::new($Params)
     }
 }
 
@@ -307,6 +356,7 @@ function Main {
     $ModuleFactory.add('touch', [ModuleTouch])
     $ModuleFactory.add('lineinfile', [ModuleLineinfile])
     $ModuleFactory.add('copy', [ModuleCopy])
+    $ModuleFactory.add('get_url', [ModuleGetUrl])
     $TaskFactory = [TaskFactory]::new($ModuleFactory)
     $Loader = [PlaybookLoader]::new($TaskFactory)
     $Playbook = $Loader.load($PlaybookPath)
@@ -318,32 +368,15 @@ function Main {
         Write-Host ('# ' + ('*' * 60))
         if (EvaluateWhen($Task2.when)) {
             $Task2.module.run()
-            Write-Host "ok"
+            Write-Host -ForegroundColor Green 'ok'
         } else {
-            Write-Host "skipping"
+            Write-Host -ForegroundColor Yellow 'skipping'
         }
         Write-Host ""
     }
-
-#    # vim-plug をインストールする
-#    $cli = New-Object System.Net.WebClient
-#    $utf8WithoutBom = New-Object "System.Text.UTF8Encoding" -ArgumentList @($false)
-#    if (-not (Test-Path $HOME/.vimfiles/autoload/plug.vim)) {
-#        $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-#        $str = $cli.DownloadString($uri)
-#        [System.IO.File]::WriteAllText("$HOME\vimfiles\autoload\plug.vim", @($str), $utf8WithoutBom)
-#    }
-#    if (-not (Test-Path $HOME/AppData/Local/nvim/autoload/plug.vim)) {
-#        mkdir -Force ~\AppData\Local\nvim\autoload
-#        $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-#        $str = $cli.DownloadString($uri)
-#        [System.IO.File]::WriteAllText("$HOME\AppData\Local\nvim\autoload\plug.vim", @($str), $utf8WithoutBom)
-#    }
 }
 
 # ファンクションの中でスクリプトパスを取得できないため、ここで得る
 $ScriptPath = $MyInvocation.MyCommand.Path
 
 Main $ScriptPath
-
-# vm:ts=2 sw=2 sts=2 et ai:
