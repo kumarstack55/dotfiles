@@ -4,11 +4,15 @@
 
 ## 対応OS
 
-* macOS
-* EL7
-* Debian
 * ArchLinux
+* Debian
+* EL7
+* macOS
 * Windows+mintty
+
+## 要件
+
+* git
 
 ## インストール
 
@@ -17,7 +21,7 @@
 ```bash
 cd /tmp
 curl -LO https://raw.githubusercontent.com/kumarstack55/dotfiles/master/bootstrap.sh
-chmod +x bootstrap.sh
+chmod -v +x bootstrap.sh
 ./bootstrap.sh
 ```
 
@@ -27,11 +31,8 @@ chmod +x bootstrap.sh
 cd $HOME
 git clone git@github.com:kumarstack55/dotfiles.git
 
-cd $HOME/dotfiles/bin
-./installer.sh
-
-pip install -U --user pynvim
-pip install --user flake8
+cd $HOME
+dotfiles/bin/installer.sh
 ```
 
 ### Windows+PowerShell
@@ -44,9 +45,6 @@ git clone git@github.com:kumarstack55/dotfiles.git
 
 cd $HOME/dotfiles/bin
 ./installer.ps1
-
-pip install -U --user pynvim
-pip install --user flake8
 ```
 
 ## 変更する場合
