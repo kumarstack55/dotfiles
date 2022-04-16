@@ -31,7 +31,12 @@
         "path": ".gvimrc",
         "src": "dotfiles/src/dot.gvimrc"
       },
-      "when": [ "is_unix", [] ]
+      "when": [
+        "and", [
+          [ "not", [ "is_mingw", [] ] ],
+          [ "is_unix", [] ]
+        ]
+      ]
     },
     {
       "name": "Vim | Ensure that _gvimrc is configured",
@@ -116,7 +121,8 @@
       "params": {
         "path": ".gitconfig",
         "src": "dotfiles/src/dot.gitconfig"
-      }
+      },
+      "when": [ "not", [ "is_mingw", [] ] ]
     },
     {
       "name": "Git | Ensure that .gitconfig_local.inc is configured",
@@ -153,7 +159,8 @@
         "path": ".config/gh",
         "src": "dotfiles/src/dot.config/gh",
         "force": false
-      }
+      },
+      "when": [ "not", [ "is_mingw", [] ] ]
     },
     {
       "name": "Commitizen | Ensure that .czrc is configured",
@@ -161,7 +168,8 @@
       "params": {
         "path": ".czrc",
         "src": "dotfiles/src/dot.czrc"
-      }
+      },
+      "when": [ "not", [ "is_mingw", [] ] ]
     },
     {
       "name": "Mercurial | Ensure that .hgrc is configured",
@@ -169,7 +177,8 @@
       "params": {
         "path": ".hgrc",
         "src": "dotfiles/src/dot.hgrc"
-      }
+      },
+      "when": [ "not", [ "is_mingw", [] ] ]
     },
     {
       "name": "Mercurial | Ensure that .hgrc_local.ini is configured",
@@ -187,7 +196,12 @@
         "path": ".ansible.cfg",
         "src": "dotfiles/src/dot.ansible.cfg"
       },
-      "when": [ "is_unix", [] ]
+      "when": [
+        "and", [
+          [ "not", [ "is_mingw", [] ] ],
+          [ "is_unix", [] ]
+        ]
+      ]
     },
     {
       "name": "Python | Ensure that pip directory is configured",
@@ -196,7 +210,12 @@
         "path": ".config/pip",
         "src": "dotfiles/src/dot.config/pip"
       },
-      "when": [ "is_unix", [] ]
+      "when": [
+        "and", [
+          [ "not", [ "is_mingw", [] ] ],
+          [ "is_unix", [] ]
+        ]
+      ]
     },
     {
       "name": "OpenSSH | Ensure that ssh directory exists",
@@ -213,7 +232,8 @@
       "params": {
         "path": ".ctags",
         "src": "dotfiles/src/dot.ctags"
-      }
+      },
+      "when": [ "not", [ "is_mingw", [] ] ]
     },
     {
       "name": "EditorConfig | Ensure that .editorconfig is configured",
@@ -221,7 +241,8 @@
       "params": {
         "path": ".editorconfig",
         "src": "dotfiles/src/dot.editorconfig"
-      }
+      },
+      "when": [ "not", [ "is_mingw", [] ] ]
     },
     {
       "name": "tmux | Ensure that .tmux.conf is configured (version < v2.1)",
@@ -244,7 +265,11 @@
         "path": ".tmux.conf",
         "src": "dotfiles/src/dot.tmux.conf.ge_v2.1"
       },
-      "when": [ "and", [ [ "is_unix", [] ], [ "tmux_version_ge_2pt1", [] ] ]
+      "when": [
+        "and", [
+          [ "is_unix", [] ],
+          [ "tmux_version_ge_2pt1", [] ]
+        ]
       ]
     },
     {
@@ -370,7 +395,12 @@
         "src": "dotfiles/src/dot.ssh/config",
         "force": false
       },
-      "when": [ "is_unix", [] ]
+      "when": [
+        "and", [
+          [ "not", [ "is_mingw", [] ] ],
+          [ "is_unix", [] ]
+        ]
+      ]
     },
     {
       "name": "Pageant | Ensure that .ssh/wsl-ssh-pageant directory is configured",
@@ -388,7 +418,12 @@
         "path": ".bashrc.d",
         "src": "dotfiles/src/dot.bashrc.d"
       },
-      "when": [ "is_unix", [] ]
+      "when": [
+        "and", [
+          [ "not", [ "is_mingw", [] ] ],
+          [ "is_unix", [] ]
+        ]
+      ]
     },
     {
       "name": "Bash | Ensure that .bashrc_local.sh is configured",
@@ -397,7 +432,12 @@
         "path": ".bashrc_local.sh",
         "src": "dotfiles/src/dot.bashrc_local.sh"
       },
-      "when": [ "is_unix", [] ]
+      "when": [
+        "and", [
+          [ "not", [ "is_mingw", [] ] ],
+          [ "is_unix", [] ]
+        ]
+      ]
     },
     {
       "name": "Bash | Ensure that .bashrc is configured",
@@ -414,7 +454,12 @@
         "path": ".bashrc",
         "line": "source $HOME/.bashrc_local.sh"
       },
-      "when": [ "is_unix", [] ]
+      "when": [
+        "and", [
+          [ "not", [ "is_mingw", [] ] ],
+          [ "is_unix", [] ]
+        ]
+      ]
     },
     {
       "name": "Bash | Ensure that .bash_profile is configured",
@@ -424,7 +469,12 @@
         "src": "dotfiles/src/dot.bash_profile",
         "force": false
       },
-      "when": [ "is_unix", [] ]
+      "when": [
+        "and", [
+          [ "not", [ "is_mingw", [] ] ],
+          [ "is_unix", [] ]
+        ]
+      ]
     },
     {
       "name": "Readline | Ensure that .inputrc is configured",
@@ -433,7 +483,12 @@
         "path": ".inputrc",
         "src": "dotfiles/src/dot.inputrc"
       },
-      "when": [ "is_unix", [] ]
+      "when": [
+        "and", [
+          [ "not", [ "is_mingw", [] ] ],
+          [ "is_unix", [] ]
+        ]
+      ]
     }
   ]
 }

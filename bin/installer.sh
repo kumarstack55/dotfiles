@@ -25,6 +25,10 @@ should_process() {
   return 0
 }
 
+is_mingw() {
+  [ "$(uname -o)" == "Msys" ]
+}
+
 is_unix() {
   return 0
 }
@@ -172,7 +176,7 @@ execute_tasks() {
 
   echo "# TASK [Vim | Ensure that .gvimrc is configured]"
   echo "# ************************************************************"
-  if is_unix; then
+  if ( ! is_mingw ) && ( is_unix ); then
     module_symlink 'dotfiles/src/dot.gvimrc' '.gvimrc' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -262,7 +266,7 @@ execute_tasks() {
 
   echo "# TASK [Git | Ensure that .gitconfig is configured]"
   echo "# ************************************************************"
-  if true; then
+  if ! is_mingw; then
     module_symlink 'dotfiles/src/dot.gitconfig' '.gitconfig' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -298,7 +302,7 @@ execute_tasks() {
 
   echo "# TASK [GitHub | Ensure that .config/gh directory is configured]"
   echo "# ************************************************************"
-  if true; then
+  if ! is_mingw; then
     module_symlink 'dotfiles/src/dot.config/gh' '.config/gh' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -307,7 +311,7 @@ execute_tasks() {
 
   echo "# TASK [Commitizen | Ensure that .czrc is configured]"
   echo "# ************************************************************"
-  if true; then
+  if ! is_mingw; then
     module_symlink 'dotfiles/src/dot.czrc' '.czrc' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -316,7 +320,7 @@ execute_tasks() {
 
   echo "# TASK [Mercurial | Ensure that .hgrc is configured]"
   echo "# ************************************************************"
-  if true; then
+  if ! is_mingw; then
     module_symlink 'dotfiles/src/dot.hgrc' '.hgrc' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -334,7 +338,7 @@ execute_tasks() {
 
   echo "# TASK [Ansible | Ensure that .ansible.cfg is configured]"
   echo "# ************************************************************"
-  if is_unix; then
+  if ( ! is_mingw ) && ( is_unix ); then
     module_symlink 'dotfiles/src/dot.ansible.cfg' '.ansible.cfg' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -343,7 +347,7 @@ execute_tasks() {
 
   echo "# TASK [Python | Ensure that pip directory is configured]"
   echo "# ************************************************************"
-  if is_unix; then
+  if ( ! is_mingw ) && ( is_unix ); then
     module_symlink 'dotfiles/src/dot.config/pip' '.config/pip' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -361,7 +365,7 @@ execute_tasks() {
 
   echo "# TASK [Universal Ctags | Ensure that .ctags is configured]"
   echo "# ************************************************************"
-  if true; then
+  if ! is_mingw; then
     module_symlink 'dotfiles/src/dot.ctags' '.ctags' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -370,7 +374,7 @@ execute_tasks() {
 
   echo "# TASK [EditorConfig | Ensure that .editorconfig is configured]"
   echo "# ************************************************************"
-  if true; then
+  if ! is_mingw; then
     module_symlink 'dotfiles/src/dot.editorconfig' '.editorconfig' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -514,7 +518,7 @@ execute_tasks() {
 
   echo "# TASK [OpenSSH | Ensure that .ssh/config is configured]"
   echo "# ************************************************************"
-  if is_unix; then
+  if ( ! is_mingw ) && ( is_unix ); then
     module_symlink 'dotfiles/src/dot.ssh/config' '.ssh/config' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -532,7 +536,7 @@ execute_tasks() {
 
   echo "# TASK [Bash | Ensure that .bashrc.d directory is configured]"
   echo "# ************************************************************"
-  if is_unix; then
+  if ( ! is_mingw ) && ( is_unix ); then
     module_symlink 'dotfiles/src/dot.bashrc.d' '.bashrc.d' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -541,7 +545,7 @@ execute_tasks() {
 
   echo "# TASK [Bash | Ensure that .bashrc_local.sh is configured]"
   echo "# ************************************************************"
-  if is_unix; then
+  if ( ! is_mingw ) && ( is_unix ); then
     module_symlink 'dotfiles/src/dot.bashrc_local.sh' '.bashrc_local.sh' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -559,7 +563,7 @@ execute_tasks() {
 
   echo "# TASK [Bash | Ensure that .bashrc_local.sh is configured]"
   echo "# ************************************************************"
-  if is_unix; then
+  if ( ! is_mingw ) && ( is_unix ); then
     module_lineinfile '.bashrc' 'source $HOME/.bashrc_local.sh' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -568,7 +572,7 @@ execute_tasks() {
 
   echo "# TASK [Bash | Ensure that .bash_profile is configured]"
   echo "# ************************************************************"
-  if is_unix; then
+  if ( ! is_mingw ) && ( is_unix ); then
     module_copy 'dotfiles/src/dot.bash_profile' '.bash_profile' '' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -577,7 +581,7 @@ execute_tasks() {
 
   echo "# TASK [Readline | Ensure that .inputrc is configured]"
   echo "# ************************************************************"
-  if is_unix; then
+  if ( ! is_mingw ) && ( is_unix ); then
     module_symlink 'dotfiles/src/dot.inputrc' '.inputrc' && echo_ok || echo 'failed'
   else
     echo_skipping

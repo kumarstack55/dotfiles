@@ -255,6 +255,10 @@ class TranslatorV1(Translator):
             ret += 'true'
             if len(when[1]) != 0:
                 raise RuntimeError(when)
+        elif when[0] == 'is_mingw':
+            ret += 'is_mingw'
+            if len(when[1]) != 0:
+                raise RuntimeError(when)
         elif when[0] == 'is_unix':
             ret += 'is_unix'
             if len(when[1]) != 0:
@@ -271,6 +275,10 @@ class TranslatorV1(Translator):
             ret += 'tmux_version_ge_2pt1'
             if len(when[1]) != 0:
                 raise RuntimeError(when)
+        elif when[0] == 'not':
+            if len(when[1]) != 2:
+                raise RuntimeError(when)
+            ret += '! ' + self._get_when_str(when[1])
         elif when[0] == 'and':
             when2 = list()
             for w in when[1]:

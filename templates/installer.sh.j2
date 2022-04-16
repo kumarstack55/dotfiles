@@ -25,6 +25,10 @@ should_process() {
   return 0
 }
 
+is_mingw() {
+  [ "$(uname -o)" == "Msys" ]
+}
+
 is_unix() {
   return 0
 }
