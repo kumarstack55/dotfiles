@@ -312,6 +312,11 @@ function EvaluateWhen {
             throw '$When[1].Count: {0}' -f $When[1].Count
         }
         return $false
+    } elseif ($When[0] -ceq 'is_mingw') {
+        if ($When[1].Count -ne 0) {
+            throw '$When[1].Count: {0}' -f $When[1].Count
+        }
+        return $false
     } elseif ($When[0] -ceq 'is_windows') {
         if ($When[1].Count -ne 0) {
             throw '$When[1].Count: {0}' -f $When[1].Count
@@ -334,6 +339,12 @@ function EvaluateWhen {
             }
         }
         return $true
+    } elseif ($When[0] -ceq 'not') {
+        $When2 = $When[1]
+        if ($When2.Count -ne 2) {
+            throw '$When2.Count: {0}' -f $When2.Count
+        }
+        return -not (EvaluateWhen($When2))
     } else {
         throw
     }
