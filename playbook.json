@@ -432,7 +432,7 @@
       "when": [ "is_windows", [] ]
     },
     {
-      "name": "Bash | Ensure that .bashrc.d directory is configured",
+      "name": "Bash | Ensure that .bashrc.d directory is configured for unix",
       "module": "symlink",
       "params": {
         "path": ".bashrc.d",
@@ -444,6 +444,15 @@
           [ "is_unix", [] ]
         ]
       ]
+    },
+    {
+      "name": "Bash | Ensure that .bashrc.d directory is configured for mingw by powershell",
+      "module": "symlink",
+      "params": {
+        "path": ".bashrc.d",
+        "src": "dotfiles/src/dot.bashrc.d"
+      },
+      "when": [ "is_windows", [] ]
     },
     {
       "name": "Bash | Ensure that .bashrc_local.sh is configured",
