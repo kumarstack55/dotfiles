@@ -82,12 +82,12 @@
       "when": [ "is_unix", [] ]
     },
     {
-      "name": "Vim | Ensure that vimfiles/autoload directory exists",
-      "module": "directory",
+      "name": "Vim | Ensure that vimfiles directory is configured",
+      "module": "symlink",
       "params": {
-        "path": "vimfiles/autoload"
-      },
-      "when": [ "is_windows", [] ]
+        "path": "vimfiles",
+        "src": "dotfiles/src/dot.vim"
+      }
     },
     {
       "name": "Vim | Ensure that vimfiles/autoload/plug.vim for Vim exists",
