@@ -167,7 +167,7 @@ execute_tasks() {
 
   echo "# TASK [Vim | Ensure that .vim directory is configured]"
   echo "# ************************************************************"
-  if true; then
+  if ! is_mingw; then
     module_symlink 'dotfiles/src/dot.vim' '.vim' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -203,7 +203,7 @@ execute_tasks() {
 
   echo "# TASK [Vim | Ensure that .config/nvim is configured]"
   echo "# ************************************************************"
-  if true; then
+  if ! is_mingw; then
     module_symlink 'dotfiles/src/dot.config/nvim' '.config/nvim' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -228,10 +228,10 @@ execute_tasks() {
   fi
   echo
 
-  echo "# TASK [Vim | Ensure that vimfiles/autoload directory exists]"
+  echo "# TASK [Vim | Ensure that vimfiles directory is configured]"
   echo "# ************************************************************"
-  if is_windows; then
-    module_directory 'vimfiles/autoload' '' && echo_ok || echo 'failed'
+  if ! is_mingw; then
+    module_symlink 'dotfiles/src/dot.vim' 'vimfiles' && echo_ok || echo 'failed'
   else
     echo_skipping
   fi
@@ -383,7 +383,7 @@ execute_tasks() {
 
   echo "# TASK [tmux | Ensure that .tmux.conf is configured (version < v2.1)]"
   echo "# ************************************************************"
-  if ( is_unix ) && ( tmux_version_lt_2pt1 ); then
+  if ( is_unix ) && ( ! is_mingw ) && ( tmux_version_lt_2pt1 ); then
     module_symlink 'dotfiles/src/dot.tmux.conf.lt_v2.1' '.tmux.conf' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -392,7 +392,7 @@ execute_tasks() {
 
   echo "# TASK [tmux | Ensure that .tmux.conf is configured (version >= v2.1)]"
   echo "# ************************************************************"
-  if ( is_unix ) && ( tmux_version_ge_2pt1 ); then
+  if ( is_unix ) && ( ! is_mingw ) && ( tmux_version_ge_2pt1 ); then
     module_symlink 'dotfiles/src/dot.tmux.conf.ge_v2.1' '.tmux.conf' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -401,7 +401,7 @@ execute_tasks() {
 
   echo "# TASK [tmux | Ensure that .tmux.conf.all is configured]"
   echo "# ************************************************************"
-  if is_unix; then
+  if ( is_unix ) && ( ! is_mingw ); then
     module_symlink 'dotfiles/src/dot.tmux.conf.all' '.tmux.conf.all' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -410,7 +410,7 @@ execute_tasks() {
 
   echo "# TASK [tmux | Ensure that .tmux directory is configured]"
   echo "# ************************************************************"
-  if is_unix; then
+  if ( is_unix ) && ( ! is_mingw ); then
     module_symlink 'dotfiles/src/dot.tmux' '.tmux' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -491,7 +491,7 @@ execute_tasks() {
 
   echo "# TASK [PowerShell | Ensure that .config/powershell directory is configured]"
   echo "# ************************************************************"
-  if is_unix; then
+  if ( is_unix ) && ( ! is_mingw ); then
     module_symlink 'dotfiles/src/dot.config/powershell' '.config/powershell' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -545,7 +545,7 @@ execute_tasks() {
 
   echo "# TASK [Bash | Ensure that .bashrc_local.sh is configured]"
   echo "# ************************************************************"
-  if ( ! is_mingw ) && ( is_unix ); then
+  if is_unix; then
     module_symlink 'dotfiles/src/dot.bashrc_local.sh' '.bashrc_local.sh' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -563,7 +563,7 @@ execute_tasks() {
 
   echo "# TASK [Bash | Ensure that .bashrc_local.sh is configured]"
   echo "# ************************************************************"
-  if ( ! is_mingw ) && ( is_unix ); then
+  if is_unix; then
     module_lineinfile '.bashrc' 'source $HOME/.bashrc_local.sh' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -572,7 +572,7 @@ execute_tasks() {
 
   echo "# TASK [Bash | Ensure that .bash_profile is configured]"
   echo "# ************************************************************"
-  if ( ! is_mingw ) && ( is_unix ); then
+  if is_unix; then
     module_copy 'dotfiles/src/dot.bash_profile' '.bash_profile' '' && echo_ok || echo 'failed'
   else
     echo_skipping
