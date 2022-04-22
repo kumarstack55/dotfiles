@@ -22,7 +22,8 @@
       "params": {
         "path": ".vim",
         "src": "dotfiles/src/dot.vim"
-      }
+      },
+      "when": [ "not", [ "is_mingw", [] ] ]
     },
     {
       "name": "Vim | Ensure that .gvimrc is configured",
@@ -62,7 +63,8 @@
       "params": {
         "path": ".config/nvim",
         "src": "dotfiles/src/dot.config/nvim"
-      }
+      },
+      "when": [ "not", [ "is_mingw", [] ] ]
     },
     {
       "name": "Vim | Ensure that .vim/autoload directory exists",
@@ -87,7 +89,8 @@
       "params": {
         "path": "vimfiles",
         "src": "dotfiles/src/dot.vim"
-      }
+      },
+      "when": [ "not", [ "is_mingw", [] ] ]
     },
     {
       "name": "Vim | Ensure that vimfiles/autoload/plug.vim for Vim exists",
@@ -254,6 +257,7 @@
       "when": [
         "and", [
           [ "is_unix", [] ],
+          [ "not", [ "is_mingw", [] ] ],
           [ "tmux_version_lt_2pt1", [] ]
         ]
       ]
@@ -268,6 +272,7 @@
       "when": [
         "and", [
           [ "is_unix", [] ],
+          [ "not", [ "is_mingw", [] ] ],
           [ "tmux_version_ge_2pt1", [] ]
         ]
       ]
@@ -279,7 +284,12 @@
         "path": ".tmux.conf.all",
         "src": "dotfiles/src/dot.tmux.conf.all"
       },
-      "when": [ "is_unix", [] ]
+      "when": [
+        "and", [
+          [ "is_unix", [] ],
+          [ "not", [ "is_mingw", [] ] ]
+        ]
+      ]
     },
     {
       "name": "tmux | Ensure that .tmux directory is configured",
@@ -288,7 +298,12 @@
         "path": ".tmux",
         "src": "dotfiles/src/dot.tmux"
       },
-      "when": [ "is_unix", [] ]
+      "when": [
+        "and", [
+          [ "is_unix", [] ],
+          [ "not", [ "is_mingw", [] ] ]
+        ]
+      ]
     },
     {
       "name": "Windows Terminal | Ensure that WindowsTerminal directory exists",
@@ -368,7 +383,12 @@
         "path": ".config/powershell",
         "src": "dotfiles/src/dot.config/powershell"
       },
-      "when": [ "is_unix", [] ]
+      "when": [
+        "and", [
+          [ "is_unix", [] ],
+          [ "not", [ "is_mingw", [] ] ]
+        ]
+      ]
     },
     {
       "name": "PowerShell | Ensure that .powershellrc.ps1 is configured",
@@ -432,12 +452,7 @@
         "path": ".bashrc_local.sh",
         "src": "dotfiles/src/dot.bashrc_local.sh"
       },
-      "when": [
-        "and", [
-          [ "not", [ "is_mingw", [] ] ],
-          [ "is_unix", [] ]
-        ]
-      ]
+      "when": [ "is_unix", [] ]
     },
     {
       "name": "Bash | Ensure that .bashrc is configured",
@@ -454,12 +469,7 @@
         "path": ".bashrc",
         "line": "source $HOME/.bashrc_local.sh"
       },
-      "when": [
-        "and", [
-          [ "not", [ "is_mingw", [] ] ],
-          [ "is_unix", [] ]
-        ]
-      ]
+      "when": [ "is_unix", [] ]
     },
     {
       "name": "Bash | Ensure that .bash_profile is configured",
@@ -469,12 +479,7 @@
         "src": "dotfiles/src/dot.bash_profile",
         "force": false
       },
-      "when": [
-        "and", [
-          [ "not", [ "is_mingw", [] ] ],
-          [ "is_unix", [] ]
-        ]
-      ]
+      "when": [ "is_unix", [] ]
     },
     {
       "name": "Readline | Ensure that .inputrc is configured",
