@@ -534,9 +534,18 @@ execute_tasks() {
   fi
   echo
 
-  echo "# TASK [Bash | Ensure that .bashrc.d directory is configured]"
+  echo "# TASK [Bash | Ensure that .bashrc.d directory is configured for unix]"
   echo "# ************************************************************"
   if ( ! is_mingw ) && ( is_unix ); then
+    module_symlink 'dotfiles/src/dot.bashrc.d' '.bashrc.d' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Bash | Ensure that .bashrc.d directory is configured for mingw by powershell]"
+  echo "# ************************************************************"
+  if is_windows; then
     module_symlink 'dotfiles/src/dot.bashrc.d' '.bashrc.d' && echo_ok || echo 'failed'
   else
     echo_skipping
