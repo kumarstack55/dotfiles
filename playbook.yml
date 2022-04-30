@@ -91,28 +91,21 @@ tasks:
   params:
     path: .gitconfig_windows.inc
     src: dotfiles/src/dot.gitconfig_windows.inc
-  when:
-  - is_windows
-  - []
+  when: [is_windows, []]
 - module: symlink
   name: Git | Ensure that .gitconfig_profiles.json.sample is configured
   params:
     force: false
     path: .gitconfig_profiles.json.sample
     src: dotfiles/src/dot.gitconfig_profiles.json.sample
-  when:
-  - is_windows
-  - []
+  when: [is_windows, []]
 - module: symlink
   name: GitHub | Ensure that .config/gh directory is configured
   params:
     force: false
     path: .config/gh
     src: dotfiles/src/dot.config/gh
-  when:
-  - not
-  - - is_mingw
-    - []
+  when: [not, [is_mingw, []]]
 - module: symlink
   name: Commitizen | Ensure that .czrc is configured
   params:
