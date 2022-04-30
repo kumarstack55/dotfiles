@@ -230,13 +230,7 @@ tasks:
   params:
     path: .config/powershell
     src: dotfiles/src/dot.config/powershell
-  when:
-  - and
-  - - - is_unix
-      - []
-    - - not
-      - - is_mingw
-        - []
+  when: [and, [[is_unix, []], [not, [is_mingw, []]]]]
 - module: symlink
   name: PowerShell | Ensure that .powershellrc.ps1 is configured
   params:
