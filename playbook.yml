@@ -141,27 +141,19 @@ tasks:
   params:
     mode: '0700'
     path: .ssh
-  when:
-  - is_unix
-  - []
+  when: [is_unix, []]
 - module: symlink
   name: Universal Ctags | Ensure that .ctags is configured
   params:
     path: .ctags
     src: dotfiles/src/dot.ctags
-  when:
-  - not
-  - - is_mingw
-    - []
+  when: [not, [is_mingw, []]]
 - module: symlink
   name: EditorConfig | Ensure that .editorconfig is configured
   params:
     path: .editorconfig
     src: dotfiles/src/dot.editorconfig
-  when:
-  - not
-  - - is_mingw
-    - []
+  when: [not, [is_mingw, []]]
 - module: symlink
   name: tmux | Ensure that .tmux.conf is configured (version < v2.1)
   params:
