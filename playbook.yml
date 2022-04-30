@@ -30,9 +30,7 @@ tasks:
   params:
     path: _gvimrc
     src: dotfiles/src/dot.gvimrc
-  when:
-  - is_windows
-  - []
+  when: [is_windows,[]]
 - module: symlink
   name: Vim | Ensure that AppData/Local/nvim is configured
   params:
