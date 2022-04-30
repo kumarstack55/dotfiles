@@ -296,10 +296,4 @@ tasks:
   params:
     path: .inputrc
     src: dotfiles/src/dot.inputrc
-  when:
-  - and
-  - - - not
-      - - is_mingw
-        - []
-    - - is_unix
-      - []
+  when: [and, [[not, [is_mingw, []]], [is_unix, []]]]
