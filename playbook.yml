@@ -12,6 +12,14 @@ tasks:
   params:
     path: .vimrc
     src: dotfiles/src/dot.vimrc
+  when: [not, [is_windows, []]]
+
+- name: Vim | Ensure that _vimrc is configured
+  module: symlink
+  params:
+    path: _vimrc
+    src: dotfiles/src/dot.vimrc
+  when: [is_windows, []]
 
 - name: Vim | Ensure that .vim directory is configured
   module: symlink
