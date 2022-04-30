@@ -30,15 +30,13 @@ tasks:
   params:
     path: _gvimrc
     src: dotfiles/src/dot.gvimrc
-  when: [is_windows,[]]
+  when: [is_windows, []]
 - module: symlink
   name: Vim | Ensure that AppData/Local/nvim is configured
   params:
     path: AppData/Local/nvim
     src: dotfiles/src/AppData/Local/nvim
-  when:
-  - is_windows
-  - []
+  when: [is_windows, []]
 - module: symlink
   name: Vim | Ensure that .config/nvim is configured
   params:
@@ -60,9 +58,7 @@ tasks:
   params:
     path: .vim/autoload/plug.vim
     url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  when:
-  - is_unix
-  - []
+  when: [is_unix, []]
 - module: symlink
   name: Vim | Ensure that vimfiles directory is configured
   params:
@@ -70,8 +66,7 @@ tasks:
     src: dotfiles/src/dot.vim
   when:
   - not
-  - - is_mingw
-    - []
+  - [is_mingw, []]
 - module: get_url
   name: Vim | Ensure that vimfiles/autoload/plug.vim for Vim exists
   params:
