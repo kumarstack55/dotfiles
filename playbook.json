@@ -2,23 +2,23 @@
   "playbook_version": 1,
   "tasks": [
     {
-      "module": "directory",
       "name": "Ensure that XDG_CONFIG_HOME directory exists",
+      "module": "directory",
       "params": {
         "path": ".config"
       }
     },
     {
-      "module": "symlink",
       "name": "Vim | Ensure that .vimrc is configured",
+      "module": "symlink",
       "params": {
         "path": ".vimrc",
         "src": "dotfiles/src/dot.vimrc"
       }
     },
     {
-      "module": "symlink",
       "name": "Vim | Ensure that .vim directory is configured",
+      "module": "symlink",
       "params": {
         "path": ".vim",
         "src": "dotfiles/src/dot.vim"
@@ -32,8 +32,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Vim | Ensure that .gvimrc is configured",
+      "module": "symlink",
       "params": {
         "path": ".gvimrc",
         "src": "dotfiles/src/dot.gvimrc"
@@ -56,8 +56,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Vim | Ensure that _gvimrc is configured",
+      "module": "symlink",
       "params": {
         "path": "_gvimrc",
         "src": "dotfiles/src/dot.gvimrc"
@@ -68,8 +68,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Vim | Ensure that AppData/Local/nvim is configured",
+      "module": "symlink",
       "params": {
         "path": "AppData/Local/nvim",
         "src": "dotfiles/src/AppData/Local/nvim"
@@ -80,8 +80,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Vim | Ensure that .config/nvim is configured",
+      "module": "symlink",
       "params": {
         "path": ".config/nvim",
         "src": "dotfiles/src/dot.config/nvim"
@@ -95,8 +95,8 @@
       ]
     },
     {
-      "module": "directory",
       "name": "Vim | Ensure that .vim/autoload directory exists",
+      "module": "directory",
       "params": {
         "path": ".vim/autoload"
       },
@@ -106,8 +106,8 @@
       ]
     },
     {
-      "module": "get_url",
       "name": "Vim | Ensure that .vim/autoload/plug.vim for Vim exists",
+      "module": "get_url",
       "params": {
         "path": ".vim/autoload/plug.vim",
         "url": "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
@@ -118,8 +118,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Vim | Ensure that vimfiles directory is configured",
+      "module": "symlink",
       "params": {
         "path": "vimfiles",
         "src": "dotfiles/src/dot.vim"
@@ -133,8 +133,8 @@
       ]
     },
     {
-      "module": "get_url",
       "name": "Vim | Ensure that vimfiles/autoload/plug.vim for Vim exists",
+      "module": "get_url",
       "params": {
         "path": "vimfiles/autoload/plug.vim",
         "url": "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
@@ -145,8 +145,8 @@
       ]
     },
     {
-      "module": "directory",
       "name": "Vim | Windows | Ensure that AppData/Local/nvim/autoload directory exists",
+      "module": "directory",
       "params": {
         "path": "AppData/Local/nvim/autoload"
       },
@@ -156,8 +156,8 @@
       ]
     },
     {
-      "module": "get_url",
       "name": "Vim | Ensure that plug.vim for NeoVim exists",
+      "module": "get_url",
       "params": {
         "path": "AppData/Local/nvim/autoload/plug.vim",
         "url": "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
@@ -168,8 +168,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Git | Ensure that .gitconfig is configured",
+      "module": "symlink",
       "params": {
         "path": ".gitconfig",
         "src": "dotfiles/src/dot.gitconfig"
@@ -183,8 +183,8 @@
       ]
     },
     {
-      "module": "copy",
       "name": "Git | Ensure that .gitconfig_local.inc is configured",
+      "module": "copy",
       "params": {
         "force": false,
         "path": ".gitconfig_local.inc",
@@ -192,8 +192,8 @@
       }
     },
     {
-      "module": "symlink",
       "name": "Git | Ensure that .gitconfig_windows.inc is configured",
+      "module": "symlink",
       "params": {
         "path": ".gitconfig_windows.inc",
         "src": "dotfiles/src/dot.gitconfig_windows.inc"
@@ -204,8 +204,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Git | Ensure that .gitconfig_profiles.json.sample is configured",
+      "module": "symlink",
       "params": {
         "force": false,
         "path": ".gitconfig_profiles.json.sample",
@@ -217,8 +217,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "GitHub | Ensure that .config/gh directory is configured",
+      "module": "symlink",
       "params": {
         "force": false,
         "path": ".config/gh",
@@ -233,8 +233,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Commitizen | Ensure that .czrc is configured",
+      "module": "symlink",
       "params": {
         "path": ".czrc",
         "src": "dotfiles/src/dot.czrc"
@@ -248,8 +248,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Mercurial | Ensure that .hgrc is configured",
+      "module": "symlink",
       "params": {
         "path": ".hgrc",
         "src": "dotfiles/src/dot.hgrc"
@@ -263,8 +263,8 @@
       ]
     },
     {
-      "module": "copy",
       "name": "Mercurial | Ensure that .hgrc_local.ini is configured",
+      "module": "copy",
       "params": {
         "force": false,
         "path": ".hgrc_local.ini",
@@ -272,8 +272,8 @@
       }
     },
     {
-      "module": "symlink",
       "name": "Ansible | Ensure that .ansible.cfg is configured",
+      "module": "symlink",
       "params": {
         "path": ".ansible.cfg",
         "src": "dotfiles/src/dot.ansible.cfg"
@@ -296,8 +296,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Python | Ensure that pip directory is configured",
+      "module": "symlink",
       "params": {
         "path": ".config/pip",
         "src": "dotfiles/src/dot.config/pip"
@@ -320,8 +320,8 @@
       ]
     },
     {
-      "module": "directory",
       "name": "OpenSSH | Ensure that ssh directory exists",
+      "module": "directory",
       "params": {
         "mode": "0700",
         "path": ".ssh"
@@ -332,8 +332,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Universal Ctags | Ensure that .ctags is configured",
+      "module": "symlink",
       "params": {
         "path": ".ctags",
         "src": "dotfiles/src/dot.ctags"
@@ -347,8 +347,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "EditorConfig | Ensure that .editorconfig is configured",
+      "module": "symlink",
       "params": {
         "path": ".editorconfig",
         "src": "dotfiles/src/dot.editorconfig"
@@ -362,8 +362,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "tmux | Ensure that .tmux.conf is configured (version < v2.1)",
+      "module": "symlink",
       "params": {
         "path": ".tmux.conf",
         "src": "dotfiles/src/dot.tmux.conf.lt_v2.1"
@@ -390,8 +390,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "tmux | Ensure that .tmux.conf is configured (version >= v2.1)",
+      "module": "symlink",
       "params": {
         "path": ".tmux.conf",
         "src": "dotfiles/src/dot.tmux.conf.ge_v2.1"
@@ -418,8 +418,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "tmux | Ensure that .tmux.conf.all is configured",
+      "module": "symlink",
       "params": {
         "path": ".tmux.conf.all",
         "src": "dotfiles/src/dot.tmux.conf.all"
@@ -442,8 +442,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "tmux | Ensure that .tmux directory is configured",
+      "module": "symlink",
       "params": {
         "path": ".tmux",
         "src": "dotfiles/src/dot.tmux"
@@ -466,8 +466,8 @@
       ]
     },
     {
-      "module": "directory",
       "name": "Windows Terminal | Ensure that WindowsTerminal directory exists",
+      "module": "directory",
       "params": {
         "path": "AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/"
       },
@@ -477,8 +477,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Windows Terminal | Ensure that WindowsTerminal is configured",
+      "module": "symlink",
       "params": {
         "path": "AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState",
         "src": "dotfiles/src/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState"
@@ -489,8 +489,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Alacritty | Ensure that AppData/Roaming/alacritty directory is configured",
+      "module": "symlink",
       "params": {
         "path": "AppData/Roaming/alacritty",
         "src": "dotfiles/src/AppData/Roaming/alacritty"
@@ -501,8 +501,8 @@
       ]
     },
     {
-      "module": "directory",
       "name": "Meld | Ensure that AppData/Local/gtk-3.0 directory exists",
+      "module": "directory",
       "params": {
         "path": "AppData/Local/gtk-3.0"
       },
@@ -512,8 +512,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Meld | Ensure that AppData/Local/gtk-3.0/settings.ini is configured",
+      "module": "symlink",
       "params": {
         "path": "AppData/Local/gtk-3.0/settings.ini",
         "src": "dotfiles/src/AppData/Local/gtk-3.0/settings.ini"
@@ -524,8 +524,8 @@
       ]
     },
     {
-      "module": "copy",
       "name": "PowerShell | Ensure that Microsoft.PowerShell_profile.ps1 is configured",
+      "module": "copy",
       "params": {
         "force": false,
         "path": "Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1",
@@ -537,8 +537,8 @@
       ]
     },
     {
-      "module": "directory",
       "name": "PowerShell | Ensure that Documents/PowerShell directory exists",
+      "module": "directory",
       "params": {
         "path": "Documents/PowerShell"
       },
@@ -548,8 +548,8 @@
       ]
     },
     {
-      "module": "copy",
       "name": "PowerShell | Ensure that Microsoft.PowerShell_profile.ps1 is configured",
+      "module": "copy",
       "params": {
         "force": false,
         "path": "Documents/PowerShell/Microsoft.PowerShell_profile.ps1",
@@ -561,8 +561,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "PowerShell | Ensure that .config/powershell directory is configured",
+      "module": "symlink",
       "params": {
         "path": ".config/powershell",
         "src": "dotfiles/src/dot.config/powershell"
@@ -585,8 +585,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "PowerShell | Ensure that .powershellrc.ps1 is configured",
+      "module": "symlink",
       "params": {
         "path": ".powershellrc.ps1",
         "src": "dotfiles/src/dot.powershellrc.ps1"
@@ -597,8 +597,8 @@
       ]
     },
     {
-      "module": "directory",
       "name": "OpenSSH | Ensure that .ssh directory exists",
+      "module": "directory",
       "params": {
         "path": ".ssh"
       },
@@ -608,8 +608,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "OpenSSH | Ensure that .ssh/config is configured",
+      "module": "symlink",
       "params": {
         "force": false,
         "path": ".ssh/config",
@@ -633,8 +633,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Pageant | Ensure that .ssh/wsl-ssh-pageant directory is configured",
+      "module": "symlink",
       "params": {
         "path": ".ssh/wsl-ssh-pageant",
         "src": "dotfiles/src/dot.ssh_windows/wsl-ssh-pageant"
@@ -645,8 +645,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Bash | Ensure that .bashrc.d directory is configured for unix",
+      "module": "symlink",
       "params": {
         "path": ".bashrc.d",
         "src": "dotfiles/src/dot.bashrc.d"
@@ -669,8 +669,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Bash | Ensure that .bashrc.d directory is configured for mingw by powershell",
+      "module": "symlink",
       "params": {
         "path": ".bashrc.d",
         "src": "dotfiles/src/dot.bashrc.d"
@@ -681,8 +681,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Bash | Ensure that .bashrc_local.sh is configured",
+      "module": "symlink",
       "params": {
         "path": ".bashrc_local.sh",
         "src": "dotfiles/src/dot.bashrc_local.sh"
@@ -693,8 +693,8 @@
       ]
     },
     {
-      "module": "touch",
       "name": "Bash | Ensure that .bashrc is configured",
+      "module": "touch",
       "params": {
         "path": ".bashrc"
       },
@@ -704,8 +704,8 @@
       ]
     },
     {
-      "module": "lineinfile",
       "name": "Bash | Ensure that .bashrc_local.sh is configured",
+      "module": "lineinfile",
       "params": {
         "line": "source $HOME/.bashrc_local.sh",
         "path": ".bashrc"
@@ -716,8 +716,8 @@
       ]
     },
     {
-      "module": "copy",
       "name": "Bash | Ensure that .bash_profile is configured",
+      "module": "copy",
       "params": {
         "force": false,
         "path": ".bash_profile",
@@ -729,8 +729,8 @@
       ]
     },
     {
-      "module": "symlink",
       "name": "Readline | Ensure that .inputrc is configured",
+      "module": "symlink",
       "params": {
         "path": ".inputrc",
         "src": "dotfiles/src/dot.inputrc"
