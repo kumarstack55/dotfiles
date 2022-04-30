@@ -230,7 +230,7 @@ execute_tasks() {
 
   echo "# TASK [Vim | Ensure that vimfiles directory is configured]"
   echo "# ************************************************************"
-  if ! is_mingw; then
+  if is_windows; then
     module_symlink 'dotfiles/src/dot.vim' 'vimfiles' && echo_ok || echo 'failed'
   else
     echo_skipping
