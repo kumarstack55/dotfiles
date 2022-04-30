@@ -1,3 +1,4 @@
+# vim:ft=yaml:
 playbook_version: 1
 tasks:
 - module: directory
