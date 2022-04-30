@@ -23,8 +23,7 @@ tasks:
     src: dotfiles/src/dot.gvimrc
   when:
   - and
-  - - [not, [is_mingw, []]]
-    - [is_unix, []]
+  - [[not, [is_mingw, []]], [is_unix, []]]
 - module: symlink
   name: Vim | Ensure that _gvimrc is configured
   params:
