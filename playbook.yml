@@ -15,9 +15,7 @@ tasks:
   params:
     path: .vim
     src: dotfiles/src/dot.vim
-  when:
-  - not
-  - [is_mingw, []]
+  when: [not, [is_mingw, []]]
 - module: symlink
   name: Vim | Ensure that .gvimrc is configured
   params:
