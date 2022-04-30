@@ -199,76 +199,54 @@ tasks:
   params:
     path: .tmux
     src: dotfiles/src/dot.tmux
-  when:
-  - and
-  - - - is_unix
-      - []
-    - - not
-      - - is_mingw
-        - []
+  when: [and, [[is_unix, []], [not, [is_mingw, []]]]]
 - module: directory
   name: Windows Terminal | Ensure that WindowsTerminal directory exists
   params:
     path: AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/
-  when:
-  - is_windows
-  - []
+  when: [is_windows, []]
 - module: symlink
   name: Windows Terminal | Ensure that WindowsTerminal is configured
   params:
     path: AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState
     src: dotfiles/src/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState
-  when:
-  - is_windows
-  - []
+  when: [is_windows, []]
 - module: symlink
   name: Alacritty | Ensure that AppData/Roaming/alacritty directory is configured
   params:
     path: AppData/Roaming/alacritty
     src: dotfiles/src/AppData/Roaming/alacritty
-  when:
-  - is_windows
-  - []
+  when: [is_windows, []]
 - module: directory
   name: Meld | Ensure that AppData/Local/gtk-3.0 directory exists
   params:
     path: AppData/Local/gtk-3.0
-  when:
-  - is_windows
-  - []
+  when: [is_windows, []]
 - module: symlink
   name: Meld | Ensure that AppData/Local/gtk-3.0/settings.ini is configured
   params:
     path: AppData/Local/gtk-3.0/settings.ini
     src: dotfiles/src/AppData/Local/gtk-3.0/settings.ini
-  when:
-  - is_windows
-  - []
+  when: [is_windows, []]
 - module: copy
   name: PowerShell | Ensure that Microsoft.PowerShell_profile.ps1 is configured
   params:
     force: false
     path: Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1
     src: dotfiles/src/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1
-  when:
-  - is_windows
-  - []
+  when: [is_windows, []]
 - module: directory
   name: PowerShell | Ensure that Documents/PowerShell directory exists
   params:
     path: Documents/PowerShell
-  when:
-  - is_windows
-  - []
+  when: [is_windows, []]
 - module: copy
   name: PowerShell | Ensure that Microsoft.PowerShell_profile.ps1 is configured
   params:
     force: false
     path: Documents/PowerShell/Microsoft.PowerShell_profile.ps1
     src: dotfiles/src/Documents/PowerShell/Microsoft.PowerShell_profile.ps1
-  when:
-  - is_windows
-  - []
+  when: [is_windows, []]
 - module: symlink
   name: PowerShell | Ensure that .config/powershell directory is configured
   params:
@@ -286,16 +264,12 @@ tasks:
   params:
     path: .powershellrc.ps1
     src: dotfiles/src/dot.powershellrc.ps1
-  when:
-  - is_windows
-  - []
+  when: [is_windows, []]
 - module: directory
   name: OpenSSH | Ensure that .ssh directory exists
   params:
     path: .ssh
-  when:
-  - is_windows
-  - []
+  when: [is_windows, []]
 - module: symlink
   name: OpenSSH | Ensure that .ssh/config is configured
   params:
@@ -314,9 +288,7 @@ tasks:
   params:
     path: .ssh/wsl-ssh-pageant
     src: dotfiles/src/dot.ssh_windows/wsl-ssh-pageant
-  when:
-  - is_windows
-  - []
+  when: [is_windows, []]
 - module: symlink
   name: Bash | Ensure that .bashrc.d directory is configured for unix
   params:
@@ -334,9 +306,7 @@ tasks:
   params:
     path: .bashrc.d
     src: dotfiles/src/dot.bashrc.d
-  when:
-  - is_windows
-  - []
+  when: [is_windows, []]
 - module: symlink
   name: Bash | Ensure that .bashrc_local.sh is configured
   params:
