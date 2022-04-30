@@ -42,9 +42,7 @@ tasks:
   params:
     path: .config/nvim
     src: dotfiles/src/dot.config/nvim
-  when:
-  - not
-  - [is_mingw, []]
+  when: [not, [is_mingw, []]]
 - module: directory
   name: Vim | Ensure that .vim/autoload directory exists
   params:
