@@ -165,15 +165,7 @@ tasks:
   params:
     path: .tmux.conf
     src: dotfiles/src/dot.tmux.conf.ge_v2.1
-  when:
-  - and
-  - - - is_unix
-      - []
-    - - not
-      - - is_mingw
-        - []
-    - - tmux_version_ge_2pt1
-      - []
+  when: [and, [[is_unix, []], [not, [is_mingw, []]], [tmux_version_ge_2pt1, []]]]
 - module: symlink
   name: tmux | Ensure that .tmux.conf.all is configured
   params:
