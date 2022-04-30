@@ -135,13 +135,7 @@ tasks:
   params:
     path: .config/pip
     src: dotfiles/src/dot.config/pip
-  when:
-  - and
-  - - - not
-      - - is_mingw
-        - []
-    - - is_unix
-      - []
+  when: [and, [[not, [is_mingw, []]], [is_unix, []]]]
 - module: directory
   name: OpenSSH | Ensure that ssh directory exists
   params:
