@@ -79,10 +79,7 @@ tasks:
   params:
     path: .gitconfig
     src: dotfiles/src/dot.gitconfig
-  when:
-  - not
-  - - is_mingw
-    - []
+  when: [not, [is_mingw, []]]
 - module: copy
   name: Git | Ensure that .gitconfig_local.inc is configured
   params:
