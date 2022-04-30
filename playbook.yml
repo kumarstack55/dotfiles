@@ -44,9 +44,7 @@ tasks:
   name: Vim | Ensure that .vim/autoload directory exists
   params:
     path: .vim/autoload
-  when:
-  - is_unix
-  - []
+  when: [is_unix, []]
 - module: get_url
   name: Vim | Ensure that .vim/autoload/plug.vim for Vim exists
   params:
@@ -64,24 +62,18 @@ tasks:
   params:
     path: vimfiles/autoload/plug.vim
     url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  when:
-  - is_windows
-  - []
+  when: [is_windows, []]
 - module: directory
   name: Vim | Windows | Ensure that AppData/Local/nvim/autoload directory exists
   params:
     path: AppData/Local/nvim/autoload
-  when:
-  - is_windows
-  - []
+  when: [is_windows, []]
 - module: get_url
   name: Vim | Ensure that plug.vim for NeoVim exists
   params:
     path: AppData/Local/nvim/autoload/plug.vim
     url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  when:
-  - is_windows
-  - []
+  when: [is_windows, []]
 - module: symlink
   name: Git | Ensure that .gitconfig is configured
   params:
