@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-from jinja2 import Environment, FileSystemLoader
 from abc import ABC
+from jinja2 import Environment, FileSystemLoader
 from textwrap import dedent
 from typing import List
 import argparse
 import copy
+import jinja2
 import json
 import re
 
@@ -244,9 +245,15 @@ class Translator(ABC):
         raise NotImplementedError()
 
 
+def load_func(name):
+    source = name
+    return source
+
+
 class TranslatorV1(Translator):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self._env = None
 
     def _get_when_str(self, when: list) -> str:
         assert len(when) == 2
@@ -288,6 +295,30 @@ class TranslatorV1(Translator):
             raise RuntimeError(when)
         return ret
 
+    def _get_value_render_env(self):
+        if self._env is None:
+            env = jinja2.Environment(loader=jinja2.FunctionLoader(load_func))
+            self._env = env
+        else:
+            env = self._env
+        return env
+
+    def _render_dict_value(self, dic):
+        rendered = dict()
+
+        for k in dic.keys():
+            dic_or_value = dic[k]
+            if isinstance(dic_or_value, dict):
+                rendered[k] = self._render_dict_value(dic_or_value)
+            elif isinstance(dic_or_value, str):
+                env = self._get_value_render_env()
+                template = env.get_template(dic_or_value)
+                rendered[k] = template.render(home='$HOME')
+            else:
+                rendered[k] = dic_or_value
+
+        return rendered
+
     def translate(self) -> str:
         env = Environment(loader=FileSystemLoader('templates'))
         template = env.get_template("installer.sh.j2")
@@ -299,7 +330,10 @@ class TranslatorV1(Translator):
             task_dic['cond'] = self._get_when_str(
                     task.when if task.when else ['true', []])
             task_dic['command'] = task.module.get_cmd()
-            tasks.append(task_dic)
+
+            rendered_task_dic = self._render_dict_value(task_dic)
+
+            tasks.append(rendered_task_dic)
 
         return template.render(tasks=tasks)
 
