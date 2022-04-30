@@ -64,9 +64,7 @@ tasks:
   params:
     path: vimfiles
     src: dotfiles/src/dot.vim
-  when:
-  - not
-  - [is_mingw, []]
+  when: [not, [is_mingw, []]]
 - module: get_url
   name: Vim | Ensure that vimfiles/autoload/plug.vim for Vim exists
   params:
