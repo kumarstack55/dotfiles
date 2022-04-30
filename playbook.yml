@@ -159,15 +159,7 @@ tasks:
   params:
     path: .tmux.conf
     src: dotfiles/src/dot.tmux.conf.lt_v2.1
-  when:
-  - and
-  - - - is_unix
-      - []
-    - - not
-      - - is_mingw
-        - []
-    - - tmux_version_lt_2pt1
-      - []
+  when: [and, [[is_unix, []], [not, [is_mingw, []]], [tmux_version_lt_2pt1, []]]]
 - module: symlink
   name: tmux | Ensure that .tmux.conf is configured (version >= v2.1)
   params:
@@ -312,33 +304,25 @@ tasks:
   params:
     path: .bashrc_local.sh
     src: dotfiles/src/dot.bashrc_local.sh
-  when:
-  - is_unix
-  - []
+  when: [is_unix, []]
 - module: touch
   name: Bash | Ensure that .bashrc is configured
   params:
     path: .bashrc
-  when:
-  - is_unix
-  - []
+  when: [is_unix, []]
 - module: lineinfile
   name: Bash | Ensure that .bashrc_local.sh is configured
   params:
     line: source $HOME/.bashrc_local.sh
     path: .bashrc
-  when:
-  - is_unix
-  - []
+  when: [is_unix, []]
 - module: copy
   name: Bash | Ensure that .bash_profile is configured
   params:
     force: false
     path: .bash_profile
     src: dotfiles/src/dot.bash_profile
-  when:
-  - is_unix
-  - []
+  when: [is_unix, []]
 - module: symlink
   name: Readline | Ensure that .inputrc is configured
   params:
