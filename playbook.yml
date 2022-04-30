@@ -111,19 +111,13 @@ tasks:
   params:
     path: .czrc
     src: dotfiles/src/dot.czrc
-  when:
-  - not
-  - - is_mingw
-    - []
+  when: [not, [is_mingw, []]]
 - module: symlink
   name: Mercurial | Ensure that .hgrc is configured
   params:
     path: .hgrc
     src: dotfiles/src/dot.hgrc
-  when:
-  - not
-  - - is_mingw
-    - []
+  when: [not, [is_mingw, []]]
 - module: copy
   name: Mercurial | Ensure that .hgrc_local.ini is configured
   params:
@@ -137,11 +131,8 @@ tasks:
     src: dotfiles/src/dot.ansible.cfg
   when:
   - and
-  - - - not
-      - - is_mingw
-        - []
-    - - is_unix
-      - []
+  - - [not, [is_mingw, []]]
+    - [is_unix, []]
 - module: symlink
   name: Python | Ensure that pip directory is configured
   params:
