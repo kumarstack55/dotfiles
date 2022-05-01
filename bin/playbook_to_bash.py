@@ -237,9 +237,93 @@ class TextBuilder(object):
         return ''.join(map(lambda x: f"{x}\n", self._lines))
 
 
+class WhenExpr(ABC):
+    def __init__(self, when_expr_factory):
+        self._when_expr_factory = when_expr_factory
+
+    def get(self, args: list) -> str:
+        raise NotImplementedError()
+
+
+class WhenExprTrue(WhenExpr):
+    def get(self, args: list) -> str:
+        if len(args) != 0:
+            raise RuntimeError(f"name: {self.__class__.__name__}, args:{args}")
+        return 'true'
+
+
+class WhenExprIsMingw(WhenExpr):
+    def get(self, args: list) -> str:
+        if len(args) != 0:
+            raise RuntimeError(f"name: {self.__class__.__name__}, args:{args}")
+        return 'is_mingw'
+
+
+class WhenExprIsWindows(WhenExpr):
+    def get(self, args: list) -> str:
+        if len(args) != 0:
+            raise RuntimeError(f"name: {self.__class__.__name__}, args:{args}")
+        return 'is_windows'
+
+
+class WhenExprIsUnix(WhenExpr):
+    def get(self, args: list) -> str:
+        if len(args) != 0:
+            raise RuntimeError(f"name: {self.__class__.__name__}, args:{args}")
+        return 'is_unix'
+
+
+class WhenExprTmuxVersionLessThan2pt1(WhenExpr):
+    def get(self, args: list) -> str:
+        if len(args) != 0:
+            raise RuntimeError(f"name: {self.__class__.__name__}, args:{args}")
+        return 'tmux_version_lt_2pt1'
+
+
+class WhenExprTmuxVersionGreaterOrEqual2pt1(WhenExpr):
+    def get(self, args: list) -> str:
+        if len(args) != 0:
+            raise RuntimeError(f"name: {self.__class__.__name__}, args:{args}")
+        return 'tmux_version_ge_2pt1'
+
+
+class WhenExprNot(WhenExpr):
+    def get(self, args: list) -> str:
+        if len(args) != 2:
+            raise RuntimeError(f"name: {self.__class__.__name__}, args:{args}")
+        child_name, child_args = args
+        when_expr = self._when_expr_factory.get(child_name)
+        return '! ' + when_expr.get(child_args)
+
+
+class WhenExprAnd(WhenExpr):
+    def get(self, args: list) -> str:
+        if len(args) == 0:
+            raise RuntimeError(f"name: {self.__class__.__name__}, args:{args}")
+        item_str_list = list()
+        for item in args:
+            child_name, child_args = item
+            when_expr = self._when_expr_factory.get(child_name)
+            item_str_list.append('( ' + when_expr.get(child_args) + ' )')
+        return ' && '.join(item_str_list)
+
+
+class WhenExprFactory(object):
+    def __init__(self):
+        self._name_cls = dict()
+
+    def add(self, name: str, cls):
+        self._name_cls[name] = cls
+
+    def get(self, name: str) -> WhenExpr:
+        cls = self._name_cls[name]
+        return cls(self)
+
+
 class Translator(ABC):
-    def __init__(self, playbook: Playbook):
+    def __init__(self, playbook: Playbook, when_expr_factory: WhenExprFactory):
         self._playbook = playbook
+        self._when_expr_factory = when_expr_factory
 
     def translate(self) -> str:
         raise NotImplementedError()
@@ -257,43 +341,9 @@ class TranslatorV1(Translator):
 
     def _get_when_str(self, when: list) -> str:
         assert len(when) == 2
-        ret = ''
-        if when[0] == 'true':
-            ret += 'true'
-            if len(when[1]) != 0:
-                raise RuntimeError(when)
-        elif when[0] == 'is_mingw':
-            ret += 'is_mingw'
-            if len(when[1]) != 0:
-                raise RuntimeError(when)
-        elif when[0] == 'is_unix':
-            ret += 'is_unix'
-            if len(when[1]) != 0:
-                raise RuntimeError(when)
-        elif when[0] == 'is_windows':
-            ret += 'is_windows'
-            if len(when[1]) != 0:
-                raise RuntimeError(when)
-        elif when[0] == 'tmux_version_lt_2pt1':
-            ret += 'tmux_version_lt_2pt1'
-            if len(when[1]) != 0:
-                raise RuntimeError(when)
-        elif when[0] == 'tmux_version_ge_2pt1':
-            ret += 'tmux_version_ge_2pt1'
-            if len(when[1]) != 0:
-                raise RuntimeError(when)
-        elif when[0] == 'not':
-            if len(when[1]) != 2:
-                raise RuntimeError(when)
-            ret += '! ' + self._get_when_str(when[1])
-        elif when[0] == 'and':
-            when2 = list()
-            for w in when[1]:
-                when2.append('( ' + self._get_when_str(w) + ' )')
-            ret += ' && '.join(when2)
-        else:
-            raise RuntimeError(when)
-        return ret
+        name, args = when
+        when_expr = self._when_expr_factory.get(name)
+        return when_expr.get(args)
 
     def _get_value_render_env(self):
         if self._env is None:
@@ -358,7 +408,20 @@ def main():
 
     playbook = loader.load(args.source)
 
-    translator: Translator = TranslatorV1(playbook=playbook)
+    when_expr_factory = WhenExprFactory()
+    when_expr_factory.add('true', WhenExprTrue)
+    when_expr_factory.add('is_mingw', WhenExprIsMingw)
+    when_expr_factory.add('is_windows', WhenExprIsWindows)
+    when_expr_factory.add('is_unix', WhenExprIsUnix)
+    when_expr_factory.add(
+            'tmux_version_lt_2pt1', WhenExprTmuxVersionLessThan2pt1)
+    when_expr_factory.add(
+            'tmux_version_ge_2pt1', WhenExprTmuxVersionGreaterOrEqual2pt1)
+    when_expr_factory.add('not', WhenExprNot)
+    when_expr_factory.add('and', WhenExprAnd)
+
+    translator: Translator = TranslatorV1(
+            playbook=playbook, when_expr_factory=when_expr_factory)
     print(translator.translate())
 
 
