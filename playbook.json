@@ -18,7 +18,7 @@
       "when": [
         "not",
         [
-          "is_windows",
+          "is_mingw",
           []
         ]
       ]

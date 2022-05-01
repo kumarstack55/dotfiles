@@ -12,7 +12,9 @@ tasks:
   params:
     path: .vimrc
     src: dotfiles/src/dot.vimrc
-  when: [not, [is_windows, []]]
+  # MinGW の symlink は MSYS 設定なしだとコピーとなるため、
+  # Windows で symlink を作る。
+  when: [not, [is_mingw, []]]
 
 - name: Vim | Ensure that _vimrc is configured
   module: symlink

@@ -158,7 +158,7 @@ execute_tasks() {
 
   echo "# TASK [Vim | Ensure that .vimrc is configured]"
   echo "# ************************************************************"
-  if ! is_windows; then
+  if ! is_mingw; then
     module_symlink 'dotfiles/src/dot.vimrc' '.vimrc' && echo_ok || echo 'failed'
   else
     echo_skipping
