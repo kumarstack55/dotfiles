@@ -183,6 +183,18 @@ class ModuleFactoryV1(ModuleFactory):
         return cls(**params)
 
 
+class ModuleFactoryInitializer(object):
+    def initialize(self) -> ModuleFactory:
+        f: ModuleFactory = ModuleFactoryV1()
+        f.add('symlink', ModuleSymlink)
+        f.add('directory', ModuleDirectory)
+        f.add('copy', ModuleCopy)
+        f.add('touch', ModuleTouch)
+        f.add('lineinfile', ModuleLineinfile)
+        f.add('get_url', ModuleGetUrl)
+        return f
+
+
 class TaskFactory(ABC):
     def __init__(self, module_factory: ModuleFactory):
         raise NotImplementedError()
@@ -320,6 +332,20 @@ class WhenExprFactory(object):
         return cls(self)
 
 
+class WhenExprFactoryInitializer(object):
+    def initialize(self) -> WhenExprFactory:
+        f = WhenExprFactory()
+        f.add('true', WhenExprTrue)
+        f.add('is_mingw', WhenExprIsMingw)
+        f.add('is_windows', WhenExprIsWindows)
+        f.add('is_unix', WhenExprIsUnix)
+        f.add('tmux_version_lt_2pt1', WhenExprTmuxVersionLessThan2pt1)
+        f.add('tmux_version_ge_2pt1', WhenExprTmuxVersionGreaterOrEqual2pt1)
+        f.add('not', WhenExprNot)
+        f.add('and', WhenExprAnd)
+        return f
+
+
 class Translator(ABC):
     def __init__(self, playbook: Playbook, when_expr_factory: WhenExprFactory):
         self._playbook = playbook
@@ -394,32 +420,11 @@ def main():
             '--source', type=argparse.FileType('r'), required=True)
     args = parser.parse_args()
 
-    module_factory: ModuleFactory = ModuleFactoryV1()
-    module_factory.add('symlink', ModuleSymlink)
-    module_factory.add('directory', ModuleDirectory)
-    module_factory.add('copy', ModuleCopy)
-    module_factory.add('touch', ModuleTouch)
-    module_factory.add('lineinfile', ModuleLineinfile)
-    module_factory.add('get_url', ModuleGetUrl)
-
+    module_factory = ModuleFactoryInitializer().initialize()
     task_factory: TaskFactory = TaskFactoryV1(module_factory)
-
     loader: PlaybookLoader = PlaybookLoaderV1(task_factory)
-
     playbook = loader.load(args.source)
-
-    when_expr_factory = WhenExprFactory()
-    when_expr_factory.add('true', WhenExprTrue)
-    when_expr_factory.add('is_mingw', WhenExprIsMingw)
-    when_expr_factory.add('is_windows', WhenExprIsWindows)
-    when_expr_factory.add('is_unix', WhenExprIsUnix)
-    when_expr_factory.add(
-            'tmux_version_lt_2pt1', WhenExprTmuxVersionLessThan2pt1)
-    when_expr_factory.add(
-            'tmux_version_ge_2pt1', WhenExprTmuxVersionGreaterOrEqual2pt1)
-    when_expr_factory.add('not', WhenExprNot)
-    when_expr_factory.add('and', WhenExprAnd)
-
+    when_expr_factory = WhenExprFactoryInitializer().initialize()
     translator: Translator = TranslatorV1(
             playbook=playbook, when_expr_factory=when_expr_factory)
     print(translator.translate())
