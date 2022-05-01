@@ -415,15 +415,19 @@ class TranslatorV1(Translator):
 
 
 def main():
+    # Parse arguments.
     parser = argparse.ArgumentParser()
     parser.add_argument(
             '--source', type=argparse.FileType('r'), required=True)
     args = parser.parse_args()
 
+    # Load the playbook.
     module_factory = ModuleFactoryInitializer().initialize()
     task_factory: TaskFactory = TaskFactoryV1(module_factory)
     loader: PlaybookLoader = PlaybookLoaderV1(task_factory)
     playbook = loader.load(args.source)
+
+    # Translate the playbook and print.
     when_expr_factory = WhenExprFactoryInitializer().initialize()
     translator: Translator = TranslatorV1(
             playbook=playbook, when_expr_factory=when_expr_factory)
