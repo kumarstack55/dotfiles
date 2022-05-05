@@ -158,8 +158,17 @@ execute_tasks() {
 
   echo "# TASK [Vim | Ensure that .vimrc is configured]"
   echo "# ************************************************************"
-  if true; then
+  if ! is_mingw; then
     module_symlink 'dotfiles/src/dot.vimrc' '.vimrc' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [Vim | Ensure that _vimrc is configured]"
+  echo "# ************************************************************"
+  if is_windows; then
+    module_symlink 'dotfiles/src/dot.vimrc' '_vimrc' && echo_ok || echo 'failed'
   else
     echo_skipping
   fi
@@ -230,7 +239,7 @@ execute_tasks() {
 
   echo "# TASK [Vim | Ensure that vimfiles directory is configured]"
   echo "# ************************************************************"
-  if ! is_mingw; then
+  if is_windows; then
     module_symlink 'dotfiles/src/dot.vim' 'vimfiles' && echo_ok || echo 'failed'
   else
     echo_skipping
@@ -614,6 +623,7 @@ parse_options() {
 
 main() {
   parse_options "$@"
+  cd "$HOME" || exit 1
   execute_tasks
 }
 

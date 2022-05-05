@@ -173,6 +173,7 @@ parse_options() {
 
 main() {
   parse_options "$@"
+  cd "$HOME" || exit 1
   execute_tasks
 }
 

@@ -1,0 +1,359 @@
+# vim:ft=yaml:
+playbook_version: 1
+tasks:
+
+- name: Ensure that XDG_CONFIG_HOME directory exists
+  module: directory
+  params:
+    path: .config
+
+- name: Vim | Ensure that .vimrc is configured
+  module: symlink
+  params:
+    path: .vimrc
+    src: dotfiles/src/dot.vimrc
+  # MinGW の symlink は MSYS 設定なしだとコピーとなるため、
+  # Windows で symlink を作る。
+  when: [not, [is_mingw, []]]
+
+- name: Vim | Ensure that _vimrc is configured
+  module: symlink
+  params:
+    path: _vimrc
+    src: dotfiles/src/dot.vimrc
+  when: [is_windows, []]
+
+- name: Vim | Ensure that .vim directory is configured
+  module: symlink
+  params:
+    path: .vim
+    src: dotfiles/src/dot.vim
+  when: [not, [is_mingw, []]]
+
+- name: Vim | Ensure that .gvimrc is configured
+  module: symlink
+  params:
+    path: .gvimrc
+    src: dotfiles/src/dot.gvimrc
+  when: [and, [[not, [is_mingw, []]], [is_unix, []]]]
+
+- name: Vim | Ensure that _gvimrc is configured
+  module: symlink
+  params:
+    path: _gvimrc
+    src: dotfiles/src/dot.gvimrc
+  when: [is_windows, []]
+
+- name: Vim | Ensure that AppData/Local/nvim is configured
+  module: symlink
+  params:
+    path: AppData/Local/nvim
+    src: dotfiles/src/AppData/Local/nvim
+  when: [is_windows, []]
+
+- name: Vim | Ensure that .config/nvim is configured
+  module: symlink
+  params:
+    path: .config/nvim
+    src: dotfiles/src/dot.config/nvim
+  when: [not, [is_mingw, []]]
+
+- name: Vim | Ensure that .vim/autoload directory exists
+  module: directory
+  params:
+    path: .vim/autoload
+  when: [is_unix, []]
+
+- name: Vim | Ensure that .vim/autoload/plug.vim for Vim exists
+  module: get_url
+  params:
+    path: .vim/autoload/plug.vim
+    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  when: [is_unix, []]
+
+- name: Vim | Ensure that vimfiles directory is configured
+  module: symlink
+  params:
+    path: vimfiles
+    src: dotfiles/src/dot.vim
+  when: [is_windows, []]
+
+- name: Vim | Ensure that vimfiles/autoload/plug.vim for Vim exists
+  module: get_url
+  params:
+    path: vimfiles/autoload/plug.vim
+    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  when: [is_windows, []]
+
+- name: Vim | Windows | Ensure that AppData/Local/nvim/autoload directory exists
+  module: directory
+  params:
+    path: AppData/Local/nvim/autoload
+  when: [is_windows, []]
+
+- name: Vim | Ensure that plug.vim for NeoVim exists
+  module: get_url
+  params:
+    path: AppData/Local/nvim/autoload/plug.vim
+    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  when: [is_windows, []]
+
+- name: Git | Ensure that .gitconfig is configured
+  module: symlink
+  params:
+    path: .gitconfig
+    src: dotfiles/src/dot.gitconfig
+  when: [not, [is_mingw, []]]
+
+- name: Git | Ensure that .gitconfig_local.inc is configured
+  module: copy
+  params:
+    force: false
+    path: .gitconfig_local.inc
+    src: dotfiles/src/dot.gitconfig_local.inc
+
+- name: Git | Ensure that .gitconfig_windows.inc is configured
+  module: symlink
+  params:
+    path: .gitconfig_windows.inc
+    src: dotfiles/src/dot.gitconfig_windows.inc
+  when: [is_windows, []]
+
+- name: Git | Ensure that .gitconfig_profiles.json.sample is configured
+  module: symlink
+  params:
+    force: false
+    path: .gitconfig_profiles.json.sample
+    src: dotfiles/src/dot.gitconfig_profiles.json.sample
+  when: [is_windows, []]
+
+- name: GitHub | Ensure that .config/gh directory is configured
+  module: symlink
+  params:
+    force: false
+    path: .config/gh
+    src: dotfiles/src/dot.config/gh
+  when: [not, [is_mingw, []]]
+
+- name: Commitizen | Ensure that .czrc is configured
+  module: symlink
+  params:
+    path: .czrc
+    src: dotfiles/src/dot.czrc
+  when: [not, [is_mingw, []]]
+
+- name: Mercurial | Ensure that .hgrc is configured
+  module: symlink
+  params:
+    path: .hgrc
+    src: dotfiles/src/dot.hgrc
+  when: [not, [is_mingw, []]]
+
+- name: Mercurial | Ensure that .hgrc_local.ini is configured
+  module: copy
+  params:
+    force: false
+    path: .hgrc_local.ini
+    src: dotfiles/src/dot.hgrc_local.ini
+
+- name: Ansible | Ensure that .ansible.cfg is configured
+  module: symlink
+  params:
+    path: .ansible.cfg
+    src: dotfiles/src/dot.ansible.cfg
+  when: [and, [[not, [is_mingw, []]], [is_unix, []]]]
+
+- name: Python | Ensure that pip directory is configured
+  module: symlink
+  params:
+    path: .config/pip
+    src: dotfiles/src/dot.config/pip
+  when: [and, [[not, [is_mingw, []]], [is_unix, []]]]
+
+- name: OpenSSH | Ensure that ssh directory exists
+  module: directory
+  params:
+    mode: '0700'
+    path: .ssh
+  when: [is_unix, []]
+
+- name: Universal Ctags | Ensure that .ctags is configured
+  module: symlink
+  params:
+    path: .ctags
+    src: dotfiles/src/dot.ctags
+  when: [not, [is_mingw, []]]
+
+- name: EditorConfig | Ensure that .editorconfig is configured
+  module: symlink
+  params:
+    path: .editorconfig
+    src: dotfiles/src/dot.editorconfig
+  when: [not, [is_mingw, []]]
+
+- name: tmux | Ensure that .tmux.conf is configured (version < v2.1)
+  module: symlink
+  params:
+    path: .tmux.conf
+    src: dotfiles/src/dot.tmux.conf.lt_v2.1
+  when: [and, [[is_unix, []], [not, [is_mingw, []]], [tmux_version_lt_2pt1, []]]]
+
+- name: tmux | Ensure that .tmux.conf is configured (version >= v2.1)
+  module: symlink
+  params:
+    path: .tmux.conf
+    src: dotfiles/src/dot.tmux.conf.ge_v2.1
+  when: [and, [[is_unix, []], [not, [is_mingw, []]], [tmux_version_ge_2pt1, []]]]
+
+- name: tmux | Ensure that .tmux.conf.all is configured
+  module: symlink
+  params:
+    path: .tmux.conf.all
+    src: dotfiles/src/dot.tmux.conf.all
+  when: [and, [[is_unix, []], [not, [is_mingw, []]]]]
+
+- name: tmux | Ensure that .tmux directory is configured
+  module: symlink
+  params:
+    path: .tmux
+    src: dotfiles/src/dot.tmux
+  when: [and, [[is_unix, []], [not, [is_mingw, []]]]]
+
+- name: Windows Terminal | Ensure that WindowsTerminal directory exists
+  module: directory
+  params:
+    path: AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/
+  when: [is_windows, []]
+
+- name: Windows Terminal | Ensure that WindowsTerminal is configured
+  module: symlink
+  params:
+    path: AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState
+    src: dotfiles/src/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState
+  when: [is_windows, []]
+
+- name: Alacritty | Ensure that AppData/Roaming/alacritty directory is configured
+  module: symlink
+  params:
+    path: AppData/Roaming/alacritty
+    src: dotfiles/src/AppData/Roaming/alacritty
+  when: [is_windows, []]
+
+- name: Meld | Ensure that AppData/Local/gtk-3.0 directory exists
+  module: directory
+  params:
+    path: AppData/Local/gtk-3.0
+  when: [is_windows, []]
+
+- name: Meld | Ensure that AppData/Local/gtk-3.0/settings.ini is configured
+  module: symlink
+  params:
+    path: AppData/Local/gtk-3.0/settings.ini
+    src: dotfiles/src/AppData/Local/gtk-3.0/settings.ini
+  when: [is_windows, []]
+
+- name: PowerShell | Ensure that Microsoft.PowerShell_profile.ps1 is configured
+  module: copy
+  params:
+    force: false
+    path: Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1
+    src: dotfiles/src/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1
+  when: [is_windows, []]
+
+- name: PowerShell | Ensure that Documents/PowerShell directory exists
+  module: directory
+  params:
+    path: Documents/PowerShell
+  when: [is_windows, []]
+
+- name: PowerShell | Ensure that Microsoft.PowerShell_profile.ps1 is configured
+  module: copy
+  params:
+    force: false
+    path: Documents/PowerShell/Microsoft.PowerShell_profile.ps1
+    src: dotfiles/src/Documents/PowerShell/Microsoft.PowerShell_profile.ps1
+  when: [is_windows, []]
+
+- name: PowerShell | Ensure that .config/powershell directory is configured
+  module: symlink
+  params:
+    path: .config/powershell
+    src: dotfiles/src/dot.config/powershell
+  when: [and, [[is_unix, []], [not, [is_mingw, []]]]]
+
+- name: PowerShell | Ensure that .powershellrc.ps1 is configured
+  module: symlink
+  params:
+    path: .powershellrc.ps1
+    src: dotfiles/src/dot.powershellrc.ps1
+  when: [is_windows, []]
+
+- name: OpenSSH | Ensure that .ssh directory exists
+  module: directory
+  params:
+    path: .ssh
+  when: [is_windows, []]
+
+- name: OpenSSH | Ensure that .ssh/config is configured
+  module: symlink
+  params:
+    force: false
+    path: .ssh/config
+    src: dotfiles/src/dot.ssh/config
+  when: [and, [[not, [is_mingw, []]], [is_unix, []]]]
+
+- name: Pageant | Ensure that .ssh/wsl-ssh-pageant directory is configured
+  module: symlink
+  params:
+    path: .ssh/wsl-ssh-pageant
+    src: dotfiles/src/dot.ssh_windows/wsl-ssh-pageant
+  when: [is_windows, []]
+
+- name: Bash | Ensure that .bashrc.d directory is configured for unix
+  module: symlink
+  params:
+    path: .bashrc.d
+    src: dotfiles/src/dot.bashrc.d
+  when: [and, [[not, [is_mingw, []]], [is_unix, []]]]
+
+- name: Bash | Ensure that .bashrc.d directory is configured for mingw by powershell
+  module: symlink
+  params:
+    path: .bashrc.d
+    src: dotfiles/src/dot.bashrc.d
+  when: [is_windows, []]
+
+- name: Bash | Ensure that .bashrc_local.sh is configured
+  module: symlink
+  params:
+    path: .bashrc_local.sh
+    src: dotfiles/src/dot.bashrc_local.sh
+  when: [is_unix, []]
+
+- name: Bash | Ensure that .bashrc is configured
+  module: touch
+  params:
+    path: .bashrc
+  when: [is_unix, []]
+
+- name: Bash | Ensure that .bashrc_local.sh is configured
+  module: lineinfile
+  params:
+    line: source $HOME/.bashrc_local.sh
+    path: .bashrc
+  when: [is_unix, []]
+
+- name: Bash | Ensure that .bash_profile is configured
+  module: copy
+  params:
+    force: false
+    path: .bash_profile
+    src: dotfiles/src/dot.bash_profile
+  when: [is_unix, []]
+
+- name: Readline | Ensure that .inputrc is configured
+  module: symlink
+  params:
+    path: .inputrc
+    src: dotfiles/src/dot.inputrc
+  when: [and, [[not, [is_mingw, []]], [is_unix, []]]]

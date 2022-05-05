@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-from jinja2 import Environment, FileSystemLoader
 from abc import ABC
+from jinja2 import Environment, FileSystemLoader
 from textwrap import dedent
 from typing import List
 import argparse
 import copy
+import jinja2
 import json
 import re
 
@@ -182,6 +183,18 @@ class ModuleFactoryV1(ModuleFactory):
         return cls(**params)
 
 
+class ModuleFactoryInitializer(object):
+    def initialize(self) -> ModuleFactory:
+        f: ModuleFactory = ModuleFactoryV1()
+        f.add('symlink', ModuleSymlink)
+        f.add('directory', ModuleDirectory)
+        f.add('copy', ModuleCopy)
+        f.add('touch', ModuleTouch)
+        f.add('lineinfile', ModuleLineinfile)
+        f.add('get_url', ModuleGetUrl)
+        return f
+
+
 class TaskFactory(ABC):
     def __init__(self, module_factory: ModuleFactory):
         raise NotImplementedError()
@@ -236,57 +249,151 @@ class TextBuilder(object):
         return ''.join(map(lambda x: f"{x}\n", self._lines))
 
 
+class WhenExpr(ABC):
+    def __init__(self, when_expr_factory):
+        self._when_expr_factory = when_expr_factory
+
+    def get(self, args: list) -> str:
+        raise NotImplementedError()
+
+
+class WhenExprTrue(WhenExpr):
+    def get(self, args: list) -> str:
+        if len(args) != 0:
+            raise RuntimeError(f"name: {self.__class__.__name__}, args:{args}")
+        return 'true'
+
+
+class WhenExprIsMingw(WhenExpr):
+    def get(self, args: list) -> str:
+        if len(args) != 0:
+            raise RuntimeError(f"name: {self.__class__.__name__}, args:{args}")
+        return 'is_mingw'
+
+
+class WhenExprIsWindows(WhenExpr):
+    def get(self, args: list) -> str:
+        if len(args) != 0:
+            raise RuntimeError(f"name: {self.__class__.__name__}, args:{args}")
+        return 'is_windows'
+
+
+class WhenExprIsUnix(WhenExpr):
+    def get(self, args: list) -> str:
+        if len(args) != 0:
+            raise RuntimeError(f"name: {self.__class__.__name__}, args:{args}")
+        return 'is_unix'
+
+
+class WhenExprTmuxVersionLessThan2pt1(WhenExpr):
+    def get(self, args: list) -> str:
+        if len(args) != 0:
+            raise RuntimeError(f"name: {self.__class__.__name__}, args:{args}")
+        return 'tmux_version_lt_2pt1'
+
+
+class WhenExprTmuxVersionGreaterOrEqual2pt1(WhenExpr):
+    def get(self, args: list) -> str:
+        if len(args) != 0:
+            raise RuntimeError(f"name: {self.__class__.__name__}, args:{args}")
+        return 'tmux_version_ge_2pt1'
+
+
+class WhenExprNot(WhenExpr):
+    def get(self, args: list) -> str:
+        if len(args) != 2:
+            raise RuntimeError(f"name: {self.__class__.__name__}, args:{args}")
+        child_name, child_args = args
+        when_expr = self._when_expr_factory.get(child_name)
+        return '! ' + when_expr.get(child_args)
+
+
+class WhenExprAnd(WhenExpr):
+    def get(self, args: list) -> str:
+        if len(args) == 0:
+            raise RuntimeError(f"name: {self.__class__.__name__}, args:{args}")
+        item_str_list = list()
+        for item in args:
+            child_name, child_args = item
+            when_expr = self._when_expr_factory.get(child_name)
+            item_str_list.append('( ' + when_expr.get(child_args) + ' )')
+        return ' && '.join(item_str_list)
+
+
+class WhenExprFactory(object):
+    def __init__(self):
+        self._name_cls = dict()
+
+    def add(self, name: str, cls):
+        self._name_cls[name] = cls
+
+    def get(self, name: str) -> WhenExpr:
+        cls = self._name_cls[name]
+        return cls(self)
+
+
+class WhenExprFactoryInitializer(object):
+    def initialize(self) -> WhenExprFactory:
+        f = WhenExprFactory()
+        f.add('true', WhenExprTrue)
+        f.add('is_mingw', WhenExprIsMingw)
+        f.add('is_windows', WhenExprIsWindows)
+        f.add('is_unix', WhenExprIsUnix)
+        f.add('tmux_version_lt_2pt1', WhenExprTmuxVersionLessThan2pt1)
+        f.add('tmux_version_ge_2pt1', WhenExprTmuxVersionGreaterOrEqual2pt1)
+        f.add('not', WhenExprNot)
+        f.add('and', WhenExprAnd)
+        return f
+
+
 class Translator(ABC):
-    def __init__(self, playbook: Playbook):
+    def __init__(self, playbook: Playbook, when_expr_factory: WhenExprFactory):
         self._playbook = playbook
+        self._when_expr_factory = when_expr_factory
 
     def translate(self) -> str:
         raise NotImplementedError()
 
 
+def load_func(name):
+    source = name
+    return source
+
+
 class TranslatorV1(Translator):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self._env = None
 
     def _get_when_str(self, when: list) -> str:
         assert len(when) == 2
-        ret = ''
-        if when[0] == 'true':
-            ret += 'true'
-            if len(when[1]) != 0:
-                raise RuntimeError(when)
-        elif when[0] == 'is_mingw':
-            ret += 'is_mingw'
-            if len(when[1]) != 0:
-                raise RuntimeError(when)
-        elif when[0] == 'is_unix':
-            ret += 'is_unix'
-            if len(when[1]) != 0:
-                raise RuntimeError(when)
-        elif when[0] == 'is_windows':
-            ret += 'is_windows'
-            if len(when[1]) != 0:
-                raise RuntimeError(when)
-        elif when[0] == 'tmux_version_lt_2pt1':
-            ret += 'tmux_version_lt_2pt1'
-            if len(when[1]) != 0:
-                raise RuntimeError(when)
-        elif when[0] == 'tmux_version_ge_2pt1':
-            ret += 'tmux_version_ge_2pt1'
-            if len(when[1]) != 0:
-                raise RuntimeError(when)
-        elif when[0] == 'not':
-            if len(when[1]) != 2:
-                raise RuntimeError(when)
-            ret += '! ' + self._get_when_str(when[1])
-        elif when[0] == 'and':
-            when2 = list()
-            for w in when[1]:
-                when2.append('( ' + self._get_when_str(w) + ' )')
-            ret += ' && '.join(when2)
+        name, args = when
+        when_expr = self._when_expr_factory.get(name)
+        return when_expr.get(args)
+
+    def _get_value_render_env(self):
+        if self._env is None:
+            env = jinja2.Environment(loader=jinja2.FunctionLoader(load_func))
+            self._env = env
         else:
-            raise RuntimeError(when)
-        return ret
+            env = self._env
+        return env
+
+    def _render_dict_value(self, dic):
+        rendered = dict()
+
+        for k in dic.keys():
+            dic_or_value = dic[k]
+            if isinstance(dic_or_value, dict):
+                rendered[k] = self._render_dict_value(dic_or_value)
+            elif isinstance(dic_or_value, str):
+                env = self._get_value_render_env()
+                template = env.get_template(dic_or_value)
+                rendered[k] = template.render(home='$HOME')
+            else:
+                rendered[k] = dic_or_value
+
+        return rendered
 
     def translate(self) -> str:
         env = Environment(loader=FileSystemLoader('templates'))
@@ -299,32 +406,31 @@ class TranslatorV1(Translator):
             task_dic['cond'] = self._get_when_str(
                     task.when if task.when else ['true', []])
             task_dic['command'] = task.module.get_cmd()
-            tasks.append(task_dic)
+
+            rendered_task_dic = self._render_dict_value(task_dic)
+
+            tasks.append(rendered_task_dic)
 
         return template.render(tasks=tasks)
 
 
 def main():
+    # Parse arguments.
     parser = argparse.ArgumentParser()
     parser.add_argument(
             '--source', type=argparse.FileType('r'), required=True)
     args = parser.parse_args()
 
-    module_factory: ModuleFactory = ModuleFactoryV1()
-    module_factory.add('symlink', ModuleSymlink)
-    module_factory.add('directory', ModuleDirectory)
-    module_factory.add('copy', ModuleCopy)
-    module_factory.add('touch', ModuleTouch)
-    module_factory.add('lineinfile', ModuleLineinfile)
-    module_factory.add('get_url', ModuleGetUrl)
-
+    # Load the playbook.
+    module_factory = ModuleFactoryInitializer().initialize()
     task_factory: TaskFactory = TaskFactoryV1(module_factory)
-
     loader: PlaybookLoader = PlaybookLoaderV1(task_factory)
-
     playbook = loader.load(args.source)
 
-    translator: Translator = TranslatorV1(playbook=playbook)
+    # Translate the playbook and print.
+    when_expr_factory = WhenExprFactoryInitializer().initialize()
+    translator: Translator = TranslatorV1(
+            playbook=playbook, when_expr_factory=when_expr_factory)
     print(translator.translate())
 
 
