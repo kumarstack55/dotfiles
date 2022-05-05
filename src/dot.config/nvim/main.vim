@@ -512,6 +512,17 @@ if exists('+colorcolumn')
 endif
 
 " }}}
+" カーソルの移動を設定する。 {{{
+
+" gjgj の代わりに gjj、同様に gkk で視覚的な行の上下を移動できるようにする。
+" https://zenn.dev/mattn/articles/83c2d4c7645faa
+nmap gj gj<SID>g
+nmap gk gk<SID>g
+nnoremap <script> <SID>gj gj<SID>g
+nnoremap <script> <SID>gk gk<SID>g
+nmap <SID>g <Nop>
+
+" }}}
 " ファイル編集の設定をする。 {{{
 
 " バックアップファイル (*~) を作らない
