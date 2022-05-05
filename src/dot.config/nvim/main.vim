@@ -73,7 +73,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'editorconfig/editorconfig-vim'
 
   " *submode.txt* Create your own submodes
-  Plug 'kana/vim-submode'
+  "Plug 'kana/vim-submode'
 
   " Vim plugin that displays tags in a window, ordered by scope
   Plug 'majutsushi/tagbar', {
@@ -471,6 +471,18 @@ set noequalalways
 if has('nvim')
   set inccommand=split
 endif
+
+" ウィンドウを <C-w>+<C-w>+ の代わりに <C-w>++ でサイズ変更する。
+" https://zenn.dev/mattn/articles/83c2d4c7645faa
+nmap <C-w>+ <C-w>+<SID>ws
+nmap <C-w>- <C-w>-<SID>ws
+nmap <C-w>> <C-w>><SID>ws
+nmap <C-w>< <C-w><<SID>ws
+nnoremap <script> <SID>ws+ <C-w>+<SID>ws
+nnoremap <script> <SID>ws- <C-w>-<SID>ws
+nnoremap <script> <SID>ws> <C-w>><SID>ws
+nnoremap <script> <SID>ws< <C-w><<SID>ws
+nmap <SID>ws <Nop>
 
 " }}}
 " ウィンドウを設定する。 {{{
