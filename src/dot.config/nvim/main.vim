@@ -72,9 +72,6 @@ call plug#begin('~/.vim/plugged')
   " EditorConfig Vim Plugin
   Plug 'editorconfig/editorconfig-vim'
 
-  " *submode.txt* Create your own submodes
-  "Plug 'kana/vim-submode'
-
   " Vim plugin that displays tags in a window, ordered by scope
   Plug 'majutsushi/tagbar', {
         \ 'for': [
@@ -162,9 +159,6 @@ call plug#begin('~/.vim/plugged')
   " for the sections within a reStructuredText document.
   Plug 'jszakmeister/rst2ctags'
 
-  " Flake8 plugin for Vim
-  "Plug 'nvie/vim-flake8', { 'for': 'python' }
-
   if has('python3')
     " UltiSnips is the ultimate solution for snippets in Vim.
     Plug 'SirVer/ultisnips'
@@ -183,19 +177,8 @@ call plug#begin('~/.vim/plugged')
   " Yet Another Lexima
   Plug 'mattn/vim-lexiv'
 
-  " vim-coverage is a utility for visualizing test coverage results in vim.
-  "if !has('win32')
-  "  Plug 'google/vim-maktaba'
-  "  Plug 'google/vim-coverage'
-  "  Plug 'google/vim-glaive'
-  "endif
-
-  " A simple Vimscript test framework
-  "Plug 'junegunn/vader.vim'
-
   " Syntax files for Bats (Bash Automated Testing System).
-  "Plug 'aliou/bats.vim'
-  Plug 'kumarstack55/bats.vim'
+  Plug 'aliou/bats.vim'
 
   if v:version >= 800
     " Async Language Server Protocol plugin for vim8 and neovim.
