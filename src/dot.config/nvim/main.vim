@@ -233,6 +233,11 @@ call plug#begin('~/.vim/plugged')
 
   " Easy and high speed coding method.
   Plug 'mattn/vim-sonictemplate'
+
+  " The extended search motion.
+  if has('nvim')
+    Plug 'hrsh7th/vim-searchx'
+  endif
 call plug#end()
 
 " }}}
