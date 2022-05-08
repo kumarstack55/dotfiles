@@ -41,6 +41,15 @@ function Get-MyPromptPoetry {
     else { '' }
 }
 
+function Get-MyPromptVirtualenv {
+    <#
+        .SYNOPSIS
+        Poetry が有効な場合の文字列を返します。
+    #>
+    if (Test-Path env:VIRTUAL_ENV) { '[Venv] ' }
+    else { '' }
+}
+
 function Get-MyPromptVersionString {
     <#
         .SYNOPSIS
@@ -57,6 +66,7 @@ function PromptComplex {
     #>
     $DebugRole = Get-MyPromptDebugRole
     $Poetry = Get-MyPromptPoetry
+    $VirtualEnv = Get-MyPromptVirtualenv
     $VersionString = Get-MyPromptVersionString
     $UserName = $env:UserName
     $HostName = $Env:Computername
@@ -65,7 +75,7 @@ function PromptComplex {
 
     $Prompt = ''
     $Prompt += "`r`n"
-    $Prompt += $DebugRole + $Poetry + $VersionString + ' ' + $UserHostName + ':' + $ParentDirectory + "`r`n"
+    $Prompt += $DebugRole + $Poetry + $VirtualEnv + $VersionString + ' ' + $UserHostName + ':' + $ParentDirectory + "`r`n"
     $Prompt += PromptSimple
 
     $Prompt
