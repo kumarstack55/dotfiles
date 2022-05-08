@@ -72,9 +72,6 @@ call plug#begin('~/.vim/plugged')
   " EditorConfig Vim Plugin
   Plug 'editorconfig/editorconfig-vim'
 
-  " *submode.txt* Create your own submodes
-  Plug 'kana/vim-submode'
-
   " Vim plugin that displays tags in a window, ordered by scope
   Plug 'majutsushi/tagbar', {
         \ 'for': [
@@ -162,9 +159,6 @@ call plug#begin('~/.vim/plugged')
   " for the sections within a reStructuredText document.
   Plug 'jszakmeister/rst2ctags'
 
-  " Flake8 plugin for Vim
-  "Plug 'nvie/vim-flake8', { 'for': 'python' }
-
   if has('python3')
     " UltiSnips is the ultimate solution for snippets in Vim.
     Plug 'SirVer/ultisnips'
@@ -183,19 +177,8 @@ call plug#begin('~/.vim/plugged')
   " Yet Another Lexima
   Plug 'mattn/vim-lexiv'
 
-  " vim-coverage is a utility for visualizing test coverage results in vim.
-  "if !has('win32')
-  "  Plug 'google/vim-maktaba'
-  "  Plug 'google/vim-coverage'
-  "  Plug 'google/vim-glaive'
-  "endif
-
-  " A simple Vimscript test framework
-  "Plug 'junegunn/vader.vim'
-
   " Syntax files for Bats (Bash Automated Testing System).
-  "Plug 'aliou/bats.vim'
-  Plug 'kumarstack55/bats.vim'
+  Plug 'aliou/bats.vim'
 
   if v:version >= 800
     " Async Language Server Protocol plugin for vim8 and neovim.
@@ -250,6 +233,11 @@ call plug#begin('~/.vim/plugged')
 
   " Easy and high speed coding method.
   Plug 'mattn/vim-sonictemplate'
+
+  " The extended search motion.
+  if has('nvim')
+    Plug 'hrsh7th/vim-searchx'
+  endif
 call plug#end()
 
 " }}}
@@ -472,6 +460,18 @@ if has('nvim')
   set inccommand=split
 endif
 
+" ウィンドウを <C-w>+<C-w>+ の代わりに <C-w>++ でサイズ変更する。
+" https://zenn.dev/mattn/articles/83c2d4c7645faa
+nmap <C-w>+ <C-w>+<SID>ws
+nmap <C-w>- <C-w>-<SID>ws
+nmap <C-w>> <C-w>><SID>ws
+nmap <C-w>< <C-w><<SID>ws
+nnoremap <script> <SID>ws+ <C-w>+<SID>ws
+nnoremap <script> <SID>ws- <C-w>-<SID>ws
+nnoremap <script> <SID>ws> <C-w>><SID>ws
+nnoremap <script> <SID>ws< <C-w><<SID>ws
+nmap <SID>ws <Nop>
+
 " }}}
 " ウィンドウを設定する。 {{{
 
@@ -510,6 +510,17 @@ set textwidth=0
 if exists('+colorcolumn')
   set colorcolumn=80
 endif
+
+" }}}
+" カーソルの移動を設定する。 {{{
+
+" gjgj の代わりに gjj、同様に gkk で視覚的な行の上下を移動できるようにする。
+" https://zenn.dev/mattn/articles/83c2d4c7645faa
+nmap gj gj<SID>g
+nmap gk gk<SID>g
+nnoremap <script> <SID>gj gj<SID>g
+nnoremap <script> <SID>gk gk<SID>g
+nmap <SID>g <Nop>
 
 " }}}
 " ファイル編集の設定をする。 {{{
