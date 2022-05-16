@@ -91,13 +91,17 @@ function Prompt {
     }
 }
 
-function MyPromptSwitch {
+function Set-MyPromptSwitch {
     <#
         .SYNOPSIS
         プロンプトを切り替えます。
     #>
     $Script:MyDotfilePrompt += 1
     $Script:MyDotfilePrompt %= 3
+}
+
+function MyPromptSwitch {
+    Set-MyPromptSwitch
 }
 
 function Get-MyPSVersionMajor {
