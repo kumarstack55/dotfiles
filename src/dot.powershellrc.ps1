@@ -4,7 +4,7 @@
 # git-bash, PowerShell 共通で $HOME/.gitconfig を参照する。
 # しかし git-bash では winpty 経由で nvim, vim を実行する必要があり、
 # $HOME/.gitconfig で同一のエディタを指定することは困難である。
-foreach ($Editor in @('nvim', 'gvim', 'vim')) {
+foreach ($Editor in @('nvim', 'vim')) {
     Get-Command $Editor | Out-Null
     if ($? -eq $true) {
         $Env:EDITOR = $Editor
