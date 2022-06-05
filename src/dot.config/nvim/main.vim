@@ -368,6 +368,17 @@ command! MyTagbarPositionSwitchLeftRight
 if exists('g:ginit_loaded') || has('gui_running')
   " 選択範囲をシステムのクリップボードにコピーする。
   set guioptions+=a
+elseif has('nvim')
+  " 選択範囲をシステムのクリップボードにコピーする。
+  " もともと guioptions で gvim のみ制御していたが、
+  " nvim でも clipboard で設定できそうなので加えた。
+  set clipboard&
+  set clipboard^=unnamedplus
+else
+  " Windows の Vim の場合、クリップボードへコピーする手段は無さそう。
+  " コンパイルオプションが指定されていないことが多いため。
+
+  " Linux の Vim では、確認を試みていない。
 endif
 
 " }}}
