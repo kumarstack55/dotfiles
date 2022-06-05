@@ -1,0 +1,14 @@
+\(\S\+\)\.if$
+	if ({{$1}}) {
+	    {{_cursor_}}# TODO:
+	} elseif ($false) {
+	    # TODO:
+	} else {
+	    # TODO:
+	}
+
+\(\S\+\)\.function$
+	function {{$1}} {
+	    {{_cursor_}}# TODO: param([Parameter(Mandatory)][string]$Arg1)
+	    # TODO:
+	}
