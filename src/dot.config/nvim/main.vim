@@ -369,6 +369,9 @@ if exists('g:ginit_loaded') || has('gui_running')
   " 選択範囲をシステムのクリップボードにコピーする。
   set guioptions+=a
 elseif has('windows') && has('nvim')
+  " 期待に反して、
+  " Windows 上の WSL2 で `has('windows')` が真になることがわかっている。
+
   " 選択範囲をシステムのクリップボードにコピーする。
   " もともと guioptions で gvim のみ制御していたが、
   " nvim でも clipboard で設定できそうなので加えた。
