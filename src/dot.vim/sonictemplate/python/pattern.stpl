@@ -33,3 +33,8 @@
 \(\S\+\)\.ii$
 	{{$1}} = input_i()
 	{{_cursor_}}
+
+\(\S\+\)\.class$
+	class {{$1}}(object):
+	    def __init__(self, {{_cursor_}}name: str = None):
+	        self._name = name
