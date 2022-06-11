@@ -16,6 +16,7 @@ tasks:
   # Windows で symlink を作る。
   when: [not, [is_mingw, []]]
 
+# Windows の Vim は .vimrc を読まず、 _vimrc を読む。
 - name: Vim | Ensure that _vimrc is configured
   module: symlink
   params:
