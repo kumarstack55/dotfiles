@@ -372,16 +372,16 @@ if exists('g:ginit_loaded') || has('gui_running')
 else
   if has('nvim')
     if has('unix')
-      # linux
+      " linux
     elseif has('win32')
       " 選択範囲をシステムのクリップボードにコピーする。
       set clipboard&
       set clipboard^=unnamedplus
     endif
   else
-    # vim
+    " vim
     if has('unix')
-      # linux, vim in git-bash
+      " linux, vim in git-bash
       if has('clipboard')
         " vim in git-bash で選択範囲をシステムのクリップボードにコピーする。
         set clipboard&
