@@ -2,7 +2,8 @@ scriptencoding utf-8
 
 " 設定用のファンクションを定義する。 {{{
 
-if has('windows')
+" Windows の場合は runtimepath を加える。
+if has('win32')
   set runtimepath+=~/.config/nvim
 endif
 " runtime library/dotfiles.vim
@@ -368,17 +369,27 @@ command! MyTagbarPositionSwitchLeftRight
 if exists('g:ginit_loaded') || has('gui_running')
   " 選択範囲をシステムのクリップボードにコピーする。
   set guioptions+=a
-elseif has('windows') && has('nvim')
-  " 選択範囲をシステムのクリップボードにコピーする。
-  " もともと guioptions で gvim のみ制御していたが、
-  " nvim でも clipboard で設定できそうなので加えた。
-  set clipboard&
-  set clipboard^=unnamedplus
 else
-  " Windows の Vim の場合、クリップボードへコピーする手段は無さそう。
-  " コンパイルオプションが指定されていないことが多いため。
-
-  " Linux の Vim では、確認を試みていない。
+  if has('nvim')
+    if has('unix')
+      # linux
+    elseif has('win32')
+      " 選択範囲をシステムのクリップボードにコピーする。
+      set clipboard&
+      set clipboard^=unnamedplus
+    endif
+  else
+    # vim
+    if has('unix')
+      # linux, vim in git-bash
+      if has('clipboard')
+        " vim in git-bash で選択範囲をシステムのクリップボードにコピーする。
+        set clipboard&
+        set clipboard^=unnamedplus
+      endif
+    elseif has('win32')
+    endif
+  endif
 endif
 
 " }}}
