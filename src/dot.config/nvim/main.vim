@@ -385,7 +385,7 @@ else
       if has('clipboard')
         " vim in git-bash で選択範囲をシステムのクリップボードにコピーする。
         set clipboard&
-        set clipboard^=unnamedplus
+        set clipboard^=autoselect
       endif
     elseif has('win32')
     endif
