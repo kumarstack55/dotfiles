@@ -388,6 +388,9 @@ else
         set clipboard^=autoselect
       endif
     elseif has('win32')
+      " vim in powershell
+      set clipboard&
+      set clipboard^=autoselect
     endif
   endif
 endif
