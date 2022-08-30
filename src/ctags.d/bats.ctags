@@ -1,0 +1,3 @@
+--langdef=bats
+--langmap=bats:.bats
+--regex-bats=/^@test +"(.+)".+/\1/t,test/
