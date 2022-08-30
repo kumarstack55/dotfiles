@@ -89,11 +89,6 @@ call plug#begin('~/.vim/plugged')
           \ 'vim',
         \ ] }
 
-  if !executable('mdctags')
-    " Generate ctags-compatible tags files for Markdown documents.
-    Plug 'jszakmeister/markdown2ctags', { 'for': ['markdown'] }
-  endif
-
   " ctrlp.vim - Full path fuzzy file, buffer, mru, tag, ...
   " finder for Vim.
   Plug 'ctrlpvim/ctrlp.vim'
