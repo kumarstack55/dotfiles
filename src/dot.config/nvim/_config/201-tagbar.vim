@@ -1,7 +1,3 @@
-if empty(globpath(&runtimepath, 'autoload/tagbar.vim'))
-  finish
-endif
-
 function! s:has_mdctags()
   return executable('mdctags')
 endfunction
@@ -25,7 +21,9 @@ let g:tagbar_type_rst = {
 let g:tagbar_type_ps1 = {
     \ 'ctagstype': 'powershell',
     \ 'kinds': [
+      \ 'c:class',
       \ 'f:function',
+      \ 'v:variable',
       \ 'i:filter',
       \ 'a:alias'
     \ ]

@@ -372,10 +372,10 @@ execute_tasks() {
   fi
   echo
 
-  echo "# TASK [Universal Ctags | Ensure that .ctags is configured]"
+  echo "# TASK [Universal Ctags | Ensure that ctags.d directory exists]"
   echo "# ************************************************************"
-  if ! is_mingw; then
-    module_symlink 'dotfiles/src/dot.ctags' '.ctags' && echo_ok || echo 'failed'
+  if is_windows; then
+    module_symlink 'dotfiles/src/ctags.d' 'ctags.d' && echo_ok || echo 'failed'
   else
     echo_skipping
   fi

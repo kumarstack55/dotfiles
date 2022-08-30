@@ -178,12 +178,12 @@ tasks:
     path: .ssh
   when: [is_unix, []]
 
-- name: Universal Ctags | Ensure that .ctags is configured
+- name: Universal Ctags | Ensure that ctags.d directory exists
   module: symlink
   params:
-    path: .ctags
-    src: dotfiles/src/dot.ctags
-  when: [not, [is_mingw, []]]
+    path: ctags.d
+    src: dotfiles/src/ctags.d
+  when: [is_windows, []]
 
 - name: EditorConfig | Ensure that .editorconfig is configured
   module: symlink

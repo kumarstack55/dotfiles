@@ -348,18 +348,15 @@
       ]
     },
     {
-      "name": "Universal Ctags | Ensure that .ctags is configured",
+      "name": "Universal Ctags | Ensure that ctags.d directory exists",
       "module": "symlink",
       "params": {
-        "path": ".ctags",
-        "src": "dotfiles/src/dot.ctags"
+        "path": "ctags.d",
+        "src": "dotfiles/src/ctags.d"
       },
       "when": [
-        "not",
-        [
-          "is_mingw",
-          []
-        ]
+        "is_windows",
+        []
       ]
     },
     {

@@ -80,6 +80,7 @@ call plug#begin('~/.vim/plugged')
           \ 'c',
           \ 'go',
           \ 'markdown',
+          \ 'ps1',
           \ 'python',
           \ 'rst',
           \ 'rust',
