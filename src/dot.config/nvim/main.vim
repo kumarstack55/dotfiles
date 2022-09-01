@@ -66,6 +66,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight',
         \ { 'on': 'NERDTreeToggle' }
 
+  " iceberg.vim が依存するために導入する。
   " Pgmnt is a template engine for creating Vim color schemes.
   Plug 'cocopon/pgmnt.vim'
 
