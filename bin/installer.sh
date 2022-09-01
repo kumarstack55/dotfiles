@@ -372,19 +372,19 @@ execute_tasks() {
   fi
   echo
 
-  echo "# TASK [Universal Ctags | Ensure that ctags.d directory exists]"
+  echo "# TASK [Universal Ctags | Ensure that .ctags.d directory exists]"
   echo "# ************************************************************"
-  if is_windows; then
-    module_symlink 'dotfiles/src/ctags.d' 'ctags.d' && echo_ok || echo 'failed'
+  if is_unix; then
+    module_symlink 'dotfiles/src/dot.ctags.d' '.ctags.d' && echo_ok || echo 'failed'
   else
     echo_skipping
   fi
   echo
 
-  echo "# TASK [Universal Ctags | Ensure that .ctags.d directory exists]"
+  echo "# TASK [Universal Ctags | Ensure that ctags.d directory exists]"
   echo "# ************************************************************"
-  if is_unix; then
-    module_symlink 'dotfiles/src/ctags.d' '.ctags.d' && echo_ok || echo 'failed'
+  if is_windows; then
+    module_symlink 'dotfiles/src/dot.ctags.d' 'ctags.d' && echo_ok || echo 'failed'
   else
     echo_skipping
   fi
