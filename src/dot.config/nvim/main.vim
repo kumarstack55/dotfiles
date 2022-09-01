@@ -6,7 +6,8 @@ scriptencoding utf-8
 if has('win32')
   set runtimepath+=~/.config/nvim
 endif
-" runtime library/dotfiles.vim
+
+runtime library/dotfiles.vim
 
 " Windows + nvim では Python3 を使う
 if has('win32') && has('nvim')
