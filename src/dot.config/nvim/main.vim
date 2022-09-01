@@ -11,16 +11,18 @@ runtime library/dotfiles.vim
 
 " Windows + nvim では Python3 を使う
 if has('win32') && has('nvim')
-  let g:python39_path = 'C:\Python39\python.exe'
-  let g:python38_path = 'C:\Python38\python.exe'
-  let g:python36_path = 'C:\Python36\python.exe'
-  if executable(g:python39_path)
-    let g:python3_host_prog = g:python39_path
-  elseif executable(g:python38_path)
-    let g:python3_host_prog = g:python38_path
-  elseif executable(g:python36_path)
-    let g:python3_host_prog = g:python36_path
-  endif
+  let s:python_path_list = [
+        \ 'C:\Python310\python.exe',
+        \ 'C:\Python39\python.exe',
+        \ 'C:\Python38\python.exe',
+        \ 'C:\Python37\python.exe',
+        \ 'C:\Python36\python.exe']
+  for s:python_path in s:python_path_list
+    if executable(s:python_path)
+      let g:python3_host_prog = s:python_path
+      break
+    endif
+  endfor
 endif
 
 " Windows + nvim では Python2 は使わない
