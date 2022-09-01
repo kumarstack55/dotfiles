@@ -114,11 +114,6 @@ call plug#begin('~/.vim/plugged')
   " quickrun.txt - Run a command and show its result quickly.
   Plug 'thinca/vim-quickrun'
 
-  " A vim plugin to give you some slime.
-  if has('unix')
-    Plug 'jpalardy/vim-slime'
-  endif
-
   " Surround.vim is all about "surroundings": parentheses,
   " brackets, quotes, XML tags, and more.
   Plug 'tpope/vim-surround'
