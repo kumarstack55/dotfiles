@@ -32,16 +32,18 @@ endif
 
 " Windows + vim では Python3 を使う
 if has('win32') && !has('nvim')
-  let g:python39dll_path = 'C:\Python39\python39.dll'
-  let g:python38dll_path = 'C:\Python38\python38.dll'
-  let g:python36dll_path = 'C:\Python36\python36.dll'
-  if executable(g:python39dll_path)
-    let &pythonthreedll=g:python39dll_path
-  elseif executable(g:python38dll_path)
-    let &pythonthreedll=g:python38dll_path
-  elseif filereadable(g:python36dll_path)
-    let &pythonthreedll=g:python36dll_path
-  endif
+  let s:python_dll_path_list = [
+        \ 'C:\Python310\python310.dll',
+        \ 'C:\Python39\python39.dll',
+        \ 'C:\Python38\python38.dll',
+        \ 'C:\Python37\python37.dll',
+        \ 'C:\Python36\python36.dll']
+  for s:python_dll_path in s:python_dll_path_list
+    if filereadable(s:python_dll_path)
+      let &pythonthreedll = s:python_dll_path
+      break
+    endif
+  endfor
 endif
 
 " }}}
