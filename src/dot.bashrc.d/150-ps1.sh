@@ -12,7 +12,7 @@ function __my_term_256_colors {
   esac
 }
 
-function __my_ps1_impl_date {
+function __my_ps1_impl_110_date {
   local prefix
   if __my_term_256_colors; then
     # shellcheck disable=SC2016
@@ -24,15 +24,15 @@ function __my_ps1_impl_date {
   export PS1="${prefix}${__my_ps1_original}"
 }
 
-function __my_ps1_impl_simple2 {
+function __my_ps1_impl_120_simple2 {
   export PS1='\W \$ '
 }
 
-function __my_ps1_impl_simple3 {
+function __my_ps1_impl_130_simple3 {
   export PS1='\$ '
 }
 
-function __my_ps1_impl_original {
+function __my_ps1_impl_900_original {
   export PS1="${__my_ps1_original}"
 }
 
