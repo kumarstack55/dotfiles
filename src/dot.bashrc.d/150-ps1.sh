@@ -17,12 +17,11 @@ function __my_ps1_impl_centos {
 
 function __my_ps1_impl_date {
   if __my_term_256_colors; then
-    PS1='\n\[\e[38;5;240m\]$(date "+%F %T")\[\e[39m\]\n[\u@\h \W]\$ '
+    export PS1='\n\[\e[38;5;240m\]$(date "+%F %T")\[\e[39m\]\n[\u@\h \W]\$ '
   else
     # shellcheck disable=SC2089
-    PS1='\n$(date "+%F %T")\n[\u@\h \W]\$ '
+    export PS1='\n$(date "+%F %T")\n[\u@\h \W]\$ '
   fi
-  export "PS1"
 }
 
 function __my_ps1_impl_simple {
