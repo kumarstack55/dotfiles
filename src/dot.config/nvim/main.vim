@@ -246,33 +246,8 @@ call plug#end()
 " コマンドを定義する。 {{{
 
 " フォントサイズを設定する
-if exists('g:ginit_loaded') || has('gui_running')
-  function! s:set_gui_font(font_height_pt)
-    let font_name = 'Cica'
-    let height = 'h' . a:font_height_pt
-    let options = [font_name, height]
-    if has('win32') && !has('nvim')
-      let charset = 'cSHIFTJIS'
-      call add(options, charset)
-      let quality = 'qDRAFT'
-      call add(options, quality)
-    endif
-    let guifont_string = join(options, ':')
-    let &guifont = guifont_string
-  endfunction
-
-  let s:FONT_SIZE_EXSMALL = 8
-  let s:FONT_SIZE_SMALL = 10
-  let s:FONT_SIZE_NORMAL = 12
-  let s:FONT_SIZE_LARGE = 16
-  let s:FONT_SIZE_EXLARGE = 20
-  let s:FONT_SIZE_DEFAULT = s:FONT_SIZE_NORMAL
-
-  command! MyFontSizeExSmall call s:set_gui_font(s:FONT_SIZE_EXSMALL)
-  command! MyFontSizeSmall call s:set_gui_font(s:FONT_SIZE_SMALL)
-  command! MyFontSizeNormal call s:set_gui_font(s:FONT_SIZE_NORMAL)
-  command! MyFontSizeLarge call s:set_gui_font(s:FONT_SIZE_LARGE)
-  command! MyFontSizeExLarge call s:set_gui_font(s:FONT_SIZE_EXLARGE)
+if !has('nvim') && has('gui_running')
+  call dotfiles#define_font_size_commands()
 endif
 
 " tabstop, shiftwidth を変える
@@ -458,7 +433,7 @@ set novisualbell
 " }}}
 " フォント、カラースキームを設定する。 {{{
 
-if exists('g:ginit_loaded') || has('gui_running')
+if !has('nvim') && has('gui_running')
   " フォントサイズを設定する。
   " この設定を有効にすることで、プリント時の文字化けが回避された。
   MyFontSizeNormal
