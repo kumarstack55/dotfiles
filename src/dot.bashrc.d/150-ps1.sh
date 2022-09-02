@@ -69,5 +69,3 @@ my_ps1_switch() {
 my_prompt_switch() {
   my_ps1_switch
 }
-
-__my_ps1_next_index=$(__my_ps1_find_index simple_date)
