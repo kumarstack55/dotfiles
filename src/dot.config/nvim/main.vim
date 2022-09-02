@@ -189,9 +189,6 @@ call plug#begin('~/.vim/plugged')
     " Auto configurations for Language Servers for vim-lsp.
     Plug 'mattn/vim-lsp-settings'
 
-    " normalize async job control api for vim and neovim
-    "Plug 'prabirshrestha/async.vim'
-
     " Async autocompletion for Vim 8 and Neovim with |timers|.
     Plug 'prabirshrestha/asyncomplete.vim'
 
