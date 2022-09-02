@@ -374,8 +374,8 @@ endif
 " }}}
 " ツールバーを設定する。 {{{
 
-if exists('g:ginit_loaded') || has('gui_running')
-  " ツールバーを非表示にする。
+if !has('nvim') && has('gui_running')
+  " Gvim でツールバーを非表示にする。
   set guioptions-=T
 endif
 
