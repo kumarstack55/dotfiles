@@ -13,12 +13,15 @@ function __my_term_256_colors {
 }
 
 function __my_ps1_impl_date {
+  local prefix
   if __my_term_256_colors; then
-    export PS1='\n\[\e[38;5;240m\]$(date "+%F %T")\[\e[39m\]\n[\u@\h \W]\$ '
+    # shellcheck disable=SC2016
+    prefix='\n\[\e[38;5;240m\]$(date "+%F %T")\[\e[39m\]\n'
   else
-    # shellcheck disable=SC2089
-    export PS1='\n$(date "+%F %T")\n[\u@\h \W]\$ '
+    # shellcheck disable=SC2016
+    prefix='\n$(date "+%F %T")\n'
   fi
+  export PS1="${prefix}${__my_ps1_original}"
 }
 
 function __my_ps1_impl_simple2 {
