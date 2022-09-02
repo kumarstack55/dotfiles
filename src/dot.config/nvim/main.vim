@@ -189,6 +189,9 @@ call plug#begin('~/.vim/plugged')
     " Auto configurations for Language Servers for vim-lsp.
     Plug 'mattn/vim-lsp-settings'
 
+    " auto-completion を利用する場合、 asyncomplete か ddc を選ぶ。
+    " ここでは asyncomplete を選ぶ。
+
     " Async autocompletion for Vim 8 and Neovim with |timers|.
     Plug 'prabirshrestha/asyncomplete.vim'
 
