@@ -388,7 +388,7 @@ endif
 " }}}
 " マウス操作を設定する。 {{{
 
-if exists('g:ginit_loaded') || has('gui_running')
+if has('mouse')
   "	Normal, Visual, Insert, Command-line モードでマウスを有効にする。
   set mouse=a
 endif
