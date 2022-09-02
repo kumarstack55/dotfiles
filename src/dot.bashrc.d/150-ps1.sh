@@ -3,7 +3,7 @@ declare __my_ps1_prefix="__my_ps1_impl_"
 declare __my_ps1_next_index=0
 declare __my_ps1_original="$PS1"
 
-function __my_term_256_colors {
+__my_term_256_colors() {
   case "$TERM" in
     "xterm-256color") return 0;;
     "screen-256color") return 0;;
@@ -12,7 +12,7 @@ function __my_term_256_colors {
   esac
 }
 
-function __my_ps1_impl_110_date {
+__my_ps1_impl_110_date() {
   local prefix
   if __my_term_256_colors; then
     # shellcheck disable=SC2016
@@ -24,23 +24,23 @@ function __my_ps1_impl_110_date {
   export PS1="${prefix}${__my_ps1_original}"
 }
 
-function __my_ps1_impl_120_simple2 {
+__my_ps1_impl_120_simple2() {
   export PS1='\W \$ '
 }
 
-function __my_ps1_impl_130_simple3 {
+__my_ps1_impl_130_simple3() {
   export PS1='\$ '
 }
 
-function __my_ps1_impl_900_original {
+__my_ps1_impl_900_original() {
   export PS1="${__my_ps1_original}"
 }
 
-function __my_ps1_funcs {
+__my_ps1_funcs() {
   declare -F | grep -o "$__my_ps1_prefix\S*"
 }
 
-function __my_ps1_find_index {
+__my_ps1_find_index() {
   local -a ps1_funcs
   mapfile -t ps1_funcs < <(__my_ps1_funcs)
   local i
@@ -53,7 +53,7 @@ function __my_ps1_find_index {
   return 1
 }
 
-function my_ps1_switch {
+my_ps1_switch() {
   local -a ps1_funcs
   mapfile -t ps1_funcs < <(__my_ps1_funcs)
   local f
