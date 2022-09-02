@@ -65,15 +65,21 @@ call plug#begin('~/.vim/plugged')
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight',
         \ { 'on': 'NERDTreeToggle' }
 
-  " iceberg.vim が依存するために導入する。
-  " Pgmnt is a template engine for creating Vim color schemes.
-  Plug 'cocopon/pgmnt.vim'
+  if !(has('win32') && !has('nvim') && !has('gui_running'))
+    " iceberg.vim が依存するために導入する。
+    " Pgmnt is a template engine for creating Vim color schemes.
+    Plug 'cocopon/pgmnt.vim'
 
-  " Iceberg is well-designed, bluish color scheme for Vim and Neovim.
-  Plug 'cocopon/iceberg.vim'
+    " Iceberg is well-designed, bluish color scheme for Vim and Neovim.
+    Plug 'cocopon/iceberg.vim'
 
-  " Theme for various programs, designed with love for iceberg.vim theme.
-  Plug 'gkeep/iceberg-dark'
+    " Theme for various programs, designed with love for iceberg.vim theme.
+    Plug 'gkeep/iceberg-dark'
+
+    " lightline.vim - A light and configurable statusline/tabline
+    " plugin for Vim
+    Plug 'itchyny/lightline.vim'
+  endif
 
   " EditorConfig Vim Plugin
   Plug 'editorconfig/editorconfig-vim'
@@ -100,10 +106,6 @@ call plug#begin('~/.vim/plugged')
 
   " BufExplorer Plugin for Vim
   Plug 'jlanzarotta/bufexplorer'
-
-  " lightline.vim - A light and configurable statusline/tabline
-  " plugin for Vim
-  Plug 'itchyny/lightline.vim'
 
   " Indent Guides is a plugin for visually displaying indent levels in Vim.
   if v:version >= 800
@@ -438,7 +440,9 @@ if !has('nvim') && has('gui_running')
 endif
 
 " カラースキームを設定する。
-colorscheme iceberg
+if !(has('win32') && !has('nvim') && !has('gui_running'))
+  colorscheme iceberg
+endif
 
 " }}}
 " 検索時のステータス表示を設定する。 {{{
@@ -496,8 +500,11 @@ if v:version > 704
   set breakindent
 endif
 
-" カーソル行を表示させる
-set cursorline
+" カーソル行を表示させる。
+" ただし、Windows + Vim は見た目がひどいため、表示させない。
+if !(has('win32') && !has('nvim') && !has('gui_running'))
+  set cursorline
+endif
 
 " neovide のときカーソル移動のアニメーションを設定する。
 let g:neovide_cursor_vfx_mode = "railgun"
@@ -506,8 +513,11 @@ let g:neovide_cursor_vfx_mode = "railgun"
 set textwidth=0
 
 " 80文字目に色をつける
-if exists('+colorcolumn')
-  set colorcolumn=80
+" ただし、Windows + Vim は見た目がひどいため、表示させない。
+if !(has('win32') && !has('nvim') && !has('gui_running'))
+  if exists('+colorcolumn')
+    set colorcolumn=80
+  endif
 endif
 
 " }}}
