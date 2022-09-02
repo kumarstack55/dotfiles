@@ -319,15 +319,15 @@ endfunction
 
 command! MyModelineAppend call s:add_modeline()
 
-" Tagbar をリロードする
-function! s:tagbar_reload()
+" Tagbar を開きなおす。
+function! s:tagbar_reopen()
   if exists('t:tagbar_buf_name') && bufwinnr(t:tagbar_buf_name) != -1
     TagbarClose
     TagbarOpen
   endif
 endfunction
 
-command! MyTagbarReload call s:tagbar_reload()
+command! MyTagbarReopen call s:tagbar_reopen()
 
 " Tagbar の表示を左と右で切り替える。
 function! s:tagbar_position_switch_left_right()
@@ -335,10 +335,10 @@ function! s:tagbar_position_switch_left_right()
   let pos_right = 'botright vertical'
   if exists("g:tagbar_position") && g:tagbar_position == pos_left
     let g:tagbar_position = pos_right
-    call s:tagbar_reload()
+    call s:tagbar_reopen()
   elseif exists("g:tagbar_position") && g:tagbar_position == pos_right
     let g:tagbar_position = pos_left
-    call s:tagbar_reload()
+    call s:tagbar_reopen()
   endif
 endfunction
 
