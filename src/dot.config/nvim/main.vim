@@ -348,32 +348,24 @@ command! MyTagbarPositionSwitchLeftRight
 " }}}
 " クリップボードを設定する。 {{{
 
-if exists('g:ginit_loaded') || has('gui_running')
+if has('win32') && !has('nvim') && has('gui_running')
   " 選択範囲をシステムのクリップボードにコピーする。
   set guioptions+=a
-else
-  if has('nvim')
-    if has('unix')
-      " linux
-    elseif has('win32')
-      " 選択範囲をシステムのクリップボードにコピーする。
-      set clipboard&
-      set clipboard^=unnamedplus
-    endif
+endif
+
+if has('clipboard')
+  set clipboard&
+
+  " すべてのヤンクをクリップボードに登録する。
+  if has('nvim') || has('unnamedplus')
+    set clipboard^=unnamedplus
   else
-    " vim
-    if has('unix')
-      " linux, vim in git-bash
-      if has('clipboard')
-        " vim in git-bash で選択範囲をシステムのクリップボードにコピーする。
-        set clipboard&
-        set clipboard^=autoselect
-      endif
-    elseif has('win32')
-      " vim in powershell
-      set clipboard&
-      set clipboard^=autoselect
-    endif
+    set clipboard^=unnamed
+  endif
+
+  " 選択範囲をクリップボードに登録する。
+  if (has('win32unix') && !has('nvim')) || (has('win32') && !has('nvim'))
+    set clipboard^=autoselect
   endif
 endif
 
