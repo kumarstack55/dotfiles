@@ -131,7 +131,7 @@ call plug#begin('~/.vim/plugged')
   Plug 'kumarstack55/vim-snippets-local'
 
   " A vim plugin for syntax highlighting Ansible's common filetypes
-  if !has('win32') && executable("ansible")
+  if has('linux') && executable("ansible")
     Plug 'pearofducks/ansible-vim', { 'for': 'yaml.ansible',
           \ 'do': './UltiSnips/generate.sh --style dictionary' }
   else

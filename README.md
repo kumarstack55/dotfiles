@@ -7,8 +7,10 @@
 * ArchLinux
 * Debian
 * EL7
-* macOS
-* Windows+mintty
+* Windows
+* Windows + WSL
+* Windows + cygwin
+* ~~macOS~~
 
 ## 要件
 
