@@ -8,6 +8,7 @@ _is_wsl() {
   uname -r | grep -q microsoft
 }
 
+# WSL内のとき、WSLホストのpoetryをPATHから除外する。
 if _is_wsl; then
   PATH=$(
     echo "$PATH" \
