@@ -477,7 +477,7 @@ nmap <SID>ws <Nop>
 " 行番号を表示させない。
 set nonumber
 
-if exists('g:ginit_loaded') || has('gui_running')
+if has('gui_running')
   " insert モードで IM を OFF にする。
   set iminsert=0
 
