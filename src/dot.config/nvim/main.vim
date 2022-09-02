@@ -290,8 +290,14 @@ function! s:set_filetype_rst()
   call s:set_tabstop(3)
 endfunction
 
+function! s:set_filetype_ps1()
+  setlocal filetype=ps1
+  call s:set_tabstop(4)
+endfunction
+
 command! MyFiletypeMarkdown call s:set_filetype_markdown()
 command! MyFiletypeRst call s:set_filetype_rst()
+command! MyFiletypePowerShell call s:set_filetype_rst()
 
 " カーソル行の直後にmodelineを加える
 function! s:add_modeline()
