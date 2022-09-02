@@ -132,7 +132,8 @@ call plug#begin('~/.vim/plugged')
 
   " A vim plugin for syntax highlighting Ansible's common filetypes
   if has('linux') && executable("ansible")
-    Plug 'pearofducks/ansible-vim', { 'for': 'yaml.ansible',
+    Plug 'pearofducks/ansible-vim', {
+          \ 'for': 'yaml.ansible',
           \ 'do': './UltiSnips/generate.sh --style dictionary' }
   else
     Plug 'pearofducks/ansible-vim', { 'for': 'yaml.ansible' }
