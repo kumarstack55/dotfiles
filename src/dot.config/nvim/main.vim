@@ -52,8 +52,7 @@ call plug#begin('~/.vim/plugged')
   " vim-cheatsheet opens your cheat sheet file.
   Plug 'reireias/vim-cheatsheet', { 'on': 'Cheat' }
 
-  " a universal set of defaults that (hopefully)
-  " everyone can agree on.
+  " a universal set of defaults that (hopefully) everyone can agree on.
   Plug 'tpope/vim-sensible'
 
   " Vaffle is a lightweight file manager for Vim.
