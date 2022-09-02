@@ -377,8 +377,8 @@ if !has('nvim') && has('gui_running')
   set guioptions-=T
 endif
 
-if has('win32') && (exists('g:ginit_loaded') || has('gui_running'))
-  " gvim で encoding=utf8 かつメニューを日本語で表示させると、
+if has('win32') && !has('nvim') && has('gui_running')
+  " GVim で encoding=utf8 かつメニューを日本語で表示させると、
   " 表示がおかしくなるため、英語表示とする。
   set langmenu=en_US
   source $VIMRUNTIME/delmenu.vim
