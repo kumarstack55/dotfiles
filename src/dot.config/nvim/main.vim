@@ -153,6 +153,7 @@ call plug#begin('~/.vim/plugged')
   " a filetype plugin so Vim can autodetect your PS1 scripts.
   Plug 'PProvost/vim-ps1', { 'for': ['ps1', 'psm', 'md'] }
 
+  " Vim のプラグインではないが、git clone させるために加えている。
   " A simple script to help create ctags-compatible tag files
   " for the sections within a reStructuredText document.
   Plug 'jszakmeister/rst2ctags'
