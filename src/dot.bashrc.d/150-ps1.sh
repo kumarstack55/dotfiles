@@ -1,6 +1,7 @@
 #!/bin/bash
 declare __my_ps1_prefix="__my_ps1_impl_"
 declare __my_ps1_next_index=0
+declare __my_ps1_original="$PS1"
 
 function __my_term_256_colors {
   case "$TERM" in
@@ -44,6 +45,10 @@ function __my_ps1_impl_simple_date {
     PS1='\n$(date "+%F %T")\n\u@\h:\W \$ '
   fi
   export "PS1"
+}
+
+function __my_ps1_impl_original {
+  export PS1="${__my_ps1_original}"
 }
 
 function __my_ps1_funcs {
