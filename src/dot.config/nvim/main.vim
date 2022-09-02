@@ -139,6 +139,15 @@ call plug#begin('~/.vim/plugged')
     Plug 'pearofducks/ansible-vim', { 'for': 'yaml.ansible' }
   endif
 
+  if has('python3')
+    " UltiSnips is the ultimate solution for snippets in Vim.
+    Plug 'SirVer/ultisnips'
+  elseif has('python')
+    " ultisnips の Python2 サポートは 3.1 まで。
+    " 3.2 以降は Python2 では動作しない。
+    Plug 'SirVer/ultisnips', { 'tag': '3.1' }
+  endif
+
   " vim-markdown を利用するために必要なプラグイン
   " vim-markdown より前である必要がある
   " Vim script for text filtering and alignment
@@ -157,15 +166,6 @@ call plug#begin('~/.vim/plugged')
   " A simple script to help create ctags-compatible tag files
   " for the sections within a reStructuredText document.
   Plug 'jszakmeister/rst2ctags'
-
-  if has('python3')
-    " UltiSnips is the ultimate solution for snippets in Vim.
-    Plug 'SirVer/ultisnips'
-  elseif has('python')
-    " ultisnips の Python2 サポートは 3.1 まで。
-    " 3.2 以降は Python2 では動作しない。
-    Plug 'SirVer/ultisnips', { 'tag': '3.1' }
-  endif
 
   " (Do)cumentation (Ge)nerator 15+ languages
   if has('nvim') || (v:version > 700 && has('patch-7.4.2119'))
