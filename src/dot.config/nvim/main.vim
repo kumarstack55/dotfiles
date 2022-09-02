@@ -174,7 +174,10 @@ call plug#begin('~/.vim/plugged')
   endif
 
   " Yet Another Lexima
-  Plug 'mattn/vim-lexiv'
+  if has('nvim') || v:version >= 801
+    " VIM 8.1 or above is required.
+    Plug 'mattn/vim-lexiv'
+  endif
 
   " Syntax files for Bats (Bash Automated Testing System).
   Plug 'aliou/bats.vim'
