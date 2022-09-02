@@ -12,10 +12,6 @@ function __my_term_256_colors {
   esac
 }
 
-function __my_ps1_impl_centos {
-  export PS1='[\u@\h \W]\$ '
-}
-
 function __my_ps1_impl_date {
   if __my_term_256_colors; then
     export PS1='\n\[\e[38;5;240m\]$(date "+%F %T")\[\e[39m\]\n[\u@\h \W]\$ '
@@ -23,10 +19,6 @@ function __my_ps1_impl_date {
     # shellcheck disable=SC2089
     export PS1='\n$(date "+%F %T")\n[\u@\h \W]\$ '
   fi
-}
-
-function __my_ps1_impl_simple {
-  export PS1='\u@\h:\W \$ '
 }
 
 function __my_ps1_impl_simple2 {
