@@ -1,8 +1,9 @@
 #!/bin/bash
 declare __my_ps1_prefix="__my_ps1_impl_"
 declare __my_ps1_next_index=0
+declare __my_ps1_original="$PS1"
 
-function __my_term_256_colors {
+__my_term_256_colors() {
   case "$TERM" in
     "xterm-256color") return 0;;
     "screen-256color") return 0;;
@@ -11,47 +12,35 @@ function __my_term_256_colors {
   esac
 }
 
-function __my_ps1_impl_centos {
-  export PS1='[\u@\h \W]\$ '
-}
-
-function __my_ps1_impl_date {
+__my_ps1_impl_110_date() {
+  local prefix
   if __my_term_256_colors; then
-    PS1='\n\[\e[38;5;240m\]$(date "+%F %T")\[\e[39m\]\n[\u@\h \W]\$ '
+    # shellcheck disable=SC2016
+    prefix='\n\[\e[38;5;240m\]$(date "+%F %T")\[\e[39m\]\n'
   else
-    # shellcheck disable=SC2089
-    PS1='\n$(date "+%F %T")\n[\u@\h \W]\$ '
+    # shellcheck disable=SC2016
+    prefix='\n$(date "+%F %T")\n'
   fi
-  export "PS1"
+  export PS1="${prefix}${__my_ps1_original}"
 }
 
-function __my_ps1_impl_simple {
-  export PS1='\u@\h:\W \$ '
-}
-
-function __my_ps1_impl_simple2 {
+__my_ps1_impl_120_simple2() {
   export PS1='\W \$ '
 }
 
-function __my_ps1_impl_simple3 {
+__my_ps1_impl_130_simple3() {
   export PS1='\$ '
 }
 
-function __my_ps1_impl_simple_date {
-  if __my_term_256_colors; then
-    PS1='\n\[\e[38;5;240m\]$(date "+%F %T")\[\e[39m\]\n\u@\h:\W \$ '
-  else
-    # shellcheck disable=SC2089
-    PS1='\n$(date "+%F %T")\n\u@\h:\W \$ '
-  fi
-  export "PS1"
+__my_ps1_impl_900_original() {
+  export PS1="${__my_ps1_original}"
 }
 
-function __my_ps1_funcs {
+__my_ps1_funcs() {
   declare -F | grep -o "$__my_ps1_prefix\S*"
 }
 
-function __my_ps1_find_index {
+__my_ps1_find_index() {
   local -a ps1_funcs
   mapfile -t ps1_funcs < <(__my_ps1_funcs)
   local i
@@ -64,7 +53,7 @@ function __my_ps1_find_index {
   return 1
 }
 
-function my_ps1_switch {
+my_ps1_switch() {
   local -a ps1_funcs
   mapfile -t ps1_funcs < <(__my_ps1_funcs)
   local f
@@ -80,5 +69,3 @@ function my_ps1_switch {
 my_prompt_switch() {
   my_ps1_switch
 }
-
-__my_ps1_next_index=$(__my_ps1_find_index simple_date)
