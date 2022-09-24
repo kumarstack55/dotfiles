@@ -41,6 +41,8 @@ if __name__ == '__main__':
     # CAPITAL_YES, CAPITAL_NO = 'Yes', 'No'
     # CAPITAL_TAKAHASHI, CAPITAL_AOKI = 'Takahashi', 'Aoki'
     # sys.setrecursionlimit(100000)
+    # sys.setrecursionlimit(200000)
+    # sys.setrecursionlimit(200005)
     {{_cursor_}}
     N = int(input())
     # N1, N2 = map(int, input().split())
