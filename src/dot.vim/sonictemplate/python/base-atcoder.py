@@ -15,6 +15,7 @@ from functools import partial
 
 debug_print = partial(print, file=sys.stderr)
 
+
 # def lcm(x: int, y: int):
 #     """ 最小公倍数(Least Common Multiple)を得る。 """
 #     """ 言い換えると x, y ともに割り切れる最小値を返す。 """
@@ -33,27 +34,45 @@ debug_print = partial(print, file=sys.stderr)
 #     """ 初項a, 公比r, 項数n の等比数列の和を得る。 """
 #     return a * (1 - r ** n) // (1 - r)
 
+# sys.setrecursionlimit(100000)
+# sys.setrecursionlimit(200000)
+# sys.setrecursionlimit(200005)
+# int1 = lambda x: int(x)-1
+# pDB = lambda *x: print(*x, end="\n", file=sys.stderr)
+# p2D = lambda x: print(*x, sep="\n", end="\n\n", file=sys.stderr)
+# def ii(): return int(sys.stdin.readline())
+# def li(): return list(map(int, sys.stdin.readline().split()))
+# def lli(rows_number): return [li() for _ in range(rows_number)]
+# def li1(): return list(map(int1, sys.stdin.readline().split()))
+# def lli1(rows_number): return [li1() for _ in range(rows_number)]
+# def si(): return sys.stdin.readline().rstrip()
 
-if __name__ == '__main__':
-    # INF = 10 ** 20
-    # MOD = 998244353
-    # MOD = 1000000007
-    # CAPITAL_YES, CAPITAL_NO = 'Yes', 'No'
-    # CAPITAL_TAKAHASHI, CAPITAL_AOKI = 'Takahashi', 'Aoki'
-    # sys.setrecursionlimit(100000)
-    # sys.setrecursionlimit(200000)
-    # sys.setrecursionlimit(200005)
-    {{_cursor_}}
-    N = int(input())
-    # N1, N2 = map(int, input().split())
-    # A = list(map(int, input().split()))
-    # S = input()
-    # S1, S2 = input().split()
-    ans = None
-    # ans = -1
-    # ans = False
-    # ans = True
-    # print(CAPITAL_YES if ans else CAPITAL_NO)
-    # print(CAPITAL_TAKAHASHI if ans else CAPITAL_AOKI)
-    # print(CAPITAL_AOKI if ans else CAPITAL_TAKAHASHI)
-    print(ans)
+# INF = 10 ** 20
+# MOD = 998244353
+# MOD = 1000000007
+
+# CAPITAL_YES, CAPITAL_NO = 'Yes', 'No'
+# CAPITAL_TAKAHASHI, CAPITAL_AOKI = 'Takahashi', 'Aoki'
+
+{{_cursor_}}
+n = int(input())
+# a, b = map(int, input().split())
+# n1, n2 = map(int, input().split())
+# a = list(map(int, input().split()))
+# s = input()
+# s1, s2 = input().split()
+
+# edges = [[] for _ in range(n)]
+# for _ in range(n-1):
+#     u, v = li1()
+#     edges[u].append(v)
+#     edges[v].append(u)
+
+ans = None
+# ans = -1
+# ans = False
+# ans = True
+# print(CAPITAL_YES if ans else CAPITAL_NO)
+# print(CAPITAL_TAKAHASHI if ans else CAPITAL_AOKI)
+# print(CAPITAL_AOKI if ans else CAPITAL_TAKAHASHI)
+print(ans)
