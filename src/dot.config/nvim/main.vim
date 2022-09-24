@@ -390,9 +390,12 @@ endif
 " }}}
 " マウス操作を設定する。 {{{
 
-if has('mouse')
-  "	Normal, Visual, Insert, Command-line モードでマウスを有効にする。
-  set mouse=a
+"	Normal, Visual, Insert, Command-line モードでマウスを有効にする。
+"	ただし、gVim 以外ではターミナル機能の文字列選択を利用したいので設定しない。
+if has('win32') && !has('nvim') && has('gui_running')
+  if has('mouse')
+    set mouse=a
+  endif
 endif
 
 " Visual や Select モードで、

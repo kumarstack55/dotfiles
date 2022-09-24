@@ -1,4 +1,4 @@
 #!/bin/bash
 if [[ -d $HOME/bin ]]; then
-  export PATH="$PATH:$HOME/bin"
+  export PATH="$HOME/bin:$PATH"
 fi
