@@ -1,3 +1,13 @@
+_\?\(\S\+\)\.prop$
+	@property
+	def {{$1}}(self):
+	    return self._{{$1}}{{_cursor_}}
+
+_\?\(\S\+\)\.property$
+	@property
+	def {{$1}}(self):
+	    return self._{{$1}}{{_cursor_}}
+
 \(\S\+\)\.if$
 	if {{$1}}:
 	    {{_cursor_}}
