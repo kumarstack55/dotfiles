@@ -34,6 +34,18 @@ def debug_print_table(x): debug_print(*x, sep="\n", end="\n\n")
 #     edges[u].append(v)
 #     edges[v].append(u)
 
+# ===>>> RECURSION, 再帰 <<<===
+# sys.setrecursionlimit(100000)
+# sys.setrecursionlimit(200000)
+# sys.setrecursionlimit(200005)
+
+# ===>>> CONSTANTS,定数 <<<===
+# INF = 10 ** 20
+# MOD = 998244353
+# MOD = 1000000007
+# CAPITAL_YES, CAPITAL_NO = 'Yes', 'No'
+# CAPITAL_TAKAHASHI, CAPITAL_AOKI = 'Takahashi', 'Aoki'
+
 # ===>>> IMPORT, インポート <<<===
 # from collections import Counter
 # from collections import defaultdict
@@ -69,18 +81,6 @@ def debug_print_table(x): debug_print(*x, sep="\n", end="\n\n")
 # def sum_of_geometric_progression(a: int, r: int, n: int):
 #     """ 初項a, 公比r, 項数n の等比数列の和を得る。 """
 #     return a * (1 - r ** n) // (1 - r)
-
-# ===>>> RECURSION, 再帰 <<<===
-# sys.setrecursionlimit(100000)
-# sys.setrecursionlimit(200000)
-# sys.setrecursionlimit(200005)
-
-# ===>>> CONSTANTS,定数 <<<===
-# INF = 10 ** 20
-# MOD = 998244353
-# MOD = 1000000007
-# CAPITAL_YES, CAPITAL_NO = 'Yes', 'No'
-# CAPITAL_TAKAHASHI, CAPITAL_AOKI = 'Takahashi', 'Aoki'
 
 # ===>>> OUTPUT,出力 <<<===
 # ans = None
