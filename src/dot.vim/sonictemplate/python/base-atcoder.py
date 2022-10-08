@@ -3,27 +3,37 @@ from functools import partial
 
 
 debug_print = partial(print, file=sys.stderr)
-def debug_print_table(x): debug_print(*x, sep="\n", end="\n\n")
+def li(): return list(map(int, input().split()))
 
 
-{{_cursor_}}# ===>>> INPUT, 入力 <<<===
+{{_cursor_}}# ===>>> DEBUG, デバッグ <<<===
+# def debug_print_table(t): debug_print(*t, sep="\n", end="\n\n")
+# def debug_print_table(t):
+#     for r in t:
+#         debug_print(*list(map(lambda c: "%2d" % (c), r)))
 
-# n = int(input())
+# ===>>> 初期化 <<<===
+# def new_table(rows, cols, val): return [[val] * cols for _ in range(rows)]
+
+# ===>>> INPUT, 入力 <<<===
 
 # s = input()
 # s1, s2 = input().split()
 
-# def li(): return list(map(int, input().split()))
+# ## 基数変更: 0
+# n = int(input())
 # a = li()
-# m, n = li()
+# n, m = li()
 # n1, n2 = li()
 # def lli(rows): return [li() for _ in range(rows)]
 # table = lli(rows)
 
+# ## 基数変更: -1
 # int1 = lambda x: int(x)-1
 # def li1(): return list(map(int1, input().split()))
+# n = int1(input())
 # a = li1()
-# m, n = li1()
+# n, m = li1()
 # n1, n2 = li1()
 # def lli1(rows): return [li1() for _ in range(rows)]
 # table = lli1(rows)
@@ -39,7 +49,7 @@ def debug_print_table(x): debug_print(*x, sep="\n", end="\n\n")
 # sys.setrecursionlimit(200000)
 # sys.setrecursionlimit(200005)
 
-# ===>>> CONSTANTS,定数 <<<===
+# ===>>> CONSTANTS, 定数 <<<===
 # INF = 10 ** 20
 # MOD = 998244353
 # MOD = 1000000007
@@ -55,11 +65,35 @@ def debug_print_table(x): debug_print(*x, sep="\n", end="\n\n")
 # from math import factorial
 # from math import gcd
 # from math import log2
+
 # from math import sqrt
+# def floor_sqrt(n):
+#     """
+#     floor(sqrt(n)) を整数で計算する。
+#
+#     >>> floor_sqrt(1)
+#     1
+#     >>> floor_sqrt(2)
+#     1
+#     >>> floor_sqrt(4)
+#     2
+#     """
+#     # 2分探索で探す。
+#     left = 0
+#     right = n
+#     while left < right:
+#         center = (left + right + 1) // 2
+#         if center * center <= n:
+#             left = center
+#         else:
+#             right = center - 1
+#     return left
+
 # import bisect
 # import heapq
 
 # ===>>> DEF, 関数定義 <<<===
+
 # def lcm(x: int, y: int):
 #     """ 最小公倍数(Least Common Multiple)を得る。 """
 #     """ 言い換えると x, y ともに割り切れる最小値を返す。 """
@@ -82,7 +116,7 @@ def debug_print_table(x): debug_print(*x, sep="\n", end="\n\n")
 #     """ 初項a, 公比r, 項数n の等比数列の和を得る。 """
 #     return a * (1 - r ** n) // (1 - r)
 
-# ===>>> OUTPUT,出力 <<<===
+# ===>>> OUTPUT, 出力 <<<===
 # ans = None
 # ans = -1
 # ans = False
