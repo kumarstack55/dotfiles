@@ -228,10 +228,28 @@ execute_tasks() {
   fi
   echo
 
-  echo "# TASK [Vim | Ensure that .vim/autoload/plug.vim for Vim exists]"
+  echo "# TASK [Vim | Ensure that .vim/autoload/plug.vim exists]"
   echo "# ************************************************************"
   if is_unix; then
     module_get_url 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' '.vim/autoload/plug.vim' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [NeoVim | Ensure that .local/share/nvim/site/autoload directory exists]"
+  echo "# ************************************************************"
+  if is_unix; then
+    module_directory '.local/share/nvim/site/autoload' '' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
+  echo "# TASK [NeoVim | Ensure that .local/share/nvim/site/autoload/plug.vim exists]"
+  echo "# ************************************************************"
+  if is_unix; then
+    module_get_url 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' '.local/share/nvim/site/autoload/plug.vim' && echo_ok || echo 'failed'
   else
     echo_skipping
   fi

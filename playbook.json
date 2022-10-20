@@ -125,10 +125,33 @@
       ]
     },
     {
-      "name": "Vim | Ensure that .vim/autoload/plug.vim for Vim exists",
+      "name": "Vim | Ensure that .vim/autoload/plug.vim exists",
       "module": "get_url",
       "params": {
         "path": ".vim/autoload/plug.vim",
+        "url": "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+      },
+      "when": [
+        "is_unix",
+        []
+      ]
+    },
+    {
+      "name": "NeoVim | Ensure that .local/share/nvim/site/autoload directory exists",
+      "module": "directory",
+      "params": {
+        "path": ".local/share/nvim/site/autoload"
+      },
+      "when": [
+        "is_unix",
+        []
+      ]
+    },
+    {
+      "name": "NeoVim | Ensure that .local/share/nvim/site/autoload/plug.vim exists",
+      "module": "get_url",
+      "params": {
+        "path": ".local/share/nvim/site/autoload/plug.vim",
         "url": "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
       },
       "when": [
