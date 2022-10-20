@@ -3,11 +3,11 @@ TARGET=bin/installer.sh
 all: $(TARGET)
 
 playbook.json: playbook.yml
-	python bin/create_playbook_json.py $< >$@.tmp
+	python3 bin/create_playbook_json.py $< >$@.tmp
 	mv -fv $@.tmp $@
 
 bin/installer.sh: playbook.json templates/installer.sh.j2 bin/playbook_to_bash.py
-	python bin/playbook_to_bash.py --source $< >$@.tmp
+	python3 bin/playbook_to_bash.py --source $< >$@.tmp
 	chmod +x $@.tmp
 	mv -fv $@.tmp $@
 
