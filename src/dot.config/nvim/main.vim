@@ -239,9 +239,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'mattn/vim-sonictemplate'
 
   " The extended search motion.
-  if has('nvim')
-    Plug 'hrsh7th/vim-searchx'
-  endif
+  "if has('nvim')
+  "  Plug 'hrsh7th/vim-searchx'
+  "endif
 call plug#end()
 
 " }}}
