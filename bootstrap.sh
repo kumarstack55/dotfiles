@@ -41,9 +41,10 @@ main() {
   fi
 
   if [ ! -d dotfiles ]; then
-    if git clone git@github.com:kumarstack55/dotfiles.git; then
-      git clone https://github.com/kumarstack55/dotfiles.git
-    fi
+    git clone git@github.com:kumarstack55/dotfiles.git
+  fi
+  if [ ! -d dotfiles ]; then
+    git clone https://github.com/kumarstack55/dotfiles.git
   fi
 
   cd "$HOME" || err_exit "failed to cd"
