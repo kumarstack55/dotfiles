@@ -212,13 +212,13 @@ call plug#begin('~/.vim/plugged')
     Plug 'maximbaz/lightline-ale'
   endif
 
-  " fernのNoteの記述に従いnvimでは適用する
-  " Fix CursorHold Performance
-  if has("nvim")
-    Plug 'antoinemadec/FixCursorHold.nvim'
-  endif
+  if has("nvim") && v:version >= 801
+    " fernのNoteの記述に従いnvimでは適用する
+    " Fix CursorHold Performance
+    if has("nvim")
+      Plug 'antoinemadec/FixCursorHold.nvim'
+    endif
 
-  if has("nvim") || v:version >= 801
     " General purpose asynchronous tree viewer written in Pure Vim script.
     Plug 'lambdalisue/fern.vim'
 
