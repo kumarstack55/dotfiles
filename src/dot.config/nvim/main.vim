@@ -588,6 +588,9 @@ augroup vimrc
   autocmd FileType markdown
     \ setlocal shiftwidth=4 softtabstop=4 tabstop=4 expandtab
 
+  autocmd FileType ps1
+    \ setlocal shiftwidth=4 softtabstop=4 tabstop=4 expandtab colorcolumn=140
+
   " vim-sonictemplate
   autocmd BufRead,BufNewFile *.stpl
     \ setlocal list listchars=tab:>-
