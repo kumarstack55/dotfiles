@@ -17,6 +17,7 @@ let g:tagbar_type_rst = {
 let g:tagbar_type_ps1 = {
     \ 'ctagstype': 'powershell',
     \ 'kinds': [
+      \ 'e:enum',
       \ 'c:class',
       \ 'f:function',
       \ 'v:variable',
