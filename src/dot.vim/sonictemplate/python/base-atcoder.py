@@ -92,6 +92,12 @@ def li(): return list(map(int, input().split()))
 # import bisect
 # import heapq
 
+# from functools import lru_cache
+# @lru_cache
+# def f(n):
+#     pass
+
+
 # ===>>> DEF, 関数定義 <<<===
 
 # def lcm(x: int, y: int):
