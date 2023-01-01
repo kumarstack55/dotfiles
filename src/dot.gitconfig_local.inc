@@ -9,6 +9,10 @@
 
 	# git diff の tab サイズを 4 にする。
 	#pager = less -x4
+
+	# commit 時に CRLF を LF に変換する。
+	# https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration
+	#autocrlf = false
 [http]
 	#proxy = http://proxy.example.com:8080
 	#sslVerify = false
