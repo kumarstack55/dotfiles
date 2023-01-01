@@ -557,6 +557,9 @@ set fileencodings=utf-8,cp932,utf-16le
 " modelineの認識は先頭と末尾の行数を指定する
 set modelines=5
 
+" インデントするとき shiftwidth の整数倍にする。
+set shiftround
+
 " ファイル再オープン時にカーソルを移動する
 " (:help restore-cursor)
 autocmd BufReadPost *
