@@ -4,15 +4,12 @@
     "actions": 
     [
         {
-            "command": "find",
-            "keys": "ctrl+shift+f"
-        },
-        {
             "command": "unbound",
             "keys": "ctrl+v"
         },
         {
-            "command": "paste"
+            "command": "find",
+            "keys": "ctrl+shift+f"
         },
         {
             "command": 
@@ -21,6 +18,9 @@
                 "singleLine": false
             },
             "keys": "ctrl+c"
+        },
+        {
+            "command": "paste"
         },
         {
             "command": 
@@ -51,6 +51,7 @@
                 "face": "Cica",
                 "size": 12
             },
+            "opacity": 85,
             "padding": "1"
         },
         "list": 
@@ -82,6 +83,24 @@
                 "hidden": false,
                 "name": "Ubuntu",
                 "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{63a5ab2b-5fd3-54dc-8e32-e53ccb3ab450}",
+                "hidden": false,
+                "name": "Developer Command Prompt for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{3ccba834-ddbb-59d2-87b3-3366cbb25bff}",
+                "hidden": false,
+                "name": "Developer PowerShell for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{16208362-94fc-5b1f-a491-5b2624d5ab56}",
+                "hidden": true,
+                "name": "Visual Studio Debug Console",
+                "source": "VSDebugConsole"
             }
         ]
     },
