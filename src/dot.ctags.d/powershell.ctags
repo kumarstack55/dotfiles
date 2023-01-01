@@ -1,3 +1,4 @@
+--languages=-powershell
 --langmap=powershell:.ps1.psm1
 --regex-powershell=/^[Cc]lass[\t ]*([a-zA-Z0-9_-]+)/\1/c,class/
 --regex-powershell=/^[Ff]unction[\t ]*([a-zA-Z0-9_-]+)/\1/f,function/

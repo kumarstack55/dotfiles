@@ -89,6 +89,7 @@ call plug#begin('~/.vim/plugged')
         \ 'for': [
           \ 'bats',
           \ 'c',
+          \ 'c++',
           \ 'go',
           \ 'markdown',
           \ 'ps1',
