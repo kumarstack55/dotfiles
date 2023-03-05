@@ -108,6 +108,17 @@ def li(): return list(map(int, input().split()))
 #     """ 例: 6, 8 がともに割り切れる最小値は 24 であり、24を返す。 """
 #     return x * y // gcd(x, y)
 
+# def get_list_of_divisors(n):
+#     """ 整数nのすべての約数のリストを得る。 """
+#     """ 約数とは、ある整数を割り切ることができる数である。 """
+#     """ 4 の約数は [1, 2, 4] である。 """
+#     d = []
+#     for i in range(1, int(n ** (1 / 2)) + 1):
+#         if n % i == 0:
+#             d.append(n // i)
+#             d.append(i)
+#     return sorted(set(d))
+
 # def combinations_count(n: int, r: int):
 #     """ 異なるn個のものからr個を選ぶ場合の数を得る。 """
 #     return math.factorial(n) // (math.factorial(n - r) * math.factorial(r))
