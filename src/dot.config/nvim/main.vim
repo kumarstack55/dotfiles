@@ -243,6 +243,10 @@ call plug#begin('~/.vim/plugged')
   "if has('nvim')
   "  Plug 'hrsh7th/vim-searchx'
   "endif
+
+  if !has('nvim') && v:version >= 900
+    Plug 'mattn/vim-yoshi'
+  endif
 call plug#end()
 
 " }}}

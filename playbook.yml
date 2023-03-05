@@ -112,6 +112,13 @@ tasks:
     url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   when: [is_windows, []]
 
+- name: Visual Studio | VsVim | Ensure that .vsvimrc is configured
+  module: symlink
+  params:
+    path: .vsvimrc
+    src: dotfiles/src/dot.vsvimrc
+  when: [is_windows, []]
+
 - name: Git | Ensure that .gitconfig is configured
   module: symlink
   params:

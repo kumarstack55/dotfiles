@@ -3,10 +3,11 @@ from functools import partial
 
 
 debug_print = partial(print, file=sys.stderr)
+def debug_vars(*v): debug_print(' '.join(['%s=%s' % (n, eval(n)) for n in v]))
 def li(): return list(map(int, input().split()))
 
 
-{{_cursor_}}# ===>>> DEBUG, デバッグ <<<===
+# ===>>> DEBUG, デバッグ <<<===
 # def debug_print_table(t): debug_print(*t, sep="\n", end="\n\n")
 # def debug_print_table(t):
 #     for r in t:
