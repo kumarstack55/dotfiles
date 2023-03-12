@@ -1,10 +1,23 @@
-import sys
-from functools import partial
-
-
-debug_print = partial(print, file=sys.stderr)
-def debug_vars(*v): debug_print(' '.join(['%s=%s' % (n, eval(n)) for n in v]))
+debug = False
 def li(): return list(map(int, input().split()))
+
+
+def debug_print(*argv):
+    if debug:
+        import sys
+        print(*argv, file=sys.stderr)
+
+
+def debug_vars(*var_names):
+    if debug:
+        import inspect
+        frame = inspect.currentframe()
+        outer_frames = inspect.getouterframes(frame)
+        caller_frame = outer_frames[1][0]
+        args = inspect.getargvalues(caller_frame)
+        it = map(lambda n: n + "=" + str(args.locals[n]), var_names)
+        debug_print(', '.join(it))
+
 
 
 # ===>>> DEBUG, デバッグ <<<===
@@ -58,6 +71,7 @@ def li(): return list(map(int, input().split()))
 # CAPITAL_TAKAHASHI, CAPITAL_AOKI = 'Takahashi', 'Aoki'
 
 # ===>>> IMPORT, インポート <<<===
+# from functools import partial
 # from collections import Counter
 # from collections import defaultdict
 # from collections import deque
@@ -134,6 +148,41 @@ def li(): return list(map(int, input().split()))
 # def sum_of_geometric_progression(a: int, r: int, n: int):
 #     """ 初項a, 公比r, 項数n の等比数列の和を得る。 """
 #     return a * (1 - r ** n) // (1 - r)
+
+# ===>>> UF <<<===
+# class UnionFind(object):
+#     def __init__(self, n):
+#         self.n = n
+#         self.parents = [-1] * n
+#
+#     def find(self, x):
+#         if self.parents[x] == -1:
+#             return x
+#         else:
+#             self.parents[x] = self.find(self.parents[x])
+#             return self.parents[x]
+#
+#     def unite(self, node1, node2):
+#         x = self.find(node1)
+#         y = self.find(node2)
+#         if x == y:
+#             return
+#         self.parents[y] = x
+#
+#
+# n, q = map(int, input().split())
+# uf = UnionFind(n)
+# for i in range(q):
+#     p, a, b = map(int, input().split())
+#     a -= 1
+#     b -= 1
+#     if p == 0:
+#         uf.unite(a, b)
+#     else:
+#         if uf.find(a) == uf.find(b):
+#             print("Yes")
+#         else:
+#             print("No")
 
 # ===>>> OUTPUT, 出力 <<<===
 # ans = None
