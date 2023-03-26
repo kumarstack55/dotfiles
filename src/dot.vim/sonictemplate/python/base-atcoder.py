@@ -1,14 +1,41 @@
-debug = False
+def ls(): return input().split()
 def li(): return list(map(int, input().split()))
+def lli(r: int): return [li() for _ in range(r)]
+def int1(x: str): return int(x) - 1
+def li1(): return list(map(int1, input().split()))
+def lli1(r: int): return [li1() for _ in range(r)]
+def new_table(r: int, c: int, v): return [[v] * c for _ in range(r)]
+def new_table3(h, r, c, v): return [new_table(r, c, v) for _ in range(h)]
+def print_capital_yes_no(v: bool): print("Yes" if v else "No")
+
+
+debug = True
+
+
+def main():
+    global debug
+    # {{_cursor_}}n, = li()
+    # n, q = li()
+    # for _ in range(q):
+    #     a, = li()
 
 
 def debug_print(*argv):
+    global debug
     if debug:
         import sys
         print(*argv, file=sys.stderr)
 
 
+def debug_print_table(t):
+    global debug
+    if debug:
+        for r in t:
+            debug_print(*list(map(lambda c: "%d" % (c), r)))
+
+
 def debug_vars(*var_names):
+    global debug
     if debug:
         import inspect
         frame = inspect.currentframe()
@@ -19,38 +46,10 @@ def debug_vars(*var_names):
         debug_print(', '.join(it))
 
 
-
-# ===>>> DEBUG, デバッグ <<<===
-# def debug_print_table(t): debug_print(*t, sep="\n", end="\n\n")
-# def debug_print_table(t):
-#     for r in t:
-#         debug_print(*list(map(lambda c: "%2d" % (c), r)))
-
-# ===>>> 初期化 <<<===
-# def new_table(rows, cols, val): return [[val] * cols for _ in range(rows)]
+if __name__ == "__main__":
+    main()
 
 # ===>>> INPUT, 入力 <<<===
-
-# s = input()
-# s1, s2 = input().split()
-
-# ## 基数変更: 0
-# n = int(input())
-# a = li()
-# n, m = li()
-# n1, n2 = li()
-# def lli(rows): return [li() for _ in range(rows)]
-# table = lli(rows)
-
-# ## 基数変更: -1
-# int1 = lambda x: int(x)-1
-# def li1(): return list(map(int1, input().split()))
-# n = int1(input())
-# a = li1()
-# n, m = li1()
-# n1, n2 = li1()
-# def lli1(rows): return [li1() for _ in range(rows)]
-# table = lli1(rows)
 
 # edges = [[] for _ in range(n)]
 # for _ in range(n-1):
@@ -67,7 +66,7 @@ def debug_vars(*var_names):
 # INF = 10 ** 20
 # MOD = 998244353
 # MOD = 1000000007
-# CAPITAL_YES, CAPITAL_NO = 'Yes', 'No'
+# YES, NO = 'yes', 'no'
 # CAPITAL_TAKAHASHI, CAPITAL_AOKI = 'Takahashi', 'Aoki'
 
 # ===>>> IMPORT, インポート <<<===
@@ -76,11 +75,14 @@ def debug_vars(*var_names):
 # from collections import defaultdict
 # from collections import deque
 # from itertools import permutations
+# import math
 # from math import ceil
 # from math import factorial
 # from math import gcd
 # from math import log2
 # from string import ascii_uppercase
+# from string import ascii_lowercase
+# from string import digits
 
 # from math import sqrt
 # def floor_sqrt(n):
@@ -109,7 +111,7 @@ def debug_vars(*var_names):
 # import heapq
 
 # from functools import lru_cache
-# @lru_cache
+# @lru_cache(maxsize=None)
 # def f(n):
 #     pass
 
@@ -189,7 +191,7 @@ def debug_vars(*var_names):
 # ans = -1
 # ans = False
 # ans = True
-# print(CAPITAL_YES if ans else CAPITAL_NO)
+# print(YES if ans else NO)
 # print(CAPITAL_TAKAHASHI if ans else CAPITAL_AOKI)
 # print(CAPITAL_AOKI if ans else CAPITAL_TAKAHASHI)
 # print(ans)
