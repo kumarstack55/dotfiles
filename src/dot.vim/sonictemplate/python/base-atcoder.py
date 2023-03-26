@@ -14,6 +14,7 @@ debug = True
 
 def main():
     global debug
+
     # {{_cursor_}}n, = li()
     # n, q = li()
     # for _ in range(q):
