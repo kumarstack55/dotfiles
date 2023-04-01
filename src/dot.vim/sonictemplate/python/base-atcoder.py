@@ -10,6 +10,7 @@ def print_capital_yes_no(v: bool): print("Yes" if v else "No")
 
 
 debug = True
+# debug = False
 
 
 def main():
@@ -28,13 +29,6 @@ def debug_print(*argv):
         print(*argv, file=sys.stderr)
 
 
-def debug_print_table(t):
-    global debug
-    if debug:
-        for r in t:
-            debug_print(*list(map(lambda c: "%d" % (c), r)))
-
-
 def debug_vars(*var_names):
     global debug
     if debug:
@@ -49,6 +43,14 @@ def debug_vars(*var_names):
 
 if __name__ == "__main__":
     main()
+
+# ===>>> DEBUG, デバッグ <<<===
+# def debug_print_table(t):
+#     global debug
+#     if debug:
+#         for r in t:
+#             debug_print(*list(map(lambda c: "%d" % (c), r)))
+#             # debug_print(*list(map(lambda c: "%s" % (c), r)))
 
 # ===>>> INPUT, 入力 <<<===
 
