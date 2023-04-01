@@ -52,11 +52,11 @@ if __name__ == "__main__":
 
 # ===>>> INPUT, 入力 <<<===
 
-# edges = [[] for _ in range(n)]
+# node_to_edges = [[] for _ in range(n)]
 # for _ in range(n-1):
 #     u, v = li1()
-#     edges[u].append(v)
-#     edges[v].append(u)
+#     node_to_edges[u].append(v)
+#     node_to_edges[v].append(u)
 
 # ===>>> RECURSION, 再帰 <<<===
 # sys.setrecursionlimit(100000)
