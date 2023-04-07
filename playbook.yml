@@ -300,7 +300,11 @@ tasks:
     force: false
     path: Documents/PowerShell/Microsoft.PowerShell_profile.ps1
     src: dotfiles/src/Documents/PowerShell/Microsoft.PowerShell_profile.ps1
-  when: [is_windows, []]
+  # OneDrive を利用する場合 $PROFILE の位置が次のように変わるため。
+  # C:\Users\xxx\OneDrive\ドキュメント\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+  # 理想としては $PROFILE のフォルダの下にコピーできるべきだが、
+  # 暫定実装として、フォルダが存在しない場合に、コピーしない実装とする。
+  when: [and, [ [is_windows, []], [path_exists, [Documents/xPowerShell]] ]]
 
 - name: PowerShell | Ensure that .config/powershell directory is configured
   module: symlink
