@@ -322,6 +322,13 @@ function EvaluateWhen {
             throw '$When[1].Count: {0}' -f $When[1].Count
         }
         return $true
+    } elseif ($When[0] -ceq 'path_exists') {
+        if ($When[1].Count -ne 1) {
+            throw '$When[1].Count: {0}' -f $When[1].Count
+        }
+        $Path = $When[1][0]
+        $Result = Test-Path -Path $Path
+        return $Result
     } elseif ($When[0] -ceq 'tmux_version_lt_2pt1') {
         if ($When[1].Count -ne 0) {
             throw '$When[1].Count: {0}' -f $When[1].Count
