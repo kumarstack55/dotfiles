@@ -77,7 +77,17 @@ if __name__ == "__main__":
 # from collections import Counter
 # from collections import defaultdict
 # from collections import deque
+
 # from itertools import permutations
+# >>> it = ["a", "b", "c"]
+# >>> list(permutations(it, 2))
+# [('a', 'b'), ('a', 'c'), ('b', 'a'), ('b', 'c'), ('c', 'a'), ('c', 'b')]
+
+# from itertools import comibinations
+# >>> it = ["a", "b", "c"]
+# >>> list(combinations(it, 2))
+# [('a', 'b'), ('a', 'c'), ('b', 'c')]
+
 # import math
 # from math import ceil
 # from math import factorial
@@ -109,6 +119,18 @@ if __name__ == "__main__":
 #         else:
 #             right = center - 1
 #     return left
+
+# def is_square(n1):
+#     """
+#     n1 が平方数か計算する。
+#
+#     >>> is_square(3)
+#     False
+#     >>> is_square(4)
+#     True
+#     """
+#     n2 = floor_sqrt(n1)
+#     return n2 ** 2 == n1
 
 # import bisect
 # import heapq
@@ -198,3 +220,6 @@ if __name__ == "__main__":
 # print(CAPITAL_TAKAHASHI if ans else CAPITAL_AOKI)
 # print(CAPITAL_AOKI if ans else CAPITAL_TAKAHASHI)
 # print(ans)
+
+# ===>>> TEST, テスト <<<===
+# python -m doctest -v .\Main.py
