@@ -4,6 +4,7 @@ def lli(r: int): return [li() for _ in range(r)]
 def int1(x: str): return int(x) - 1
 def li1(): return list(map(int1, input().split()))
 def lli1(r: int): return [li1() for _ in range(r)]
+def read_table(r: int): return [list(input()) for _ in range(r)]
 def new_table(r: int, c: int, v): return [[v] * c for _ in range(r)]
 def new_table3(h, r, c, v): return [new_table(r, c, v) for _ in range(h)]
 def print_capital_yes_no(v: bool): print("Yes" if v else "No")
@@ -97,6 +98,12 @@ if __name__ == "__main__":
 # from string import ascii_lowercase
 # from string import digits
 
+# ===>>> 乗 <<<===
+# pow(base, exp, mod=None)
+    # mod があれば、base の exp 乗に対する mod の剰余を返します。
+    # pow(base, exp) % mod より効率よく計算されます。
+
+# ===>>> 平方 <<<===
 # from math import sqrt
 # def floor_sqrt(n):
 #     """
@@ -212,6 +219,17 @@ if __name__ == "__main__":
 #             print("No")
 
 # ===>>> OUTPUT, 出力 <<<===
+
+# 入力と出力を StringIO で分ける。
+# from io import StringIO
+# q, = li()
+# f = StringIO()
+# for _ in range(q):
+#     ...
+#     print(ans, file=f)
+# text = f.getvalue()
+# print(text, end='')
+
 # ans = None
 # ans = -1
 # ans = False
