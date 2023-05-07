@@ -4,47 +4,25 @@ scriptencoding utf-8
 
 " Windows の場合は runtimepath を加える。
 if has('win32')
-  set runtimepath+=~/.config/nvim
+  set runtimepath+=~\.config\nvim
 endif
 
 runtime library/dotfiles.vim
+runtime library/dotfiles/path.vim
 
-" Windows + nvim では Python3 を使う
-if has('win32') && has('nvim')
-  let s:python_path_list = [
-        \ 'C:\Python310\python.exe',
-        \ 'C:\Python39\python.exe',
-        \ 'C:\Python38\python.exe',
-        \ 'C:\Python37\python.exe',
-        \ 'C:\Python36\python.exe']
-  for s:python_path in s:python_path_list
-    if executable(s:python_path)
-      let g:python3_host_prog = s:python_path
-      break
-    endif
-  endfor
+if has('win32')
+  if has('nvim')
+    " Windows + nvim では Python2 は使わない。
+    let g:loaded_python_provider = 0
+
+    " Windows + nvim では Python3 を使う。
+    call dotfiles#set_python3_host_prog()
+  else
+    " Windows + vim では Python3 を指定する。
+    call dotfiles#set_pythonthreedll()
+  endif
 endif
 
-" Windows + nvim では Python2 は使わない
-if has('win32') && has('nvim')
-  let g:loaded_python_provider = 0
-endif
-
-" Windows + vim では Python3 を使う
-if has('win32') && !has('nvim')
-  let s:python_dll_path_list = [
-        \ 'C:\Python310\python310.dll',
-        \ 'C:\Python39\python39.dll',
-        \ 'C:\Python38\python38.dll',
-        \ 'C:\Python37\python37.dll',
-        \ 'C:\Python36\python36.dll']
-  for s:python_dll_path in s:python_dll_path_list
-    if filereadable(s:python_dll_path)
-      let &pythonthreedll = s:python_dll_path
-      break
-    endif
-  endfor
-endif
 
 " }}}
 " プラグインを管理する。 {{{
@@ -444,7 +422,7 @@ set novisualbell
 if !has('nvim') && has('gui_running')
   " フォントサイズを設定する。
   " この設定を有効にすることで、プリント時の文字化けが回避された。
-  MyFontSizeNormal
+  MyFontSize10Normal
 endif
 
 " カラースキームを設定する。

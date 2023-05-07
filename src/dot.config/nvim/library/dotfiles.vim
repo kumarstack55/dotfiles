@@ -57,9 +57,83 @@ function! dotfiles#define_font_size_commands()
   let s:FONT_SIZE_EXLARGE = 20
   let s:FONT_SIZE_DEFAULT = s:FONT_SIZE_NORMAL
 
-  command! MyFontSizeExSmall call s:set_gui_font(s:FONT_SIZE_EXSMALL)
-  command! MyFontSizeSmall call s:set_gui_font(s:FONT_SIZE_SMALL)
-  command! MyFontSizeNormal call s:set_gui_font(s:FONT_SIZE_NORMAL)
-  command! MyFontSizeLarge call s:set_gui_font(s:FONT_SIZE_LARGE)
-  command! MyFontSizeExLarge call s:set_gui_font(s:FONT_SIZE_EXLARGE)
+  command! MyFontSize13ExSmall call s:set_gui_font(s:FONT_SIZE_EXSMALL)
+  command! MyFontSize14Small call s:set_gui_font(s:FONT_SIZE_SMALL)
+  command! MyFontSize10Normal call s:set_gui_font(s:FONT_SIZE_NORMAL)
+  command! MyFontSize11Large call s:set_gui_font(s:FONT_SIZE_LARGE)
+  command! MyFontSize12ExLarge call s:set_gui_font(s:FONT_SIZE_EXLARGE)
 endfunction
+
+function! dotfiles#get_pythonthreedll() abort
+  if !has("win32") || has("nvim")
+    return ""
+  endif
+
+  let unsorted_dirs = split(glob('C:\Python3*'), "\n")
+
+  let dirs = reverse(sort(unsorted_dirs, { a, b ->
+    \ str2nr(matchstr(a, '\d\+')[1:]) - str2nr(matchstr(b, '\d\+')[1:])}))
+
+  for dir in dirs
+    let ver = matchstr(dir, '\d\+')
+    let dll_name = printf("python%d.dll", ver)
+    let dll_path = dotfiles#path#join([dir, dll_name])
+
+    if filereadable(dll_path)
+      return dll_path
+    endif
+  endfor
+
+  return ""
+endfunction
+
+function! dotfiles#set_pythonthreedll() abort
+  let dll_path = dotfiles#get_pythonthreedll()
+  if dll_path != ""
+    let &pythonthreedll = dll_path
+  endif
+endfunction
+
+function! dotfiles#get_python3_host_prog() abort
+  if !has("win32") || !has("nvim")
+    return ""
+  endif
+
+  let unsorted_dirs = split(glob('C:\Python3*'), "\n")
+
+  let dirs = reverse(sort(unsorted_dirs, { a, b ->
+    \ str2nr(matchstr(a, '\d\+')[1:]) - str2nr(matchstr(b, '\d\+')[1:])}))
+
+  for dir in dirs
+    let python3_path = dotfiles#path#join([dir, "python.exe"])
+    if executable(python3_path)
+      return python3_path
+    endif
+  endfor
+  return ""
+endfunction
+
+function! dotfiles#set_python3_host_prog() abort
+  let host_prog = dotfiles#get_python3_host_prog()
+  if host_prog != ""
+    let g:python3_host_prog = host_prog
+  endif
+endfunction
+
+" function! dotfiles#stdpath(what) abort
+"   if has('nvim')
+"     return stdpath(what)
+"   endif
+"
+"   if what != "config"
+"     throw "not implemented"
+"   endif
+"
+"   let xdg_config_home_key = "XDG_CONFIG_HOME"
+"   let env = environ()
+"   if has_key(env, xdg_config_home_key)
+"     let xdg_config_home = env[l:xdg_config_home_key]
+"   else
+"     let xdg_config_home = "~/.config"
+"   endif
+" endfunction
