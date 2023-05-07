@@ -1,3 +1,4 @@
+import sys
 def ls(): return input().split()
 def li(): return list(map(int, input().split()))
 def lli(r: int): return [li() for _ in range(r)]
@@ -42,8 +43,20 @@ def debug_vars(*var_names):
         debug_print(', '.join(it))
 
 
+def run_doctest():
+    import doctest
+    finder = doctest.DocTestFinder(exclude_empty=True)
+    runner = doctest.DocTestRunner(verbose=True)
+    for test in finder.find(sys.modules.get('__main__')):
+        runner.run(test)
+    runner.summarize()
+
+
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) >= 2 and sys.argv[1] == "doctest":
+        run_doctest()
+    else:
+        main()
 
 # ===>>> DEBUG, デバッグ <<<===
 # def debug_print_table(t):
@@ -157,9 +170,14 @@ if __name__ == "__main__":
 #     return x * y // gcd(x, y)
 
 # def get_list_of_divisors(n):
-#     """ 整数nのすべての約数のリストを得る。 """
-#     """ 約数とは、ある整数を割り切ることができる数である。 """
-#     """ 4 の約数は [1, 2, 4] である。 """
+#     """
+#     整数nのすべての約数のリストを得る。
+#     約数とは、ある整数を割り切ることができる数である。
+#     4 の約数は [1, 2, 4] である。
+#
+#         >>> get_list_of_divisors(4)
+#         [1, 2, 4]
+#     """
 #     d = []
 #     for i in range(1, int(n ** (1 / 2)) + 1):
 #         if n % i == 0:
