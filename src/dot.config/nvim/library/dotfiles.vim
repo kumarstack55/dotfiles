@@ -120,20 +120,3 @@ function! dotfiles#set_python3_host_prog() abort
   endif
 endfunction
 
-" function! dotfiles#stdpath(what) abort
-"   if has('nvim')
-"     return stdpath(what)
-"   endif
-"
-"   if what != "config"
-"     throw "not implemented"
-"   endif
-"
-"   let xdg_config_home_key = "XDG_CONFIG_HOME"
-"   let env = environ()
-"   if has_key(env, xdg_config_home_key)
-"     let xdg_config_home = env[l:xdg_config_home_key]
-"   else
-"     let xdg_config_home = "~/.config"
-"   endif
-" endfunction
