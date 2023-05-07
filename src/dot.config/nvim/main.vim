@@ -23,7 +23,6 @@ if has('win32')
   endif
 endif
 
-
 " }}}
 " プラグインを管理する。 {{{
 call plug#begin('~/.vim/plugged')
@@ -39,11 +38,9 @@ call plug#begin('~/.vim/plugged')
   " NERDTree
   Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 
-  " This adds syntax for nerdtree on most common file extensions.
-  Plug 'tiagofumo/vim-nerdtree-syntax-highlight',
-        \ { 'on': 'NERDTreeToggle' }
-
-  if !(has('win32') && !has('nvim') && !has('gui_running'))
+  " Windows のコマンドプロンプト内の vim は変更しない。
+  " git commit には影響させたくないため。
+  if ! dotfiles#is_win32_vim()
     " iceberg.vim が依存するために導入する。
     " Pgmnt is a template engine for creating Vim color schemes.
     Plug 'cocopon/pgmnt.vim'
@@ -191,11 +188,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'maximbaz/lightline-ale'
   endif
 
-  if has("nvim") && v:version >= 801
-    " fernのNoteの記述に従いnvimでは適用する
-    " Fix CursorHold Performance
-    if has("nvim")
-      Plug 'antoinemadec/FixCursorHold.nvim'
+  if has("nvim")
+    if v:version < 800
+      " fernの README.md の記述に従い適用する
+      " Fix CursorHold Performance
+        Plug 'antoinemadec/FixCursorHold.nvim'
     endif
 
     " General purpose asynchronous tree viewer written in Pure Vim script.
