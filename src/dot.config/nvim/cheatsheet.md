@@ -2,6 +2,16 @@
 
 ## Vim Tips
 
+### 改行コードを変換する。
+
+#### dos を unix にする。
+
+* `:set fileformat?` で改行コードを得る。
+* `:set list` で改行コードを可視化する。
+* `:edit ++fileformat=unix` で改行コードを指定して開く。
+* `:set fileformat=unix` で改行コードを指定する。
+* `:%s/\r$//` で `^M` を消す。
+
 ### システムのクリップボードを扱う。
 
 * gvim の場合、 `Shift+Insert` でペーストできる。
