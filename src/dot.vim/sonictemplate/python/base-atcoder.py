@@ -15,6 +15,14 @@ debug = True
 # debug = False
 
 
+# def solve():
+#     '''
+#     >>> solve(1)
+#     False
+#     '''
+#     return True
+
+
 def main():
     global debug
 
@@ -22,6 +30,10 @@ def main():
     # n, q = li()
     # for _ in range(q):
     #     a, = li()
+
+    # ans = solve()
+    # print(ans)
+    # print_capital_yes_no(ans)
 
 
 def debug_print(*argv):
@@ -43,6 +55,14 @@ def debug_vars(*var_names):
         debug_print(', '.join(it))
 
 
+def debug_print_table(t):
+    global debug
+    if debug:
+        debug_print("table:")
+        for r in t:
+            debug_print(*list(map(lambda c: str(c), r)))
+
+
 def run_doctest():
     import doctest
     finder = doctest.DocTestFinder(exclude_empty=True)
@@ -58,15 +78,7 @@ if __name__ == "__main__":
     else:
         main()
 
-# ===>>> DEBUG, デバッグ <<<===
-# def debug_print_table(t):
-#     global debug
-#     if debug:
-#         for r in t:
-#             debug_print(*list(map(lambda c: "%d" % (c), r)))
-#             # debug_print(*list(map(lambda c: "%s" % (c), r)))
-
-# ===>>> INPUT, 入力 <<<===
+# === INPUT, 入力 ===
 
 # node_to_edges = [[] for _ in range(n)]
 # for _ in range(n-1):
@@ -74,19 +86,111 @@ if __name__ == "__main__":
 #     node_to_edges[u].append(v)
 #     node_to_edges[v].append(u)
 
-# ===>>> RECURSION, 再帰 <<<===
+# === bisect, 二分探索 ===
+
+# import bisect
+
+# import bisect_left from bisect
+
+# def bisect_left(a, x, lo=0, hi=None, key=None):
+#     """
+#     2分探索でソート済み配列aに要素xを挿入するインデックスを探す。
+#
+#     計算量は O(log2 n) である。
+#
+#     返り値 index は a[:index] の各要素 e について e < x である。
+#     返り値 index は a[index:] の各要素 e について e >= x である。
+#     そのため、 a に1個以上 x が含まれる場合は x の最も左の index を返す。
+#
+#     >>> bisect_left([10, 20], 5)
+#     0
+#     >>> bisect_left([10, 20], 15)
+#     1
+#     >>> bisect_left([10, 20], 25)
+#     2
+#     >>> bisect_left([10, 20, 20, 30], 20)
+#     1
+#     >>> bisect_left([(10, "y"), (20, "x"), (20, "z")], 20, key=lambda e: e[0])
+#     1
+#     """
+#     assert lo >= 0
+#
+#     if hi is None:
+#         hi = len(a)
+#
+#     if key is None:
+#         while lo < hi:
+#             mid = (lo + hi) // 2
+#             if a[mid] < x:
+#                 lo = mid + 1
+#             else:
+#                 hi = mid
+#     else:
+#         while lo < hi:
+#             mid = (lo + hi) // 2
+#             if key(a[mid]) < x:
+#                 lo = mid + 1
+#             else:
+#                 hi = mid
+#     return lo
+
+# import bisect_right from bisect
+
+# def bisect_right(a, x, lo=0, hi=None, key=None):
+#     """
+#     2分探索でソート済み配列aに要素xを挿入するインデックスを探す。
+#
+#     計算量は O(log2 n) である。
+#
+#     返り値 index は a[:index] の各要素 e について e <= x である。
+#     返り値 index は a[index:] の各要素 e について e > x である。
+#     そのため、 a に1個以上 x が含まれる場合は x の最も右の次の index を返す。
+#
+#     >>> bisect_right([10, 20], 5)
+#     0
+#     >>> bisect_right([10, 20], 15)
+#     1
+#     >>> bisect_right([10, 20], 25)
+#     2
+#     >>> bisect_right([10, 20, 20, 30], 20)
+#     3
+#     >>> bisect_right([(10, "y"), (20, "x"), (20, "z")], 20, key=lambda e: e[0])
+#     3
+#     """
+#     assert lo >= 0
+#
+#     if hi is None:
+#         hi = len(a)
+#
+#     if key is None:
+#         while lo < hi:
+#             mid = (lo + hi) // 2
+#             if x < a[mid]:
+#                 hi = mid
+#             else:
+#                 lo = mid + 1
+#     else:
+#         while lo < hi:
+#             mid = (lo + hi) // 2
+#             if x < key(a[mid]):
+#                 hi = mid
+#             else:
+#                 lo = mid + 1
+#     return lo
+
+# === RECURSION, 再帰 ===
 # sys.setrecursionlimit(100000)
 # sys.setrecursionlimit(200000)
 # sys.setrecursionlimit(200005)
 
-# ===>>> CONSTANTS, 定数 <<<===
+# === CONSTANTS, 定数 ===
 # INF = 10 ** 20
 # MOD = 998244353
 # MOD = 1000000007
 # YES, NO = 'yes', 'no'
 # CAPITAL_TAKAHASHI, CAPITAL_AOKI = 'Takahashi', 'Aoki'
 
-# ===>>> IMPORT, インポート <<<===
+# === IMPORT, インポート ===
 # from functools import partial
 # from collections import Counter
 # from collections import defaultdict
@@ -111,12 +215,12 @@ if __name__ == "__main__":
 # from string import ascii_lowercase
 # from string import digits
 
-# ===>>> 乗 <<<===
+# === 乗 ===
 # pow(base, exp, mod=None)
     # mod があれば、base の exp 乗に対する mod の剰余を返します。
     # pow(base, exp) % mod より効率よく計算されます。
 
-# ===>>> 平方 <<<===
+# === 平方 ===
 # from math import sqrt
 # def floor_sqrt(n):
 #     """
@@ -152,7 +256,6 @@ if __name__ == "__main__":
 #     n2 = floor_sqrt(n1)
 #     return n2 ** 2 == n1
 
-# import bisect
 # import heapq
 
 # from functools import lru_cache
@@ -161,12 +264,18 @@ if __name__ == "__main__":
 #     pass
 
 
-# ===>>> DEF, 関数定義 <<<===
+# === DEF, 関数定義 ===
 
 # def lcm(x: int, y: int):
-#     """ 最小公倍数(Least Common Multiple)を得る。 """
-#     """ 言い換えると x, y ともに割り切れる最小値を返す。 """
-#     """ 例: 6, 8 がともに割り切れる最小値は 24 であり、24を返す。 """
+#     """
+#     最小公倍数(Least Common Multiple)を得る。
+#
+#     言い換えると x, y ともに割り切れる最小値を返す。
+#     例: 6, 8 がともに割り切れる最小値は 24 であり、24を返す。
+#
+#     >>> lcm(6, 8)
+#     24
+#     """
 #     return x * y // gcd(x, y)
 
 # def get_list_of_divisors(n):
@@ -201,7 +310,7 @@ if __name__ == "__main__":
 #     """ 初項a, 公比r, 項数n の等比数列の和を得る。 """
 #     return a * (1 - r ** n) // (1 - r)
 
-# ===>>> UF <<<===
+# === UF ===
 # class UnionFind(object):
 #     def __init__(self, n):
 #         self.n = n
@@ -236,7 +345,7 @@ if __name__ == "__main__":
 #         else:
 #             print("No")
 
-# ===>>> OUTPUT, 出力 <<<===
+# === OUTPUT, 出力 ===
 
 # 入力と出力を StringIO で分ける。
 # from io import StringIO
@@ -257,5 +366,5 @@ if __name__ == "__main__":
 # print(CAPITAL_AOKI if ans else CAPITAL_TAKAHASHI)
 # print(ans)
 
-# ===>>> TEST, テスト <<<===
+# === TEST, テスト ===
 # python -m doctest -v .\Main.py
