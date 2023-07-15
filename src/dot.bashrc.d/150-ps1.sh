@@ -16,10 +16,10 @@ __my_ps1_impl_110_date() {
   local prefix
   if __my_term_256_colors; then
     # shellcheck disable=SC2016
-    prefix='\n\[\e[38;5;240m\]$(date "+%F %T")\[\e[39m\]\n'
+    prefix='\n\[\e[38;5;240m\]`date "+%F %T"`\[\e[39m\]'
   else
     # shellcheck disable=SC2016
-    prefix='\n$(date "+%F %T")\n'
+    prefix='\n`date "+%F %T"`'
   fi
   export PS1="${prefix}${__my_ps1_original}"
 }
