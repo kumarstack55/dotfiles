@@ -201,6 +201,10 @@ if __name__ == "__main__":
 # >>> list(permutations(it, 2))
 # [('a', 'b'), ('a', 'c'), ('b', 'a'), ('b', 'c'), ('c', 'a'), ('c', 'b')]
 
+# from itertools import product
+# >>> list(product([0, 1], repeat=2))
+# [(0, 0), (0, 1), (1, 0), (1, 1)]
+
 # 累積和
 # from itertools import accumulate
 # >>> a = [1, 2, 3]
