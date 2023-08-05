@@ -201,6 +201,13 @@ if __name__ == "__main__":
 # >>> list(permutations(it, 2))
 # [('a', 'b'), ('a', 'c'), ('b', 'a'), ('b', 'c'), ('c', 'a'), ('c', 'b')]
 
+# 累積和
+# from itertools import accumulate
+# >>> a = [1, 2, 3]
+# >>> b = list(accumulate(a))
+# >>> a, b
+# ([1, 2, 3], [1, 3, 6])
+
 # from itertools import comibinations
 # >>> it = ["a", "b", "c"]
 # >>> list(combinations(it, 2))
