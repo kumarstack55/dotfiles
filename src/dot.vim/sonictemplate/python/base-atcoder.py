@@ -39,10 +39,11 @@ def main():
 def debug_print(*argv):
     global debug
     if debug:
-        import sys
         print(*argv, file=sys.stderr)
 
 
+# 2023-09 時点で、Python3 で 3.10 が利用できるようになっている。
+# f-string `f"{var=}"` が利用できるため、不要である。
 def debug_vars(*var_names):
     global debug
     if debug:
