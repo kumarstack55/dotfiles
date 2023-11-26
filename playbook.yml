@@ -304,9 +304,7 @@ tasks:
   # C:\Users\xxx\OneDrive\ドキュメント\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
   # 理想としては $PROFILE のフォルダの下にコピーできるべきだが、
   # 暫定実装として、フォルダが存在しない場合に、コピーしない実装とする。
-  # TODO: path_exists を実装済みにする。
-  #when: [and, [ [is_windows, []], [path_exists, [Documents/WindowsPowerShell]] ]]
-  when: [is_windows, []]
+  when: [and, [ [is_windows, []], [path_exists, [Documents/WindowsPowerShell]] ]]
 
 - name: PowerShell | Ensure that .config/powershell directory is configured
   module: symlink
