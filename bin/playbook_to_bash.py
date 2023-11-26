@@ -299,6 +299,14 @@ class WhenExprTmuxVersionGreaterOrEqual2pt1(WhenExpr):
         return 'tmux_version_ge_2pt1'
 
 
+class WhenExprPathExists(WhenExpr):
+    def get(self, args: list) -> str:
+        if len(args) != 1:
+            raise RuntimeError(f"name: {self.__class__.__name__}, args:{args}")
+        path = args[0]
+        return f'test_path_exists "{path}"'
+
+
 class WhenExprNot(WhenExpr):
     def get(self, args: list) -> str:
         if len(args) != 2:
@@ -341,6 +349,7 @@ class WhenExprFactoryInitializer(object):
         f.add('is_unix', WhenExprIsUnix)
         f.add('tmux_version_lt_2pt1', WhenExprTmuxVersionLessThan2pt1)
         f.add('tmux_version_ge_2pt1', WhenExprTmuxVersionGreaterOrEqual2pt1)
+        f.add('path_exists', WhenExprPathExists)
         f.add('not', WhenExprNot)
         f.add('and', WhenExprAnd)
         return f

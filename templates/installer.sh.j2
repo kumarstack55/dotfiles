@@ -37,6 +37,11 @@ is_windows() {
   return 1
 }
 
+test_path_exists() {
+  local path="$1"
+  [[ -e "${path}" ]]
+}
+
 executable() {
   type "$1" >/dev/null 2>&1
 }
