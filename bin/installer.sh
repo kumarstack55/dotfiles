@@ -532,7 +532,7 @@ execute_tasks() {
 
   echo "# TASK [PowerShell | Ensure that Microsoft.PowerShell_profile.ps1 is configured]"
   echo "# ************************************************************"
-  if is_windows; then
+  if ( is_windows ) && ( test_path_exists "Documents/WindowsPowerShell" ); then
     module_copy 'dotfiles/src/Documents/PowerShell/Microsoft.PowerShell_profile.ps1' 'Documents/PowerShell/Microsoft.PowerShell_profile.ps1' '' && echo_ok || echo 'failed'
   else
     echo_skipping
