@@ -592,17 +592,8 @@
         "src": "dotfiles/src/Documents/WindowsPowerShell/Microsoft.PowerShell_profile.ps1"
       },
       "when": [
-        "and",
-        [
-          [
-            "is_windows",
-            []
-          ],
-          [
-            "path_exists",
-            ["Documents/xPowerShell"]
-          ]
-        ]
+        "is_windows",
+        []
       ]
     },
     {

@@ -291,6 +291,15 @@ execute_tasks() {
   fi
   echo
 
+  echo "# TASK [Visual Studio | VsVim | Ensure that .vsvimrc is configured]"
+  echo "# ************************************************************"
+  if is_windows; then
+    module_symlink 'dotfiles/src/dot.vsvimrc' '.vsvimrc' && echo_ok || echo 'failed'
+  else
+    echo_skipping
+  fi
+  echo
+
   echo "# TASK [Git | Ensure that .gitconfig is configured]"
   echo "# ************************************************************"
   if ! is_mingw; then
