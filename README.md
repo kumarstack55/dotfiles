@@ -51,6 +51,8 @@ cd $HOME/dotfiles/bin
 
 ## 変更する場合
 
+### commitizen
+
 ```sh
 cd $HOME/dotfiles
 npm install commitizen
