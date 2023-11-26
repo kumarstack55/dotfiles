@@ -58,3 +58,12 @@ npm install cz-conventional-changelog
 exec $SHELL -l
 npm run commit
 ```
+
+## 参考
+
+### Windows で OneDrive にドキュメントなどを同期しない場合
+
+```console
+PS > $PROFILE -replace $env:USERNAME, 'your_user_name'
+C:\Users\your_user_name\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+```
