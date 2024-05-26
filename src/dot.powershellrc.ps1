@@ -12,95 +12,29 @@ foreach ($Editor in @('nvim', 'vim')) {
     }
 }
 
-$Script:MyDotfilePrompt = 0
-
-function PromptDefault {
-    <#
-        .SYNOPSIS
-        既定のプロンプト定義です。
-        (Get-Command prompt).Definition で得たコードを再定義しています。
-    #>
-    "PS $($executionContext.SessionState.Path.CurrentLocation)$('>' * ($nestedPromptLevel + 1)) "
-}
-
-function PromptSimple {
-    <#
-        .SYNOPSIS
-        パスに関する情報を出力しないプロンプト定義です。
-    #>
-    "PS $('>' * ($nestedPromptLevel + 1)) "
-}
-
-function Get-MyPromptDebugRole {
-    <#
-        .SYNOPSIS
-        管理者として実行の場合、デバッグコンテキストの文字列を返します。
-    #>
-    $Identity = [Security.Principal.WindowsIdentity]::GetCurrent()
-    $Principal = [Security.Principal.WindowsPrincipal] $Identity
-    $AdminRole = [Security.Principal.WindowsBuiltInRole]::Administrator
-    if (Test-Path variable:/PSDebugContext) { '[DBG] ' }
-    elseif ($Principal.IsInRole($AdminRole)) { '[ADMIN] ' }
-    else { '' }
-}
-
-function Get-MyPromptPoetry {
-    <#
-        .SYNOPSIS
-        Poetry が有効な場合の文字列を返します。
-    #>
-    if (Test-Path env:POETRY_ACTIVE) { '[Poetry] ' }
-    else { '' }
-}
-
-function Get-MyPromptVirtualenv {
-    <#
-        .SYNOPSIS
-        Poetry が有効な場合の文字列を返します。
-    #>
-    if (Test-Path env:VIRTUAL_ENV) { '[Venv] ' }
-    else { '' }
-}
-
-function Get-MyPromptVersionString {
-    <#
-        .SYNOPSIS
-        PowerShell のバージョンを返します。
-    #>
-    $Version = $PSVersionTable.PSVersion
-    'v' + $Version.Major + '.' + $Version.Minor
-}
-
-function PromptComplex {
-    <#
-        .SYNOPSIS
-        管理者か、Poetry有効か、バージョン、ユーザ、ホスト、作業ディレクトリ、などを出力するプロンプト定義です。
-    #>
-    $DebugRole = Get-MyPromptDebugRole
-    $Poetry = Get-MyPromptPoetry
-    $VirtualEnv = Get-MyPromptVirtualenv
-    $VersionString = Get-MyPromptVersionString
-    $UserName = $env:UserName
-    $HostName = $Env:Computername
-    $UserHostName = $UserName + '@' + $HostName
-    $ParentDirectory = $(Split-Path (Get-Location) -Leaf)
-
-    $Prompt = ''
-    $Prompt += "`r`n"
-    $Prompt += $DebugRole + $Poetry + $VirtualEnv + $VersionString + ' ' + $UserHostName + ':' + $ParentDirectory + "`r`n"
-    $Prompt += PromptSimple
-
-    $Prompt
-}
+$script:DotfilePrompt = 0
 
 function Prompt {
-    if ($Script:MyDotfilePrompt -eq 0) {
-        return PromptDefault
-    } elseif ($Script:MyDotfilePrompt -eq 1) {
-        return PromptComplex
-    } else {
-        return PromptSimple
+    switch ($script:DotfilePrompt) {
+        1 {
+            # パスに関する情報を出力しないプロンプト定義です。
+            "PS $('>' * ($nestedPromptLevel + 1)) "
+        }
+        default {
+            # 既定のプロンプト定義です。
+            # (Get-Command prompt).Definition で得たコードを再定義しています。
+            "PS $($executionContext.SessionState.Path.CurrentLocation)$('>' * ($nestedPromptLevel + 1)) "
+        }
     }
+}
+
+function Invoke-DotfilesSwitchPrompt {
+    <#
+        .SYNOPSIS
+        プロンプトを切り替えます。
+    #>
+    $script:DotfilePrompt += 1
+    $script:DotfilePrompt %= 2
 }
 
 function Set-MyPromptSwitch {
@@ -108,8 +42,8 @@ function Set-MyPromptSwitch {
         .SYNOPSIS
         プロンプトを切り替えます。
     #>
-    $Script:MyDotfilePrompt += 1
-    $Script:MyDotfilePrompt %= 3
+    Write-Warning "Deprecated. Use Invoke-DotfilesSwitchPrompt instead."
+    Invoke-DotfilesSwitchPrompt
 }
 
 function MyPromptSwitch {
